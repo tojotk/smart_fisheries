@@ -1,0 +1,185 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-glass: rgba(45, 30, 47, 0.5);
+        --input-dark: rgba(26, 15, 27, 0.7);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+        --accent-red: #ff4757;
+    }
+
+    .register-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Main Container - No White Background */
+    .glass-form-container {
+        background: var(--plum-glass);
+        backdrop-filter: blur(20px);
+        width: 100%;
+        max-width: 550px;
+        padding: 3rem;
+        border-radius: 30px;
+        border: 1px solid rgba(181, 101, 216, 0.2);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .form-header i {
+        font-size: 3.5rem;
+        color: var(--accent-pink);
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 0 15px var(--accent-pink));
+    }
+
+    .form-header h3 {
+        color: var(--pure-white);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 800;
+        margin-bottom: 2rem;
+    }
+
+    /* Input Field - Obsidian Style (No White) */
+    .input-box {
+        position: relative;
+        margin-bottom: 2.5rem;
+        text-align: left;
+    }
+
+    .input-box label {
+        color: var(--accent-violet);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-obsidian {
+        width: 100%;
+        background: var(--input-dark);
+        border: 2px solid rgba(181, 101, 216, 0.3);
+        border-radius: 15px;
+        padding: 1.2rem 1.5rem;
+        color: var(--pure-white); /* White only for input text */
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+
+    .form-control-obsidian:focus {
+        outline: none;
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 20px rgba(255, 110, 199, 0.2);
+        background: rgba(26, 15, 27, 0.9);
+    }
+
+    .form-control-obsidian::placeholder {
+        color: rgba(230, 213, 245, 0.3);
+    }
+
+    /* Action Buttons */
+    .form-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .btn-action {
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: 0.3s;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: var(--accent-violet);
+        color: var(--pure-white);
+        box-shadow: 0 5px 15px rgba(181, 101, 216, 0.3);
+    }
+
+    .btn-submit:hover {
+        background: var(--accent-pink);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 110, 199, 0.4);
+    }
+
+    .btn-ban {
+        background: rgba(255, 71, 87, 0.1);
+        border: 1px solid var(--accent-red);
+        color: var(--accent-red);
+    }
+
+    .btn-ban:hover {
+        background: var(--accent-red);
+        color: var(--pure-white);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+    }
+
+    @media (max-width: 500px) {
+        .form-actions { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="glass-form-container">
+        <div class="form-header">
+            <i class="fa fa-anchor"></i>
+            <h3>Registration Check</h3>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="input-box">
+                <label for="registerNumber">Boat Registry Number</label>
+                <input
+                    type="text"
+                    class="form-control-obsidian"
+                    id="registerNumber"
+                    name="name"
+                    placeholder="E.g. IND-KL-01-9922"
+                    required
+                >
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-action btn-submit">
+                    <i class="fa fa-check-circle"></i> Submit
+                </button>
+                <a href="#" class="btn-action btn-ban" onclick="return confirm('Are you sure you want to proceed with the ban?')">
+                    <i class="fa fa-ban"></i> Ban
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

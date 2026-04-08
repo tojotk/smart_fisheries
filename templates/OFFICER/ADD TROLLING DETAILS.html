@@ -1,0 +1,709 @@
+{#{% extends 'OFFICER/officer_home.html' %}#}
+{#{% block body %}#}
+{#<body>#}
+{#  <div class="container mt-5">#}
+{#    <div class="row justify-content-center">#}
+{#      <div class="col-md-6">#}
+{##}
+{#        <div class="card shadow">#}
+{#          <div class="card-header text-center bg-primary text-white">#}
+{#            <h5>Fishing Area Entry</h5>#}
+{#          </div>#}
+{##}
+{#          <div class="card-body">#}
+{#            <form method="post" action="/myapp/add_trolling_post">#}
+{#              {% csrf_token %}#}
+{##}
+{#              <div class="mb-3">#}
+{#                <label for="fishingArea" class="form-label">Fishing Area</label>#}
+{#                <input type="text" class="form-control" id="fishingArea" name="name" placeholder="Enter fishing area">#}
+{#              </div>#}
+{##}
+{#              <div class="mb-3">#}
+{#                <label for="startDate" class="form-label">Start Date</label>#}
+{#                <input type="date" class="form-control" id="startDate" name="sdate">#}
+{#              </div>#}
+{##}
+{#              <div class="mb-3">#}
+{#                <label for="endDate" class="form-label">End Date</label>#}
+{#                <input type="date" class="form-control" id="endDate" name="edate">#}
+{#              </div>#}
+{##}
+{#              <div class="mb-3">#}
+{#                <label for="remarks" class="form-label">Remarks</label>#}
+{#                <input type="text" class="form-control" id="remarks" name="remark" placeholder="Enter remarks">#}
+{#              </div>#}
+{##}
+{#              <div class="d-grid gap-2">#}
+{#                <button type="submit" class="btn btn-success">Submit</button>#}
+{#                <a href="#" class="btn btn-secondary">Add</a>#}
+{#              </div>#}
+{#            </form>#}
+{#          </div>#}
+{##}
+{#        </div>#}
+{##}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</body>#}
+{#{% endblock %}#}
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+<style>
+    :root {
+        --obsidian-dark: #2d1e2f;
+        --obsidian-plum: #4e2a4f;
+        --plum-light: #6b3d6b;
+        --plum-bright: #8e4a8e;
+        --accent-violet: #b565d8;
+        --accent-lavender: #e6d5f5;
+        --accent-pink: #ff6ec7;
+        --glow-purple: rgba(181, 101, 216, 0.4);
+    }
+
+    .fishing-area-section {
+        padding: 3rem 0;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Animated background particles */
+    .fishing-area-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            radial-gradient(2px 2px at 15% 25%, var(--accent-violet), transparent),
+            radial-gradient(2px 2px at 65% 75%, var(--accent-pink), transparent),
+            radial-gradient(1px 1px at 45% 55%, var(--accent-lavender), transparent),
+            radial-gradient(1px 1px at 85% 15%, var(--accent-violet), transparent),
+            radial-gradient(2px 2px at 25% 85%, var(--accent-pink), transparent);
+        background-size: 300% 300%;
+        animation: particleMove 25s ease-in-out infinite;
+        pointer-events: none;
+        opacity: 0.3;
+        z-index: 0;
+    }
+
+    @keyframes particleMove {
+        0%, 100% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+    }
+
+    .form-card {
+        background: linear-gradient(135deg, rgba(45, 30, 47, 0.92) 0%, rgba(35, 20, 37, 0.96) 100%);
+        backdrop-filter: blur(30px);
+        border-radius: 28px;
+        border: 2px solid rgba(181, 101, 216, 0.45);
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.7),
+            0 0 120px rgba(181, 101, 216, 0.25),
+            inset 0 1px 0 rgba(181, 101, 216, 0.25);
+        padding: 3.5rem;
+        max-width: 700px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+
+    .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--accent-violet), var(--accent-pink), var(--accent-violet));
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+        box-shadow: 0 0 25px var(--glow-purple);
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    .form-card:hover {
+        transform: translateY(-10px) scale(1.01);
+        box-shadow:
+            0 25px 70px rgba(0, 0, 0, 0.8),
+            0 0 150px rgba(181, 101, 216, 0.35),
+            inset 0 1px 0 rgba(181, 101, 216, 0.35);
+        border-color: rgba(255, 110, 199, 0.5);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2.8rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .form-header i {
+        font-size: 4rem;
+        color: var(--accent-violet);
+        margin-bottom: 1.2rem;
+        display: block;
+        animation: iconPulse 2.5s ease-in-out infinite;
+        filter: drop-shadow(0 0 25px var(--glow-purple));
+    }
+
+    @keyframes iconPulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            filter: drop-shadow(0 0 25px var(--glow-purple));
+        }
+        50% {
+            opacity: 0.9;
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 35px rgba(255, 110, 199, 0.7));
+        }
+    }
+
+    .form-header h3 {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow:
+            0 0 25px var(--glow-purple),
+            0 5px 20px rgba(0, 0, 0, 0.7);
+        animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+        0%, 100% {
+            text-shadow:
+                0 0 25px var(--glow-purple),
+                0 5px 20px rgba(0, 0, 0, 0.7);
+        }
+        50% {
+            text-shadow:
+                0 0 35px rgba(255, 110, 199, 0.6),
+                0 5px 25px rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    .form-header p {
+        color: #e6d5f5;
+        opacity: 0.95;
+        font-size: 1.08rem;
+        letter-spacing: 0.8px;
+        font-weight: 500;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+        position: relative;
+        animation: slideUp 0.6s ease backwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.15s; }
+    .form-group:nth-child(2) { animation-delay: 0.25s; }
+    .form-group:nth-child(3) { animation-delay: 0.35s; }
+    .form-group:nth-child(4) { animation-delay: 0.45s; }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        text-shadow: 0 2px 10px rgba(181, 101, 216, 0.5);
+    }
+
+    .form-group label i {
+        font-size: 1.2rem;
+        color: var(--accent-pink);
+        filter: drop-shadow(0 0 10px rgba(255, 110, 199, 0.7));
+    }
+
+    .form-control-custom {
+        width: 100%;
+        padding: 1.15rem 1.5rem;
+        background: rgba(255, 255, 255, 0.96);
+        border: 2px solid rgba(181, 101, 216, 0.35);
+        border-radius: 16px;
+        color: var(--obsidian-dark);
+        font-size: 1.05rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.25),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control-custom::placeholder {
+        color: rgba(45, 30, 47, 0.4);
+        font-weight: 500;
+    }
+
+    .form-control-custom:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 1);
+        border-color: var(--accent-violet);
+        box-shadow:
+            0 0 0 5px rgba(181, 101, 216, 0.3),
+            0 8px 25px rgba(181, 101, 216, 0.35),
+            inset 0 2px 0 rgba(255, 255, 255, 1);
+        transform: translateY(-3px) scale(1.01);
+        animation: inputGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes inputGlow {
+        0%, 100% {
+            border-color: var(--accent-violet);
+        }
+        50% {
+            border-color: var(--accent-pink);
+        }
+    }
+
+    /* Date input styling */
+    .form-control-custom[type="date"] {
+        color-scheme: light;
+        cursor: pointer;
+    }
+
+    .form-control-custom[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0.3) sepia(1) hue-rotate(250deg) saturate(4);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control-custom[type="date"]::-webkit-calendar-picker-indicator:hover {
+        background: rgba(181, 101, 216, 0.2);
+        transform: scale(1.1);
+    }
+
+    .button-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin-top: 2.8rem;
+        animation: slideUp 0.6s ease 0.55s backwards;
+    }
+
+    .btn-custom {
+        padding: 1.35rem;
+        border: none;
+        border-radius: 16px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-pink) 100%);
+        color: #ffffff;
+        box-shadow:
+            0 6px 30px var(--glow-purple),
+            inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        grid-column: 1 / -1;
+    }
+
+    .btn-submit::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.35);
+        transform: translate(-50%, -50%);
+        transition: width 0.7s, height 0.7s;
+    }
+
+    .btn-submit:hover::before {
+        width: 450px;
+        height: 450px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow:
+            0 12px 40px var(--glow-purple),
+            0 0 60px rgba(255, 110, 199, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.45);
+        background: linear-gradient(135deg, var(--plum-bright) 0%, var(--accent-violet) 100%);
+    }
+
+    .btn-submit:active {
+        transform: translateY(-2px) scale(1.01);
+    }
+
+    .btn-submit span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-add {
+        background: linear-gradient(135deg, rgba(78, 42, 79, 0.6), rgba(107, 61, 107, 0.5));
+        color: #ffffff;
+        border: 2px solid rgba(181, 101, 216, 0.5);
+        grid-column: 1 / -1;
+        margin-top: 0.5rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-add:hover {
+        background: linear-gradient(135deg, rgba(107, 61, 107, 0.8), rgba(142, 74, 142, 0.7));
+        transform: translateY(-3px) scale(1.02);
+        box-shadow:
+            0 6px 20px rgba(181, 101, 216, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-color: var(--accent-violet);
+    }
+
+    .btn-custom i {
+        font-size: 1.35rem;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+    }
+
+    /* Date range indicator */
+    .date-range-info {
+        background: linear-gradient(135deg, rgba(181, 101, 216, 0.2), rgba(255, 110, 199, 0.15));
+        border-left: 5px solid var(--accent-violet);
+        padding: 1.2rem 1.5rem;
+        border-radius: 12px;
+        margin: 1.8rem 0;
+        color: #ffffff;
+        font-size: 1rem;
+        display: none;
+        box-shadow:
+            0 5px 20px rgba(181, 101, 216, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .date-range-info i {
+        margin-right: 0.6rem;
+        color: var(--accent-pink);
+        filter: drop-shadow(0 0 8px rgba(255, 110, 199, 0.6));
+    }
+
+    .date-range-info strong {
+        color: var(--accent-lavender);
+        text-shadow: 0 2px 8px rgba(181, 101, 216, 0.4);
+    }
+
+    .date-range-info.active {
+        display: block;
+        animation: fadeInSlide 0.5s ease;
+    }
+
+    @keyframes fadeInSlide {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Decorative elements */
+    .form-card::after {
+        content: '🎣';
+        position: absolute;
+        font-size: 12rem;
+        opacity: 0.07;
+        right: -3rem;
+        bottom: -3rem;
+        pointer-events: none;
+        animation: float 8s ease-in-out infinite;
+        filter: drop-shadow(0 0 40px var(--glow-purple));
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.07;
+        }
+        50% {
+            transform: translateY(-30px) rotate(15deg);
+            opacity: 0.12;
+        }
+    }
+
+    /* Loading state */
+    .btn-submit.loading {
+        pointer-events: none;
+        opacity: 0.85;
+    }
+
+    .btn-submit.loading i {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Rotating background gradient */
+    .form-card {
+        animation: cardFloat 10s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+        0%, 100% {
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.7),
+                0 0 120px rgba(181, 101, 216, 0.25),
+                inset 0 1px 0 rgba(181, 101, 216, 0.25);
+        }
+        50% {
+            box-shadow:
+                0 22px 65px rgba(0, 0, 0, 0.75),
+                0 0 140px rgba(255, 110, 199, 0.3),
+                inset 0 1px 0 rgba(255, 110, 199, 0.25);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-card {
+            padding: 2.5rem 1.8rem;
+            margin: 1rem;
+        }
+
+        .form-header h3 {
+            font-size: 1.8rem;
+        }
+
+        .form-header i {
+            font-size: 3.2rem;
+        }
+
+        .button-group {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-custom {
+            padding: 1.15rem;
+            font-size: 1rem;
+        }
+
+        .form-control-custom {
+            padding: 1rem 1.3rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="fishing-area-section">
+    <div class="form-card">
+        <div class="form-header">
+            <i class="fa fa-map-marker"></i>
+            <h3>Fishing Area Entry</h3>
+            <p>Define restricted fishing zones and ban periods</p>
+        </div>
+
+        <form method="post" action="/myapp/add_trolling_post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="fishingArea">
+                    <i class="fa fa-location-arrow"></i>
+                    Fishing Area
+                </label>
+                <input
+                    type="text"
+                    class="form-control-custom"
+                    id="fishingArea"
+                    name="name"
+                    placeholder="Enter fishing area name or coordinates"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">
+                    <i class="fa fa-calendar-check-o"></i>
+                    Start Date
+                </label>
+                <input
+                    type="date"
+                    class="form-control-custom"
+                    id="startDate"
+                    name="sdate"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">
+                    <i class="fa fa-calendar-times-o"></i>
+                    End Date
+                </label>
+                <input
+                    type="date"
+                    class="form-control-custom"
+                    id="endDate"
+                    name="edate"
+                    required
+                >
+            </div>
+
+            <div class="date-range-info" id="dateRangeInfo">
+                <i class="fa fa-info-circle"></i>
+                <strong>Duration:</strong> <span id="durationText"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="remarks">
+                    <i class="fa fa-comment-o"></i>
+                    Remarks
+                </label>
+                <input
+                    type="text"
+                    class="form-control-custom"
+                    id="remarks"
+                    name="remark"
+                    placeholder="Additional notes or restrictions"
+                    required
+                >
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-custom btn-submit">
+                    <span>
+                        <i class="fa fa-check-circle"></i>
+                        Submit Entry
+                    </span>
+                </button>
+                <a href="#" class="btn-custom btn-add">
+                    <i class="fa fa-plus-circle"></i>
+                    Add Another
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Calculate and display date range duration
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const dateRangeInfo = document.getElementById('dateRangeInfo');
+    const durationText = document.getElementById('durationText');
+
+    function calculateDuration() {
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (startDateInput.value && endDateInput.value) {
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays >= 0) {
+                durationText.textContent = `${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+                dateRangeInfo.classList.add('active');
+            } else {
+                dateRangeInfo.classList.remove('active');
+            }
+        } else {
+            dateRangeInfo.classList.remove('active');
+        }
+    }
+
+    startDateInput.addEventListener('change', calculateDuration);
+    endDateInput.addEventListener('change', calculateDuration);
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    startDateInput.setAttribute('min', today);
+
+    // Update end date minimum when start date changes
+    startDateInput.addEventListener('change', function() {
+        endDateInput.setAttribute('min', this.value);
+    });
+
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (endDate < startDate) {
+            e.preventDefault();
+            alert('End date must be after start date.');
+            return;
+        }
+
+        // Add loading animation to button
+        const btn = document.querySelector('.btn-submit');
+        btn.classList.add('loading');
+        btn.innerHTML = '<span><i class="fa fa-spinner fa-spin"></i> Submitting...</span>';
+    });
+
+    // Add subtle animation to inputs
+    const inputs = document.querySelectorAll('.form-control-custom');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.01)';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+</script>
+
+{% endblock %}

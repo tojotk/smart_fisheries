@@ -1,0 +1,718 @@
+{#{% extends 'BOAT OWNER/owner_home.html' %}#}
+{#{% block body %}#}
+{#<div class="container my-5">#}
+{#    <h4 class="text-center mb-4">Boat Monitoring Status</h4>#}
+{#    <div class="table-responsive">#}
+{#        <table class="table table-bordered table-hover align-middle text-center">#}
+{#            <thead class="table-dark">#}
+{#                <tr>#}
+{#                    <th>Boat Reg</th>#}
+{#                    <th>Date</th>#}
+{#                    <th>Time</th>#}
+{#                    <th>Image</th>#}
+{#                    <th>Status</th>#}
+{#                </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#                {% for i in val %}#}
+{#                    <tr>#}
+{#                        <td>{{ i.boat.regno }}</td>#}
+{#                        <td>{{ i.monitor.date }}</td>#}
+{#                        <td>{{ i.monitor.time }}</td>#}
+{#                        <td>#}
+{#                            {% if i.monitor.image %}#}
+{#                                <img src="{{ i.monitor.image.url }}" alt="Monitor Image" class="img-thumbnail" style="max-height: 100px; max-width: 100px;">#}
+{#                            {% else %}#}
+{#                                <span class="text-muted">No Image</span>#}
+{#                            {% endif %}#}
+{#                        </td>#}
+{#                        <td>#}
+{#                            <span class="badge bg-secondary">{{ i.status }}</span>#}
+{#                        </td>#}
+{#                    </tr>#}
+{#                {% empty %}#}
+{#                    <tr>#}
+{#                        <td colspan="5" class="text-muted">No records found.</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </tbody>#}
+{#        </table>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% extends 'BOAT OWNER/owner_home.html' %}#}
+{#{% block body %}#}
+{#<style>#}
+{#    .monitoring-section {#}
+{#        padding: 3rem 0;#}
+{#        min-height: calc(100vh - 200px);#}
+{#    }#}
+{##}
+{#    .page-header {#}
+{#        text-align: center;#}
+{#        margin-bottom: 3rem;#}
+{#    }#}
+{##}
+{#    .page-header h4 {#}
+{#        font-size: 2.5rem;#}
+{#        font-weight: 700;#}
+{#        background: linear-gradient(135deg, #10b981, #34d399);#}
+{#        -webkit-background-clip: text;#}
+{#        -webkit-text-fill-color: transparent;#}
+{#        margin-bottom: 0.5rem;#}
+{#    }#}
+{##}
+{#    .page-header .subtitle {#}
+{#        color: rgba(255, 255, 255, 0.6);#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    .table-card {#}
+{#        background: rgba(15, 32, 39, 0.8);#}
+{#        backdrop-filter: blur(20px);#}
+{#        border-radius: 20px;#}
+{#        border: 1px solid rgba(16, 185, 129, 0.3);#}
+{#        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);#}
+{#        overflow: hidden;#}
+{#        padding: 2rem;#}
+{#    }#}
+{##}
+{#    .table-responsive {#}
+{#        border-radius: 12px;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .custom-table {#}
+{#        margin: 0;#}
+{#        background: transparent;#}
+{#    }#}
+{##}
+{#    .custom-table thead {#}
+{#        background: linear-gradient(135deg, #10b981, #059669) !important;#}
+{#        position: sticky;#}
+{#        top: 0;#}
+{#        z-index: 10;#}
+{#    }#}
+{##}
+{#    .custom-table thead th {#}
+{#        color: white !important;#}
+{#        font-weight: 600;#}
+{#        text-transform: uppercase;#}
+{#        letter-spacing: 1px;#}
+{#        padding: 1.2rem 1rem;#}
+{#        border: none !important;#}
+{#        font-size: 0.9rem;#}
+{#        background: transparent !important;#}
+{#    }#}
+{##}
+{#    .custom-table thead tr {#}
+{#        background: transparent !important;#}
+{#    }#}
+{##}
+{#    .custom-table tbody tr {#}
+{#        background: rgba(255, 255, 255, 0.03) !important;#}
+{#        border-bottom: 1px solid rgba(16, 185, 129, 0.1) !important;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .custom-table tbody tr:hover {#}
+{#        background: rgba(16, 185, 129, 0.1) !important;#}
+{#        transform: scale(1.01);#}
+{#        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);#}
+{#    }#}
+{##}
+{#    .custom-table tbody td {#}
+{#        color: rgba(255, 255, 255, 0.9) !important;#}
+{#        padding: 1.2rem 1rem;#}
+{#        vertical-align: middle;#}
+{#        border: none !important;#}
+{#        background: transparent !important;#}
+{#    }#}
+{##}
+{#    .boat-reg {#}
+{#        color: #10b981 !important;#}
+{#        font-weight: 700;#}
+{#        font-size: 1.05rem;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 0.5rem;#}
+{#    }#}
+{##}
+{#    .boat-reg i {#}
+{#        font-size: 1.2rem;#}
+{#    }#}
+{##}
+{#    .date-cell {#}
+{#        color: #34d399 !important;#}
+{#        font-weight: 600;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 0.5rem;#}
+{#    }#}
+{##}
+{#    .date-cell i {#}
+{#        font-size: 1rem;#}
+{#    }#}
+{##}
+{#    .time-cell {#}
+{#        color: #6ee7b7 !important;#}
+{#        font-weight: 600;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 0.5rem;#}
+{#    }#}
+{##}
+{#    .time-cell i {#}
+{#        font-size: 1rem;#}
+{#    }#}
+{##}
+{#    .image-container {#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .monitor-image {#}
+{#        max-height: 90px;#}
+{#        max-width: 90px;#}
+{#        border-radius: 12px;#}
+{#        border: 2px solid rgba(16, 185, 129, 0.3);#}
+{#        transition: all 0.3s ease;#}
+{#        cursor: pointer;#}
+{#        object-fit: cover;#}
+{#    }#}
+{##}
+{#    .monitor-image:hover {#}
+{#        transform: scale(1.1);#}
+{#        border-color: #10b981;#}
+{#        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5);#}
+{#    }#}
+{##}
+{#    .no-image {#}
+{#        color: rgba(255, 255, 255, 0.4) !important;#}
+{#        font-style: italic;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 0.5rem;#}
+{#    }#}
+{##}
+{#    .status-badge {#}
+{#        padding: 0.5rem 1.2rem;#}
+{#        border-radius: 20px;#}
+{#        font-weight: 600;#}
+{#        font-size: 0.85rem;#}
+{#        text-transform: uppercase;#}
+{#        letter-spacing: 0.5px;#}
+{#        display: inline-flex;#}
+{#        align-items: center;#}
+{#        gap: 0.5rem;#}
+{#    }#}
+{##}
+{#    .status-active {#}
+{#        background: linear-gradient(135deg, #10b981, #059669);#}
+{#        color: white;#}
+{#        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);#}
+{#    }#}
+{##}
+{#    .status-inactive {#}
+{#        background: linear-gradient(135deg, #ef4444, #dc2626);#}
+{#        color: white;#}
+{#        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);#}
+{#    }#}
+{##}
+{#    .status-warning {#}
+{#        background: linear-gradient(135deg, #f59e0b, #d97706);#}
+{#        color: white;#}
+{#        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);#}
+{#    }#}
+{##}
+{#    .status-default {#}
+{#        background: rgba(255, 255, 255, 0.1);#}
+{#        color: rgba(255, 255, 255, 0.8);#}
+{#        border: 1px solid rgba(255, 255, 255, 0.2);#}
+{#    }#}
+{##}
+{#    .empty-state {#}
+{#        padding: 4rem 2rem;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .empty-state i {#}
+{#        font-size: 4rem;#}
+{#        color: rgba(16, 185, 129, 0.3);#}
+{#        margin-bottom: 1rem;#}
+{#    }#}
+{##}
+{#    .empty-state h5 {#}
+{#        color: rgba(255, 255, 255, 0.6);#}
+{#        font-size: 1.3rem;#}
+{#        margin-bottom: 0.5rem;#}
+{#    }#}
+{##}
+{#    .empty-state p {#}
+{#        color: rgba(255, 255, 255, 0.4);#}
+{#        font-size: 1rem;#}
+{#    }#}
+{##}
+{#    /* Image Modal */#}
+{#    .image-modal {#}
+{#        display: none;#}
+{#        position: fixed;#}
+{#        z-index: 9999;#}
+{#        left: 0;#}
+{#        top: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: rgba(0, 0, 0, 0.9);#}
+{#        backdrop-filter: blur(10px);#}
+{#        justify-content: center;#}
+{#        align-items: center;#}
+{#    }#}
+{##}
+{#    .image-modal.active {#}
+{#        display: flex;#}
+{#    }#}
+{##}
+{#    .modal-content-img {#}
+{#        max-width: 90%;#}
+{#        max-height: 90%;#}
+{#        border-radius: 12px;#}
+{#        box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);#}
+{#        border: 2px solid #10b981;#}
+{#    }#}
+{##}
+{#    .modal-close {#}
+{#        position: absolute;#}
+{#        top: 2rem;#}
+{#        right: 2rem;#}
+{#        font-size: 2rem;#}
+{#        color: white;#}
+{#        cursor: pointer;#}
+{#        background: rgba(16, 185, 129, 0.2);#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .modal-close:hover {#}
+{#        background: rgba(16, 185, 129, 0.4);#}
+{#        transform: rotate(90deg);#}
+{#    }#}
+{##}
+{#    @media (max-width: 768px) {#}
+{#        .page-header h4 {#}
+{#            font-size: 2rem;#}
+{#        }#}
+{##}
+{#        .table-card {#}
+{#            padding: 1rem;#}
+{#        }#}
+{##}
+{#        .custom-table thead th,#}
+{#        .custom-table tbody td {#}
+{#            padding: 0.8rem 0.5rem;#}
+{#            font-size: 0.85rem;#}
+{#        }#}
+{##}
+{#        .monitor-image {#}
+{#            max-height: 60px;#}
+{#            max-width: 60px;#}
+{#        }#}
+{##}
+{#        .boat-reg,#}
+{#        .date-cell,#}
+{#        .time-cell {#}
+{#            font-size: 0.9rem;#}
+{#        }#}
+{#    }#}
+{#</style>#}
+{##}
+{#<div class="monitoring-section">#}
+{#    <div class="container">#}
+{#        <div class="page-header">#}
+{#            <h4><i class="fas fa-chart-line"></i> Boat Monitoring Status</h4>#}
+{#            <p class="subtitle">Real-time tracking and surveillance data</p>#}
+{#        </div>#}
+{##}
+{#        <div class="table-card">#}
+{#            <div class="table-responsive">#}
+{#                <table class="table custom-table">#}
+{#                    <thead>#}
+{#                        <tr>#}
+{#                            <th><i class="fas fa-ship"></i>id</th>#}
+{#                            <th><i class="far fa-calendar-alt"></i> date</th>#}
+{#                            <th><i class="far fa-clock"></i> Time</th>#}
+{#                            <th><i class="far fa-image"></i> latitude</th>#}
+{#                            <th><i class="fas fa-info-circle"></i>longitude</th>#}
+{#                            <th><i class="fas fa-info-circle"></i>boat id</th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                        {% for i in val %}#}
+{#                            <tr>#}
+{#                                <td>#}
+{#                                    <div class="boat-reg">#}
+{#                                        <i class="fas fa-anchor"></i>#}
+{#                                        {{ i.boat.regno }}#}
+{#                                    </div>#}
+{#                                </td>#}
+{#                                <td>#}
+{#                                    <div class="date-cell">#}
+{#                                        <i class="far fa-calendar-check"></i>#}
+{#                                        {{ i.monitor.date }}#}
+{#                                    </div>#}
+{#                                </td>#}
+{#                                <td>#}
+{#                                    <div class="time-cell">#}
+{#                                        <i class="far fa-clock"></i>#}
+{#                                        {{ i.monitor.time }}#}
+{#                                    </div>#}
+{#                                </td>#}
+{#                                <td>#}
+{#                                    {% if i.monitor.image %}#}
+{#                                        <div class="image-container">#}
+{#                                            <img#}
+{#                                                src="{{ i.monitor.image.url }}"#}
+{#                                                alt="Monitor Image"#}
+{#                                                class="monitor-image"#}
+{#                                                onclick="openImageModal(this.src)"#}
+{#                                            >#}
+{#                                        </div>#}
+{#                                    {% else %}#}
+{#                                        <div class="no-image">#}
+{#                                            <i class="far fa-image"></i>#}
+{#                                            No Image#}
+{#                                        </div>#}
+{#                                    {% endif %}#}
+{#                                </td>#}
+{#                                <td>#}
+{#                                    {% if i.status %}#}
+{#                                        {% if 'active' in i.status|lower or 'approved' in i.status|lower or 'safe' in i.status|lower %}#}
+{#                                            <span class="status-badge status-active">#}
+{#                                                <i class="fas fa-check-circle"></i>#}
+{#                                                {{ i.status }}#}
+{#                                            </span>#}
+{#                                        {% elif 'warning' in i.status|lower or 'alert' in i.status|lower or 'pending' in i.status|lower %}#}
+{#                                            <span class="status-badge status-warning">#}
+{#                                                <i class="fas fa-exclamation-triangle"></i>#}
+{#                                                {{ i.status }}#}
+{#                                            </span>#}
+{#                                        {% elif 'inactive' in i.status|lower or 'violation' in i.status|lower or 'banned' in i.status|lower %}#}
+{#                                            <span class="status-badge status-inactive">#}
+{#                                                <i class="fas fa-times-circle"></i>#}
+{#                                                {{ i.status }}#}
+{#                                            </span>#}
+{#                                        {% else %}#}
+{#                                            <span class="status-badge status-default">#}
+{#                                                <i class="fas fa-info-circle"></i>#}
+{#                                                {{ i.status }}#}
+{#                                            </span>#}
+{#                                        {% endif %}#}
+{#                                    {% else %}#}
+{#                                        <span class="status-badge status-default">#}
+{#                                            <i class="fas fa-question-circle"></i>#}
+{#                                            Unknown#}
+{#                                        </span>#}
+{#                                    {% endif %}#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                        {% empty %}#}
+{#                            <tr>#}
+{#                                <td colspan="5">#}
+{#                                    <div class="empty-state">#}
+{#                                        <i class="fas fa-satellite-dish"></i>#}
+{#                                        <h5>No Monitoring Data</h5>#}
+{#                                        <p>There are no boat monitoring records available at this time</p>#}
+{#                                    </div>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<!-- Image Modal -->#}
+{#<div class="image-modal" id="imageModal" onclick="closeImageModal()">#}
+{#    <span class="modal-close">#}
+{#        <i class="fas fa-times"></i>#}
+{#    </span>#}
+{#    <img class="modal-content-img" id="modalImage" src="" alt="Full Image">#}
+{#</div>#}
+{##}
+{#<script>#}
+{#    function openImageModal(src) {#}
+{#        const modal = document.getElementById('imageModal');#}
+{#        const modalImg = document.getElementById('modalImage');#}
+{#        modal.classList.add('active');#}
+{#        modalImg.src = src;#}
+{#        document.body.style.overflow = 'hidden';#}
+{#    }#}
+{##}
+{#    function closeImageModal() {#}
+{#        const modal = document.getElementById('imageModal');#}
+{#        modal.classList.remove('active');#}
+{#        document.body.style.overflow = 'auto';#}
+{#    }#}
+{##}
+{#    // Close modal on Escape key#}
+{#    document.addEventListener('keydown', function(event) {#}
+{#        if (event.key === 'Escape') {#}
+{#            closeImageModal();#}
+{#        }#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+    /* Formal Deep Teal Silk Surveillance Styling */
+    .monitoring-section {
+        padding: 2rem 0;
+        min-height: calc(100vh - 200px);
+    }
+
+    .monitoring-header {
+        margin-bottom: 2rem;
+        border-left: 4px solid #2dd4bf;
+        padding-left: 1.5rem;
+    }
+
+    .monitoring-title {
+        font-family: 'Raleway', sans-serif;
+        color: #ffffff;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .monitoring-subtitle {
+        color: #2dd4bf;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 5px;
+    }
+
+    .table-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .custom-table thead {
+        background: rgba(45, 212, 191, 0.1);
+    }
+
+    .custom-table thead th {
+        padding: 1.2rem;
+        color: #2dd4bf;
+        font-weight: 600;
+        text-align: center;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    .custom-table tbody td {
+        padding: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
+        border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+        text-align: center;
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(45, 212, 191, 0.05);
+    }
+
+    /* Column Specifics */
+    .registry-id {
+        color: #ffffff;
+        font-weight: 700;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .monitor-thumb {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .monitor-thumb:hover {
+        border-color: #2dd4bf;
+        filter: brightness(1.2);
+    }
+
+    /* Formal Status Badges */
+    .status-badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: inline-block;
+        border: 1px solid transparent;
+    }
+
+    .status-active { background: rgba(45, 212, 191, 0.1); color: #2dd4bf; border-color: rgba(45, 212, 191, 0.3); }
+    .status-warning { background: rgba(234, 179, 8, 0.1); color: #eab308; border-color: rgba(234, 179, 8, 0.3); }
+    .status-alert { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+
+    /* Modal Overlay */
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(11, 48, 55, 0.95);
+        backdrop-filter: blur(10px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-modal.active { display: flex; }
+
+    .modal-content-img {
+        max-width: 85%;
+        max-height: 85%;
+        border: 1px solid #2dd4bf;
+        border-radius: 4px;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        color: #2dd4bf;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .table-card { border-radius: 0; }
+    }
+</style>
+
+<div class="monitoring-section">
+    <div class="container">
+        <div class="monitoring-header">
+            <h2 class="monitoring-title">Surveillance Monitor</h2>
+            <p class="monitoring-subtitle">Live Vessel Status & Registry Inspection</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Registry ID</th>
+                            <th>Capture Date</th>
+                            <th>Timestamp</th>
+                            <th>Visual Feed</th>
+                            <th>Vessel Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in val %}
+                            <tr>
+                                <td class="registry-id">
+                                    {{ i.boat.regno }}
+                                </td>
+                                <td>{{ i.monitor.date }}</td>
+                                <td>{{ i.monitor.time }}</td>
+                                <td>
+                                    {% if i.monitor.image %}
+                                        <img src="{{ i.monitor.image.url }}"
+                                             alt="Feed"
+                                             class="monitor-thumb"
+                                             onclick="openImageModal(this.src)">
+                                    {% else %}
+                                        <span style="opacity: 0.3; font-style: italic; font-size: 0.8rem;">No Feed</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if i.status %}
+                                        {% if 'active' in i.status|lower or 'approved' in i.status|lower or 'safe' in i.status|lower %}
+                                            <span class="status-badge status-active">Operational</span>
+                                        {% elif 'warning' in i.status|lower or 'pending' in i.status|lower %}
+                                            <span class="status-badge status-warning">Warning</span>
+                                        {% else %}
+                                            <span class="status-badge status-alert">Alert</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="status-badge" style="color: grey;">N/A</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="py-5 text-center text-muted">
+                                    <i class="fas fa-satellite fa-3x mb-3 opacity-25"></i>
+                                    <p>No active monitoring signals detected.</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="image-modal" id="imageModal" onclick="closeImageModal()">
+    <span class="modal-close"><i class="fas fa-times"></i></span>
+    <img class="modal-content-img" id="modalImage" src="" alt="Full Resolution Feed">
+</div>
+
+<script>
+    function openImageModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modal.classList.add('active');
+        modalImg.src = src;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+    /* Formal Deep Teal Silk Voyage Entry Styling */
+    .trip-container {
+        padding: 3rem 0;
+    }
+
+    .form-header {
+        margin-bottom: 2rem;
+        border-left: 4px solid #2dd4bf;
+        padding-left: 1.5rem;
+        text-align: left;
+    }
+
+    .form-title {
+        font-family: 'Raleway', sans-serif;
+        color: #ffffff;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .form-subtitle {
+        color: #2dd4bf;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 5px;
+    }
+
+    /* Formal Glass Card */
+    .command-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 8px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Label & Field Styling */
+    .field-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .field-group label {
+        color: #2dd4bf;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-wrapper i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(45, 212, 191, 0.6);
+        font-size: 1.1rem;
+    }
+
+    .form-control, .form-select {
+        background: rgba(11, 48, 55, 0.5);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 4px;
+        padding: 12px 15px 12px 45px;
+        color: white !important;
+        font-size: 0.95rem;
+        width: 100%;
+        transition: 0.3s ease-in-out;
+    }
+
+    /* Fix for date picker icon color in some browsers */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+    }
+
+    .form-control:focus, .form-select:focus {
+        outline: none;
+        border-color: #2dd4bf;
+        background: rgba(11, 48, 55, 0.8);
+        box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+    }
+
+    /* Select option styling */
+    .form-select option {
+        background: #0b3037;
+        color: white;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+        background: transparent;
+        border: 1px solid #2dd4bf;
+        color: #2dd4bf;
+        padding: 15px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+        width: 100%;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-submit:hover {
+        background: #2dd4bf;
+        color: #0b3037;
+        box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .command-card {
+            padding: 25px;
+        }
+    }
+</style>
+
+<div class="container trip-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="form-header">
+                <h2 class="form-title">Voyage Configuration</h2>
+                <p class="form-subtitle">Register or Update Trip Manifest Details</p>
+            </div>
+
+            <div class="command-card">
+                <form method="post" action="/myapp/boat_owner_edit_trip_details_post">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 field-group">
+                            <label>Departure Date</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                                <input type="date" class="form-control" name="sdate" required value="{{start_date}}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 field-group">
+                            <label>Estimated Arrival</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                <input type="date" class="form-control" name="edate" required value="{{ end_date }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Origin Port</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-anchor"></i>
+                            <input type="text" class="form-control" name="from" placeholder="Port of Departure" required value="{{ data.From }}">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Destination Port</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <input type="text" class="form-control" name="to" placeholder="Final Destination" required value="{{ data.To }}">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Voyage Status</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <select name="status" class="form-select" required>
+                                <option value="ONGOING" {% if data.status == 'ONGOING' %}selected{% endif %}>Ongoing</option>
+                                <option value="COMPLETED" {% if data.status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+                                <option value="CANCELLED" {% if data.status == 'CANCELLED' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="pt-3">
+                        <button type="submit" class="btn-submit">
+                            <i class="fa-solid fa-paper-plane"></i> Commit Voyage Data
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

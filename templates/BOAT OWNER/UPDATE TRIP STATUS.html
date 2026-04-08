@@ -1,0 +1,172 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+  /* Formal Deep Teal Status Update Styling */
+  .status-update-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+  }
+
+  .status-update-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border-radius: 8px;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    max-width: 550px;
+    width: 100%;
+  }
+
+  .card-header-status {
+    background: rgba(45, 212, 191, 0.1);
+    padding: 2.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .card-header-status h2 {
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .card-header-status p {
+    color: #2dd4bf;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.5rem;
+    font-weight: 600;
+  }
+
+  .card-header-status i {
+    font-size: 2.5rem;
+    color: #2dd4bf;
+    margin-bottom: 1rem;
+  }
+
+  .form-body-status {
+    padding: 2.5rem;
+  }
+
+  .form-label-status {
+    color: #2dd4bf;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .select-status {
+    background: rgba(11, 48, 55, 0.5);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    color: white !important;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: 0.3s;
+    cursor: pointer;
+    appearance: none; /* Custom arrow look */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232dd4bf' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 1.25rem) center;
+  }
+
+  .select-status:focus {
+    background: rgba(11, 48, 55, 0.8);
+    border-color: #2dd4bf;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+    outline: none;
+  }
+
+  .select-status option {
+    background: #0b3037;
+    color: white;
+  }
+
+  .btn-submit-status {
+    background: transparent;
+    border: 1px solid #2dd4bf;
+    color: #2dd4bf;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-submit-status:hover {
+    background: #2dd4bf;
+    color: #0b3037;
+    box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+  }
+
+  .btn-submit-status i {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .form-body-status { padding: 1.5rem; }
+    .card-header-status h2 { font-size: 1.3rem; }
+  }
+</style>
+
+<div class="status-update-container">
+  <div class="status-update-card">
+    <div class="card-header-status">
+      <i class="fa-solid fa-anchor"></i>
+      <h2>Trip Manifest Status</h2>
+      <p>Logistical Coordination</p>
+    </div>
+
+    <div class="form-body-status">
+      <form method="post" action="/myapp/boat_owner_update_trip_status_post#a">
+        {% csrf_token %}
+
+        <div class="mb-4">
+          <label for="status" class="form-label-status">
+            <i class="fa-solid fa-satellite-dish"></i>
+            Operational Status
+          </label>
+          <select name="status" id="status" class="select-status" required>
+            <option value="">-- Select Status --</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit-status">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          Update Registry
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{% endblock %}

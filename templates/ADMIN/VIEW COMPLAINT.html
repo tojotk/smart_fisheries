@@ -1,0 +1,218 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-complaints-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+  }
+
+  .sfm-complaints-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .sfm-page-header {
+    margin-bottom: 2.5rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .sfm-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sfm-page-title i {
+    color: #2dd4bf;
+  }
+
+  .sfm-table-wrapper {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .sfm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .sfm-table thead {
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 2px solid rgba(45, 212, 191, 0.3);
+  }
+
+  .sfm-table th {
+    padding: 1.2rem 1.5rem;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .sfm-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+  }
+
+  .sfm-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  .sfm-table td {
+    padding: 1.2rem 1.5rem;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    vertical-align: middle;
+  }
+
+  .sfm-complaint-msg {
+    max-width: 350px;
+    color: #cbd5e1;
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+
+  .sfm-date-badge {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sfm-action-cell {
+    text-align: right;
+  }
+
+  .sfm-btn-reply {
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sfm-btn-reply:hover {
+    background: #2dd4bf;
+    color: #141e30;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 212, 191, 0.3);
+  }
+
+  .sfm-reply-text {
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 0.9rem;
+    max-width: 250px;
+    display: inline-block;
+  }
+
+  .sfm-empty {
+    text-align: center;
+    padding: 4rem !important;
+    color: #64748b;
+  }
+
+  @media (max-width: 992px) {
+    .sfm-table-wrapper { overflow-x: auto; }
+    .sfm-table { min-width: 900px; }
+  }
+</style>
+
+<div class="sfm-complaints-section">
+  <div class="sfm-complaints-container">
+
+    <div class="sfm-page-header">
+      <h2 class="sfm-page-title">
+        <i class="fa-solid fa-headset"></i>
+        Grievance Registry
+      </h2>
+    </div>
+
+    <div class="sfm-table-wrapper">
+      <table class="sfm-table">
+        <thead>
+          <tr>
+            <th>Vessel Owner</th>
+            <th>Grievance Details</th>
+            <th>Submission Date</th>
+            <th class="text-end">Resolution / Reply</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            <td>
+              <div class="fw-bold text-white">{{ item.owner.name }}</div>
+              <small class="text-muted">ID: #{{ item.id }}</small>
+            </td>
+            <td>
+              <div class="sfm-complaint-msg">
+                {{ item.complaint }}
+              </div>
+            </td>
+            <td>
+              <div class="sfm-date-badge">
+                <i class="fa-regular fa-calendar-check"></i> {{ item.date }}
+              </div>
+            </td>
+            <td class="sfm-action-cell">
+              {% if item.reply == 'pending' %}
+                <a href="/myapp/admin_sent_reply/{{ item.id }}" class="sfm-btn-reply">
+                  <i class="fa-solid fa-reply-all"></i> Dispatch Reply
+                </a>
+              {% else %}
+                <span class="sfm-reply-text">
+                  <i class="fa-solid fa-check-double text-cyan me-1"></i> {{ item.reply }}
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="sfm-empty">
+              <i class="fa-solid fa-envelope-open text-muted d-block mb-3" style="font-size: 3rem; opacity: 0.2;"></i>
+              No active complaints found in the registry.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

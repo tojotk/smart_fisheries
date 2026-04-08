@@ -1,0 +1,966 @@
+{##}
+{##}
+{#  <head>#}
+{##}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <meta name="description" content="">#}
+{#    <meta name="author" content="">#}
+{##}
+{#    <title>Smart Fisheries</title>#}
+{##}
+{#    <!-- Bootstrap core CSS -->#}
+{#    <link href="/static/officer/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">#}
+{##}
+{#    <!-- Custom fonts for this template -->#}
+{#    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/devicons/css/devicons.min.css" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">#}
+{##}
+{#    <!-- Custom styles for this template -->#}
+{#    <link href="/static/officer/css/resume.min.css" rel="stylesheet">#}
+{##}
+{#  </head>#}
+{##}
+{#  <body id="page-top">#}
+{##}
+{#    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">#}
+{#      <a class="navbar-brand js-scroll-trigger" href="#page-top">#}
+{#        <span class="d-block d-lg-none">FISHERIES</span>#}
+{#        <span class="d-none d-lg-block">#}
+{#          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/static/login/images/logo.jpg" alt="">#}
+{#        </span>#}
+{#      </a>#}
+{#      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
+{#        <span class="navbar-toggler-icon"></span>#}
+{#      </button>#}
+{#      <div class="collapse navbar-collapse" id="navbarSupportedContent">#}
+{#        <ul class="navbar-nav">#}
+{#             <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="#">Home </a>#}
+{#          </li>#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_profile#a">Profile</a>#}
+{#          </li>#}
+{##}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_trolling_details_officer#a"> View Trolling Details</a>#}
+{#          </li>#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_ban_boat#a">Ban Boat</a>#}
+{#          </li> <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_baned_boat#a">View Ban Boat</a>#}
+{#          </li>#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_trip_details#a">Trip Details</a>#}
+{#          </li>#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="officer_view_monitoring_details#a">Illegal Montoring</a>#}
+{#          </li>#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_boat_verify#a">Verification</a>#}
+{#          </li>#}
+{#            <li class="nav-item">#}
+{#            <a class="nav-link js-scroll-trigger" href="/myapp/officer_manage_tips#a">Safety Tips</a>#}
+{#          </li>#}
+{#            <li class="nav-item">#}
+{#            <a class="btn btn-dark" href="/myapp/login#a">LOGOUT</a>#}
+{#          </li>#}
+{##}
+{##}
+{#        </ul>#}
+{#      </div>#}
+{#    </nav>#}
+{##}
+{#    <div class="container-fluid p-0">#}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">#}
+{#        <div class="my-auto">#}
+{#          <h1 class="mb-0">SMART#}
+{##}
+{#            <span class="text-primary">FISHERIES</span>#}
+{#          </h1>#}
+{#          <div class="subheading mb-5"SMART FISHERIES AI#}
+{#          </div>#}
+{#          <p class="mb-5">AI MONITORING & DROWNING DETECTION</p>#}
+{#          <ul class="list-inline list-social-icons mb-0">#}
+{#            <li class="list-inline-item">#}
+{#              <a href="#">#}
+{#                <span class="fa-stack fa-lg">#}
+{#                  <i class="fa fa-circle fa-stack-2x"></i>#}
+{#                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>#}
+{#                </span>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <a href="#">#}
+{#                <span class="fa-stack fa-lg">#}
+{#                  <i class="fa fa-circle fa-stack-2x"></i>#}
+{#                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>#}
+{#                </span>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <a href="#">#}
+{#                <span class="fa-stack fa-lg">#}
+{#                  <i class="fa fa-circle fa-stack-2x"></i>#}
+{#                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>#}
+{#                </span>#}
+{#              </a>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <a href="#">#}
+{#                <span class="fa-stack fa-lg">#}
+{#                  <i class="fa fa-circle fa-stack-2x"></i>#}
+{#                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>#}
+{#                </span>#}
+{#              </a>#}
+{#            </li>#}
+{#          </ul>#}
+{#        </div>#}
+{#      </section>#}
+{##}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">#}
+{##}
+{#        <div class="my-auto">#}
+{#          <h2 class="mb-5">Experience</h2>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row mb-5">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">Senior Web Developer</h3>#}
+{#              <div class="subheading mb-3">Intelitec Solutions</div>#}
+{#              <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">March 2013 - Present</span>#}
+{#            </div>#}
+{#          </div>#}
+{#           <div class="container" id="a">#}
+{#              {% block body %}#}
+{#              {% endblock %}#}
+{##}
+{#          </div>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row mb-5">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">Web Developer</h3>#}
+{#              <div class="subheading mb-3">Intelitec Solutions</div>#}
+{#              <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">December 2011 - March 2013</span>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row mb-5">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">Junior Web Designer</h3>#}
+{#              <div class="subheading mb-3">Shout! Media Productions</div>#}
+{#              <p>Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">July 2010 - December 2011</span>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">Web Design Intern</h3>#}
+{#              <div class="subheading mb-3">Shout! Media Productions</div>#}
+{#              <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">September 2008 - June 2010</span>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#        </div>#}
+{##}
+{#      </section>#}
+{##}
+{##}
+{##}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">#}
+{#        <div class="my-auto">#}
+{#          <h2 class="mb-5">Education</h2>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row mb-5">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">University of Colorado Boulder</h3>#}
+{#              <div class="subheading mb-3">Bachelor of Science</div>#}
+{#              <div>Computer Science - Web Development Track</div>#}
+{#              <p>GPA: 3.23</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">August 2006 - May 2010</span>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="resume-item d-flex flex-column flex-md-row">#}
+{#            <div class="resume-content mr-auto">#}
+{#              <h3 class="mb-0">James Buchanan High School</h3>#}
+{#              <div class="subheading mb-3">Technology Magnet Program</div>#}
+{#              <p>GPA: 3.56</p>#}
+{#            </div>#}
+{#            <div class="resume-date text-md-right">#}
+{#              <span class="text-primary">August 2002 - May 2006</span>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#        </div>#}
+{#      </section>#}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">#}
+{#        <div class="my-auto">#}
+{#          <h2 class="mb-5">Skills</h2>#}
+{##}
+{#          <div class="subheading mb-3">Programming Languages &amp; Tools</div>#}
+{#          <ul class="list-inline list-icons">#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-html5"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-css3"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-javascript"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-jquery"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-sass"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-less"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-bootstrap"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-wordpress"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-grunt"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-gulp"></i>#}
+{#            </li>#}
+{#            <li class="list-inline-item">#}
+{#              <i class="devicons devicons-npm"></i>#}
+{#            </li>#}
+{#          </ul>#}
+{##}
+{#          <div class="subheading mb-3">Workflow</div>#}
+{#          <ul class="fa-ul mb-0">#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-check"></i>#}
+{#              Mobile-First, Responsive Design</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-check"></i>#}
+{#              Cross Browser Testing &amp; Debugging</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-check"></i>#}
+{#              Cross Functional Teams</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-check"></i>#}
+{#              Agile Development &amp; Scrum</li>#}
+{#          </ul>#}
+{#        </div>#}
+{#      </section>#}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">#}
+{#        <div class="my-auto">#}
+{#          <h2 class="mb-5">Interests</h2>#}
+{#          <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skiier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>#}
+{#          <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technolgy advancements in the front-end web development world.</p>#}
+{#        </div>#}
+{#      </section>#}
+{##}
+{#      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="awards">#}
+{#        <div class="my-auto">#}
+{#          <h2 class="mb-5">Awards &amp; Certifications</h2>#}
+{#          <ul class="fa-ul mb-0">#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              Google Analytics Certified Developer</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              Mobile Web Specialist - Google Certification</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              1<sup>st</sup>#}
+{#              Place - University of Colorado Boulder - Emerging Tech Competition 2009</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              1<sup>st</sup>#}
+{#              Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              2<sup>nd</sup>#}
+{#              Place - University of Colorado Boulder - Emerging Tech Competition 2008</li>#}
+{#            <li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              1<sup>st</sup>#}
+{#              Place - James Buchanan High School - Hackathon 2006</li>#}
+{#            <li>#}
+{#              <i class="fa-li fa fa-trophy text-warning"></i>#}
+{#              3<sup>rd</sup>#}
+{#              Place - James Buchanan High School - Hackathon 2005</li>#}
+{#          </ul>#}
+{#        </div>#}
+{#      </section>#}
+{##}
+{#    </div>#}
+{##}
+{#    <!-- Bootstrap core JavaScript -->#}
+{#    <script src="/static/officer/vendor/jquery/jquery.min.js"></script>#}
+{#    <script src="/static/officer/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>#}
+{##}
+{#    <!-- Plugin JavaScript -->#}
+{#    <script src="/static/officer/vendor/jquery-easing/jquery.easing.min.js"></script>#}
+{##}
+{#    <!-- Custom scripts for this template -->#}
+{#    <script src="/static/officer/js/resume.min.js"></script>#}
+{##}
+{#  </body>#}
+{##}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <meta name="description" content="">#}
+{#    <meta name="author" content="">#}
+{##}
+{#    <title>Smart Fisheries - Officer Portal</title>#}
+{##}
+{#    <!-- Bootstrap core CSS -->#}
+{#    <link href="/static/officer/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">#}
+{##}
+{#    <!-- Custom fonts for this template -->#}
+{#    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/devicons/css/devicons.min.css" rel="stylesheet">#}
+{#    <link href="/static/officer/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">#}
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">#}
+{##}
+{#    <!-- Custom styles for this template -->#}
+{#    <link href="/static/officer/css/resume.min.css" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#        :root {#}
+{#            --walnut-noir: #5e4b43;#}
+{#            --walnut-dark: #4a3a34;#}
+{#            --walnut-light: #75604f;#}
+{#            --accent-gold: #d4af37;#}
+{#            --accent-cream: #f5e6d3;#}
+{#        }#}
+{##}
+{#        body {#}
+{#            background: linear-gradient(135deg, #2c2420 0%, #5e4b43 50%, #75604f 100%);#}
+{#            font-family: 'Open Sans', sans-serif;#}
+{#        }#}
+{##}
+{#        /* Enhanced Sidebar Navigation */#}
+{#        #sideNav {#}
+{#            background: linear-gradient(180deg, var(--walnut-noir) 0%, var(--walnut-dark) 100%) !important;#}
+{#            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);#}
+{#            border-right: 2px solid var(--accent-gold);#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-brand {#}
+{#            padding: 2rem 1rem;#}
+{#            background: rgba(212, 175, 55, 0.1);#}
+{#            border-bottom: 2px solid var(--accent-gold);#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-brand .d-block {#}
+{#            color: var(--accent-gold) !important;#}
+{#            font-weight: 800;#}
+{#            letter-spacing: 2px;#}
+{#            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);#}
+{#        }#}
+{##}
+{#        #sideNav .img-profile {#}
+{#            border: 4px solid var(--accent-gold);#}
+{#            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);#}
+{#            transition: all 0.3s ease;#}
+{#        }#}
+{##}
+{#        #sideNav .img-profile:hover {#}
+{#            transform: scale(1.05);#}
+{#            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item {#}
+{#            margin: 0.5rem 0;#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .nav-link {#}
+{#            color: var(--accent-cream) !important;#}
+{#            padding: 1rem 1.5rem;#}
+{#            border-radius: 10px;#}
+{#            transition: all 0.3s ease;#}
+{#            font-weight: 600;#}
+{#            letter-spacing: 0.5px;#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .nav-link::before {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            left: 0;#}
+{#            top: 0;#}
+{#            width: 4px;#}
+{#            height: 100%;#}
+{#            background: var(--accent-gold);#}
+{#            transform: scaleY(0);#}
+{#            transition: transform 0.3s ease;#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .nav-link:hover {#}
+{#            background: rgba(212, 175, 55, 0.2);#}
+{#            color: var(--accent-gold) !important;#}
+{#            transform: translateX(10px);#}
+{#            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .nav-link:hover::before {#}
+{#            transform: scaleY(1);#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .btn-dark {#}
+{#            background: linear-gradient(135deg, var(--accent-gold), #b8941f);#}
+{#            border: none;#}
+{#            color: var(--walnut-dark) !important;#}
+{#            font-weight: 700;#}
+{#            padding: 0.75rem 2rem;#}
+{#            border-radius: 25px;#}
+{#            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);#}
+{#            transition: all 0.3s ease;#}
+{#            margin-top: 1rem;#}
+{#        }#}
+{##}
+{#        #sideNav .navbar-nav .nav-item .btn-dark:hover {#}
+{#            transform: translateY(-3px);#}
+{#            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);#}
+{#            background: linear-gradient(135deg, #b8941f, var(--accent-gold));#}
+{#        }#}
+{##}
+{#        /* Main Content Area */#}
+{#        .container-fluid {#}
+{#            background: transparent;#}
+{#        }#}
+{##}
+{#        .resume-section {#}
+{#            background: rgba(245, 230, 211, 0.05);#}
+{#            backdrop-filter: blur(10px);#}
+{#            border-radius: 20px;#}
+{#            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);#}
+{#            margin: 2rem;#}
+{#            border: 1px solid rgba(212, 175, 55, 0.2);#}
+{#        }#}
+{##}
+{#        /* Hero Section */#}
+{#        #about {#}
+{#            position: relative;#}
+{#            overflow: hidden;#}
+{#        }#}
+{##}
+{#        #about::before {#}
+{#            content: '';#}
+{#            position: absolute;#}
+{#            top: 0;#}
+{#            left: 0;#}
+{#            right: 0;#}
+{#            bottom: 0;#}
+{#            background: linear-gradient(135deg, rgba(94, 75, 67, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);#}
+{#            z-index: 0;#}
+{#        }#}
+{##}
+{#        #about .my-auto {#}
+{#            position: relative;#}
+{#            z-index: 1;#}
+{#        }#}
+{##}
+{#        #about h1 {#}
+{#            font-size: 4rem;#}
+{#            font-weight: 900;#}
+{#            color: var(--accent-cream);#}
+{#            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);#}
+{#            animation: fadeInUp 1s ease;#}
+{#        }#}
+{##}
+{#        #about .text-primary {#}
+{#            color: var(--accent-gold) !important;#}
+{#            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);#}
+{#        }#}
+{##}
+{#        #about p {#}
+{#            color: var(--accent-cream);#}
+{#            font-size: 1.5rem;#}
+{#            font-weight: 300;#}
+{#            letter-spacing: 3px;#}
+{#            opacity: 0.9;#}
+{#            animation: fadeInUp 1s ease 0.3s backwards;#}
+{#        }#}
+{##}
+{#        /* Content Section */#}
+{#        #experience {#}
+{#            background: rgba(94, 75, 67, 0.3);#}
+{#            backdrop-filter: blur(20px);#}
+{#        }#}
+{##}
+{#        #experience #a {#}
+{#            background: rgba(245, 230, 211, 0.1);#}
+{#            border-radius: 15px;#}
+{#            padding: 2rem;#}
+{#            border: 1px solid rgba(212, 175, 55, 0.2);#}
+{#            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);#}
+{#        }#}
+{##}
+{#        /* Animations */#}
+{#        @keyframes fadeInUp {#}
+{#            from {#}
+{#                opacity: 0;#}
+{#                transform: translateY(30px);#}
+{#            }#}
+{#            to {#}
+{#                opacity: 1;#}
+{#                transform: translateY(0);#}
+{#            }#}
+{#        }#}
+{##}
+{#        @keyframes slideInRight {#}
+{#            from {#}
+{#                opacity: 0;#}
+{#                transform: translateX(-50px);#}
+{#            }#}
+{#            to {#}
+{#                opacity: 1;#}
+{#                transform: translateX(0);#}
+{#            }#}
+{#        }#}
+{##}
+{#        /* Decorative Elements */#}
+{#        #about::after {#}
+{#            content: '⚓';#}
+{#            position: absolute;#}
+{#            font-size: 20rem;#}
+{#            color: rgba(212, 175, 55, 0.05);#}
+{#            right: -5rem;#}
+{#            bottom: -5rem;#}
+{#            animation: float 6s ease-in-out infinite;#}
+{#        }#}
+{##}
+{#        @keyframes float {#}
+{#            0%, 100% {#}
+{#                transform: translateY(0) rotate(0deg);#}
+{#            }#}
+{#            50% {#}
+{#                transform: translateY(-20px) rotate(5deg);#}
+{#            }#}
+{#        }#}
+{##}
+{#        /* Responsive adjustments */#}
+{#        @media (max-width: 992px) {#}
+{#            #sideNav {#}
+{#                border-right: none;#}
+{#                border-bottom: 2px solid var(--accent-gold);#}
+{#            }#}
+{##}
+{#            #about h1 {#}
+{#                font-size: 2.5rem;#}
+{#            }#}
+{##}
+{#            #about p {#}
+{#                font-size: 1.2rem;#}
+{#            }#}
+{##}
+{#            .resume-section {#}
+{#                margin: 1rem;#}
+{#            }#}
+{#        }#}
+{##}
+{#        /* Navbar toggler styling */#}
+{#        .navbar-toggler {#}
+{#            border-color: var(--accent-gold);#}
+{#            background: rgba(212, 175, 55, 0.2);#}
+{#        }#}
+{##}
+{#        .navbar-toggler-icon {#}
+{#            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(212, 175, 55, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");#}
+{#        }#}
+{##}
+{#        /* Scrollbar styling */#}
+{#        ::-webkit-scrollbar {#}
+{#            width: 10px;#}
+{#        }#}
+{##}
+{#        ::-webkit-scrollbar-track {#}
+{#            background: var(--walnut-dark);#}
+{#        }#}
+{##}
+{#        ::-webkit-scrollbar-thumb {#}
+{#            background: var(--accent-gold);#}
+{#            border-radius: 5px;#}
+{#        }#}
+{##}
+{#        ::-webkit-scrollbar-thumb:hover {#}
+{#            background: #b8941f;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{##}
+{#<body id="page-top">#}
+{##}
+{#    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">#}
+{#        <a class="navbar-brand js-scroll-trigger" href="#page-top">#}
+{#            <span class="d-block d-lg-none">FISHERIES</span>#}
+{#            <span class="d-none d-lg-block">#}
+{#                <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/static/login/images/logo.jpg" alt="">#}
+{#            </span>#}
+{#        </a>#}
+{#        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
+{#            <span class="navbar-toggler-icon"></span>#}
+{#        </button>#}
+{#        <div class="collapse navbar-collapse" id="navbarSupportedContent">#}
+{#            <ul class="navbar-nav">#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="#">#}
+{#                        <i class="fa fa-home"></i> Home#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_profile#a">#}
+{#                        <i class="fa fa-user"></i> Profile#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_trolling_details_officer#a">#}
+{#                        <i class="fa fa-ship"></i> View Trolling Details#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_ban_boat#a">#}
+{#                        <i class="fa fa-ban"></i> Ban Boat#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_baned_boat#a">#}
+{#                        <i class="fa fa-eye"></i> View Ban Boat#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="officer_view_monitoring_details#a">#}
+{#                        <i class="fa fa-video-camera"></i> Illegal Monitoring#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_view_boat_verify#a">#}
+{#                        <i class="fa fa-check-circle"></i> Verification#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link js-scroll-trigger" href="/myapp/officer_manage_tips#a">#}
+{#                        <i class="fa fa-lightbulb-o"></i> Safety Tips#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="btn btn-dark" href="/myapp/login#a">#}
+{#                        <i class="fa fa-sign-out"></i> LOGOUT#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
+{#    </nav>#}
+{##}
+{#    <div class="container-fluid p-0">#}
+{##}
+{#        <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">#}
+{#            <div class="my-auto">#}
+{#                <h1 class="mb-0">SMART#}
+{#                    <span class="text-primary">FISHERIES</span>#}
+{#                </h1>#}
+{#                <p class="mb-5">AI MONITORING & DROWNING DETECTION</p>#}
+{#            </div>#}
+{#        </section>#}
+{##}
+{#        <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">#}
+{#            <div class="container" id="a">#}
+{#                {% block body %}#}
+{#                {% endblock %}#}
+{#            </div>#}
+{#        </section>#}
+{##}
+{#    </div>#}
+{##}
+{#    <!-- Bootstrap core JavaScript -->#}
+{#    <script src="/static/officer/vendor/jquery/jquery.min.js"></script>#}
+{#    <script src="/static/officer/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>#}
+{##}
+{#    <!-- Plugin JavaScript -->#}
+{#    <script src="/static/officer/vendor/jquery-easing/jquery.easing.min.js"></script>#}
+{##}
+{#    <!-- Custom scripts for this template -->#}
+{#    <script src="/static/officer/js/resume.min.js"></script>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+
+
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Fisheries - Officer Portal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --obsidian: #0f0810;
+            --plum-deep: #2d1e2f;
+            --accent-violet: #b565d8;
+            --accent-pink: #ff6ec7;
+            --text-lavender: #e6d5f5;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--obsidian) 0%, #1a0f1b 50%, var(--plum-deep) 100%);
+            color: var(--text-lavender);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Sidebar Design */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            background: rgba(15, 8, 16, 0.95);
+            border-right: 1px solid rgba(181, 101, 216, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .brand-section {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(181, 101, 216, 0.2);
+        }
+
+        .img-profile {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-violet);
+            box-shadow: 0 0 20px rgba(181, 101, 216, 0.4);
+            object-fit: cover;
+        }
+
+        .nav-menu {
+            padding: 1.5rem 0;
+            list-style: none;
+        }
+
+        .nav-item-link {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--text-lavender);
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item-link i {
+            width: 25px;
+            margin-right: 15px;
+            color: var(--accent-violet);
+            font-size: 1.1rem;
+        }
+
+        .nav-item-link:hover {
+            background: rgba(181, 101, 216, 0.1);
+            color: white;
+            border-left: 4px solid var(--accent-pink);
+        }
+
+        .btn-logout {
+            margin: 2rem 1.5rem;
+            background: linear-gradient(45deg, #880e4f, #e91e63);
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        /* Main Content area */
+        .main-content {
+            margin-left: 280px;
+            padding: 3rem;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-title span {
+            color: var(--accent-pink);
+            text-shadow: 0 0 20px rgba(255, 110, 199, 0.5);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 3rem;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(181, 101, 216, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            background: rgba(181, 101, 216, 0.08);
+            border-color: var(--accent-pink);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(181, 101, 216, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: var(--accent-pink);
+        }
+
+        .action-card h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-card p {
+            color: var(--text-lavender);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { width: 0; overflow: hidden; }
+            .main-content { margin-left: 0; padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand-section">
+            <img src="/static/login/images/logo.jpg" alt="Fisheries Logo" class="img-profile mb-3">
+            <h5 class="text-white">Officer Portal</h5>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="/myapp/officer_home" class="nav-item-link"><i class="fa fa-th-large"></i> Home</a>
+            <a href="/myapp/officer_view_profile#a" class="nav-item-link"><i class="fa fa-user-circle"></i> Profile</a>
+            <a href="/myapp/officer_view_trolling_details_officer#a" class="nav-item-link"><i class="fa fa-anchor"></i> Trolling Data</a>
+            <a href="/myapp/officer_view_baned_boat#a" class="nav-item-link"><i class="fa fa-shield"></i> Ban Boat</a>
+            <a href="officer_view_monitoring_details#a" class="nav-item-link"><i class="fa fa-eye"></i> Illegal Monitoring</a>
+            <a href="/myapp/officer_view_boat_verify#a" class="nav-item-link"><i class="fa fa-file-signature"></i> Verification</a>
+            <a href="/myapp/officer_manage_tips#a" class="nav-item-link"><i class="fa fa-lightbulb"></i> Safety Tips</a>
+        </nav>
+
+        <a href="/myapp/login#a" class="btn-logout">
+            <i class="fa fa-power-off me-2"></i> LOGOUT
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <h1 class="hero-title">SMART <span>FISHERIES</span></h1>
+            <p class="text-uppercase tracking-widest opacity-75">AI Monitoring & Drowning Detection</p>
+        </header>
+
+        <hr style="border-top: 1px solid rgba(181, 101, 216, 0.2); margin: 2rem 0;">
+
+        <div id="a">
+            {% block body %}
+                <div class="dashboard-grid">
+                    <a href="officer_view_boat_verify#a" class="action-card">
+                        <div class="card-icon"><i class="fa fa-video"></i></div>
+                        <h3>Boat Verifications</h3>
+                        <p>Review vessel registrations and compliance status.</p>
+                    </a>
+
+                    <a href="/myapp/officer_view_monitoring_details#a" class="action-card">
+                        <div class="card-icon"><i class="fa fa-check-circle"></i></div>
+                        <h3>Illegal Reports</h3>
+                        <p>Review Illegal Reports.</p>
+                    </a>
+
+                    <a href="/myapp/officer_view_trolling_details_officer#a" class="action-card">
+                        <div class="card-icon"><i class="fa fa-ship"></i></div>
+                        <h3>Trolling Logs</h3>
+                        <p>Detailed history of trolling period.</p>
+                    </a>
+
+                    <a href="/myapp/officer_manage_tips#a" class="action-card">
+                        <div class="card-icon"><i class="fa fa-bullhorn"></i></div>
+                        <h3>Safety Alerts</h3>
+                        <p>Push emergency tips and weather warnings.</p>
+                    </a>
+                </div>
+            {% endblock %}
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

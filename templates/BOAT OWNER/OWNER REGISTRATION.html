@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boat Owner Registration</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Formal Deep Teal Registration Styling */
+    body {
+      background-color: #0b3037;
+      background-image: radial-gradient(circle at 20% 30%, rgba(45, 212, 191, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(45, 212, 191, 0.05) 0%, transparent 40%);
+      min-height: 100vh;
+      font-family: 'Raleway', 'Segoe UI', sans-serif;
+      color: #ffffff;
+    }
+
+    .reg-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 1rem;
+    }
+
+    /* Formal Command Card */
+    .reg-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 650px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .reg-card-header {
+      padding: 2.5rem;
+      border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+      text-align: center;
+    }
+
+    .reg-card-header h2 {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .reg-card-header p {
+      color: #2dd4bf;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .reg-card-body {
+      padding: 2.5rem;
+    }
+
+    /* Form Layout Grid */
+    .reg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .full-width { grid-column: span 2; }
+
+    .reg-form-group label {
+      color: #2dd4bf;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper i.field-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(45, 212, 191, 0.5);
+      font-size: 0.9rem;
+    }
+
+    .reg-form-control {
+      background: rgba(11, 48, 55, 0.5);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 4px;
+      padding: 12px 15px 12px 42px;
+      color: white !important;
+      font-size: 0.9rem;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .reg-form-control:focus {
+      outline: none;
+      border-color: #2dd4bf;
+      background: rgba(11, 48, 55, 0.8);
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+    }
+
+    /* File Input Styling */
+    .reg-file-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      background: rgba(45, 212, 191, 0.05);
+      border: 1px dashed rgba(45, 212, 191, 0.4);
+      border-radius: 4px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+
+    .reg-file-label:hover {
+      border-color: #2dd4bf;
+      background: rgba(45, 212, 191, 0.1);
+    }
+
+    /* Password Toggle */
+    .password-toggle-btn {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: rgba(45, 212, 191, 0.5);
+      transition: 0.3s;
+    }
+
+    .password-toggle-btn:hover { color: #2dd4bf; }
+
+    /* Submit Button */
+    .reg-btn-submit {
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+      border: 1px solid #2dd4bf;
+      color: #2dd4bf;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 4px;
+      transition: 0.3s;
+      margin-top: 1rem;
+    }
+
+    .reg-btn-submit:hover {
+      background: #2dd4bf;
+      color: #0b3037;
+      box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+    }
+
+    .reg-login-link {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(45, 212, 191, 0.1);
+    }
+
+    .reg-login-link a {
+      color: #2dd4bf;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .reg-grid { grid-template-columns: 1fr; }
+      .full-width { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reg-container">
+    <div class="reg-card">
+      <div class="reg-card-header">
+        <h2>Personnel Registry</h2>
+        <p>Initialize Boat Owner Credentials</p>
+      </div>
+
+      <div class="reg-card-body">
+        <form action="/myapp/boat_owner_owner_registration" method="post" enctype="multipart/form-data" novalidate>
+
+          <div class="reg-grid">
+            <div class="reg-form-group full-width">
+              <label>Full Legal Name</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user-tie field-icon"></i>
+                <input type="text" class="reg-form-control" id="name" name="name" required placeholder="Enter full name">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-envelope field-icon"></i>
+                <input type="email" class="reg-form-control" id="email" name="email" required placeholder="name@example.com">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Contact Number</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-phone field-icon"></i>
+                <input type="tel" class="reg-form-control" id="phone" name="phone" required placeholder="10-digit number" pattern="[0-9]{10}" maxlength="10">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Place / City</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-location-dot field-icon"></i>
+                <input type="text" class="reg-form-control" id="place" name="place" required placeholder="Current city">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Post Office</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-mailbox field-icon"></i>
+                <input type="text" class="reg-form-control" id="post" name="post" required placeholder="Post office">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Area PIN Code</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-map-pin field-icon"></i>
+                <input type="text" class="reg-form-control" id="pin" name="pin" required placeholder="6-digit code" pattern="[0-9]{6}" maxlength="6">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>ID Proof (PDF/IMG)</label>
+              <div class="input-wrapper">
+                <input type="file" id="id_proof" name="id_proof" required accept="image/*,.pdf" style="display:none;" onchange="displayFileName(this)">
+                <label for="id_proof" class="reg-file-label">
+                  <span id="file-text">Upload Document</span>
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </label>
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Unique Username</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-circle-user field-icon"></i>
+                <input type="text" class="reg-form-control" id="username" name="username" required placeholder="Choose username">
+              </div>
+            </div>
+
+            <div class="reg-form-group">
+              <label>Access Password</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-shield-halved field-icon"></i>
+                <input type="password" class="reg-form-control" id="password" name="password" required placeholder="Create password">
+                <i class="bi bi-eye password-toggle-btn" id="togglePassword"></i>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="reg-btn-submit">
+            Initialize Registry <i class="fa-solid fa-chevron-right ms-2"></i>
+          </button>
+
+          <div class="reg-login-link">
+            <a href="/myapp/login"><i class="fa-solid fa-right-to-bracket me-2"></i>Existing User? Authenticate Here</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Password Toggle Logic
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordField = document.getElementById('password');
+      this.classList.toggle('bi-eye');
+      this.classList.toggle('bi-eye-slash');
+      passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+    });
+
+    // File Name Display Logic
+    function displayFileName(input) {
+      const fileText = document.getElementById('file-text');
+      if (input.files && input.files[0]) {
+        fileText.textContent = input.files[0].name;
+        fileText.style.color = "#2dd4bf";
+      }
+    }
+
+    // Input Sanitization (Numbers Only)
+    ['phone', 'pin'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+    });
+  </script>
+</body>
+</html>

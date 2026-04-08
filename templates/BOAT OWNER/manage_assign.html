@@ -1,0 +1,218 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+
+<style>
+  /* Formal Deep Teal Assignment Styling */
+  .assign-container {
+    padding: 2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .assign-header {
+    margin-bottom: 2rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .assign-title {
+    font-family: 'Raleway', sans-serif;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .assign-subtitle {
+    color: #2dd4bf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+  }
+
+  /* Command Card (Glassmorphic) */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px);
+    background: rgba(45, 212, 191, 0.05);
+    border-color: rgba(45, 212, 191, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Formal Modal Styling */
+  .modal-content.glass-modal {
+    background: #0b3037;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    color: white;
+    border-radius: 8px;
+  }
+
+  .modal-header { border-bottom: 1px solid rgba(45, 212, 191, 0.2); }
+  .modal-footer { border-top: 1px solid rgba(45, 212, 191, 0.2); }
+
+  .form-select, .form-control {
+    background: rgba(11, 48, 55, 0.5) !important;
+    border: 1px solid rgba(45, 212, 191, 0.3) !important;
+    color: white !important;
+    border-radius: 4px;
+  }
+
+  .form-select option { background: #0b3037; color: white; }
+
+  /* Buttons */
+  .btn-command-primary {
+    background: transparent;
+    border: 1px solid #2dd4bf;
+    color: #2dd4bf;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+  }
+
+  .btn-command-primary:hover {
+    background: #2dd4bf;
+    color: #0b3037;
+    box-shadow: 0 5px 15px rgba(45, 212, 191, 0.3);
+  }
+
+  .btn-command-danger {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 0.5rem;
+    width: 100%;
+    transition: 0.3s;
+  }
+
+  .btn-command-danger:hover {
+    background: #ef4444;
+    color: white;
+  }
+
+  .registry-pill {
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    padding: 2px 10px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+  }
+</style>
+
+<div class="assign-container">
+    <div class="assign-header">
+        <div>
+            <h2 class="assign-title">Assignment Registry</h2>
+            <p class="assign-subtitle">Personnel-to-Vessel Deployment Matrix</p>
+        </div>
+        <button type="button" class="btn-command-primary" data-bs-toggle="modal" data-bs-target="#assignModal">
+            <i class="fa-solid fa-plus-circle me-2"></i> New Deployment
+        </button>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} bg-dark text-white border-0 shadow-sm mb-4" style="border-left: 4px solid #2dd4bf !important;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        {% for i in data %}
+        <div class="col-md-4 mb-4">
+            <div class="card glass-card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="text-white fw-bold mb-0" style="font-size: 1.1rem;">{{ i.boat.type }}</h5>
+                        <span class="badge registry-pill">{{ i.boat.regno }}</span>
+                    </div>
+
+                    <h6 class="text-info mb-3" style="font-size: 0.9rem; color: #2dd4bf !important;">
+                        <i class="fa-solid fa-user-tie me-2"></i>{{ i.USER.name }}
+                    </h6>
+
+                    <div class="mb-4" style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">
+                        <div class="mb-1"><i class="fa-regular fa-calendar me-2"></i>Assigned: {{ i.date }}</div>
+                        <div><i class="fa-solid fa-shield-halved me-2"></i>Status: <span style="color: #2dd4bf;">{{ i.status }}</span></div>
+                    </div>
+
+                    <a href="/myapp/DeleteAssign/{{ i.id }}/"
+                       onclick="return confirm('Terminate this assignment record?')"
+                       class="btn btn-command-danger">
+                        <i class="fa-solid fa-user-minus me-2"></i>Terminate Assignment
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="fa-solid fa-folder-open fa-3x mb-3 opacity-25" style="color: #2dd4bf;"></i>
+            <p style="color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px;">No active deployments detected.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="post" class="modal-content glass-modal">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-size: 1rem; font-weight: 700; text-transform: uppercase;"><i class="fa-solid fa-link me-2"></i>Initialize Deployment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <label class="form-label" style="color: #2dd4bf; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Target Vessel</label>
+                    <select name="boat" class="form-select" required>
+                        {% for b in boats %}
+                            <option value="{{ b.id }}">{{ b.type }} (Reg: {{ b.regno }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label" style="color: #2dd4bf; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Assign Personnel</label>
+                    <select name="user" class="form-select" required>
+                        <option value="" selected disabled>Select authorized user...</option>
+                        {% for u in users %}
+                            <option value="{{ u.id }}">{{ u.name }} — {{ u.place }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="form-text mt-2" style="font-size: 0.7rem; color: rgba(255,255,255,0.4);">
+                        <i class="fa-solid fa-circle-info me-1"></i> Personnel are restricted to one vessel assignment at a time.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link text-white text-decoration-none" style="font-size: 0.8rem;" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn-command-primary">Execute Assignment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

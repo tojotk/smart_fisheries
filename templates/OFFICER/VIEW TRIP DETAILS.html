@@ -1,0 +1,223 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-glass: rgba(45, 30, 47, 0.6);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --accent-cyan: #06b6d4;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+        --glow-purple: rgba(181, 101, 216, 0.4);
+    }
+
+    .voyage-wrapper {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+
+    .page-header h2 {
+        color: var(--pure-white);
+        font-weight: 800;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 2.2rem;
+        text-shadow: 0 0 20px var(--glow-purple);
+    }
+
+    .page-header span {
+        color: var(--accent-pink);
+    }
+
+    /* Glass Monitoring Card */
+    .monitoring-card {
+        background: var(--plum-glass);
+        backdrop-filter: blur(25px);
+        border-radius: 30px;
+        border: 1px solid rgba(181, 101, 216, 0.2);
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .custom-table {
+        width: 100%;
+        color: var(--text-lavender);
+        border-collapse: collapse;
+    }
+
+    .custom-table thead {
+        background: rgba(15, 8, 16, 0.8);
+    }
+
+    .custom-table th {
+        padding: 1.5rem;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        color: var(--accent-violet);
+        border-bottom: 2px solid rgba(181, 101, 216, 0.2);
+        text-align: center;
+    }
+
+    .custom-table td {
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .custom-table tr:hover {
+        background: rgba(181, 101, 216, 0.08);
+        transition: 0.3s;
+    }
+
+    /* Date Labels */
+    .date-pill {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        color: var(--accent-lavender);
+        border: 1px solid rgba(181, 101, 216, 0.2);
+    }
+
+    /* Route Visualization */
+    .route-path {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .loc-tag {
+        color: var(--pure-white);
+        font-size: 0.95rem;
+    }
+
+    .route-arrow {
+        color: var(--accent-pink);
+        animation: pulseArrow 1.5s infinite;
+    }
+
+    @keyframes pulseArrow {
+        0%, 100% { transform: translateX(0); opacity: 1; }
+        50% { transform: translateX(5px); opacity: 0.5; }
+    }
+
+    /* Status Pills */
+    .status-pill {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .ongoing { background: rgba(6, 182, 212, 0.15); color: #06b6d4; border: 1px solid #06b6d4; }
+    .pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b; }
+    .completed { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; }
+    .cancelled { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; }
+
+    .empty-state {
+        padding: 5rem;
+        text-align: center;
+        color: var(--text-lavender);
+        opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+        .custom-table thead { display: none; }
+        .custom-table td { display: block; text-align: right; padding-left: 50%; position: relative; }
+        .custom-table td::before {
+            content: attr(data-label);
+            position: absolute; left: 1.5rem; color: var(--accent-violet); font-size: 0.7rem;
+        }
+        .route-path { justify-content: flex-end; }
+    }
+</style>
+
+<div class="voyage-wrapper">
+    <div class="page-header">
+        <h2>Trip <span>Schedule</span></h2>
+        <p class="text-muted"><i class="fas fa-satellite"></i> Real-time Fleet Tracking Active</p>
+    </div>
+
+    <div class="monitoring-card">
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th><i class="far fa-calendar-alt me-2"></i>Deployment</th>
+                        <th><i class="far fa-calendar-check me-2"></i>Return</th>
+                        <th><i class="fas fa-map-signs me-2"></i>Transit Route</th>
+                        <th><i class="fas fa-signal me-2"></i>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in data %}
+                    <tr>
+                        <td data-label="Deployment">
+                            <span class="date-pill">{{ trip.start_date }}</span>
+                        </td>
+                        <td data-label="Return">
+                            <span class="date-pill">{{ trip.end_date }}</span>
+                        </td>
+                        <td data-label="Transit Route">
+                            <div class="route-path">
+                                <span class="loc-tag">{{ trip.From }}</span>
+                                <i class="fas fa-long-arrow-alt-right route-arrow"></i>
+                                <span class="loc-tag">{{ trip.To }}</span>
+                            </div>
+                        </td>
+                        <td data-label="Status">
+                            {% if trip.status == 'Ongoing' %}
+                                <span class="status-pill ongoing"><i class="fas fa-ship fa-spin"></i> Ongoing</span>
+                            {% elif trip.status == 'not started' or trip.status == 'pending' %}
+                                <span class="status-pill pending"><i class="far fa-clock"></i> Pending</span>
+                            {% elif trip.status == 'Completed' %}
+                                <span class="status-pill completed"><i class="fas fa-check-circle"></i> Completed</span>
+                            {% elif trip.status == 'Cancelled' %}
+                                <span class="status-pill cancelled"><i class="fas fa-ban"></i> Cancelled</span>
+                            {% else %}
+                                <span class="status-pill ongoing">Unknown</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <i class="fas fa-compass fa-4x mb-3"></i>
+                                <h4>No active voyages logged.</h4>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

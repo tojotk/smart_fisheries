@@ -1,0 +1,219 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-assignment-log-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+  }
+
+  .sfm-assignment-log-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .sfm-page-header {
+    margin-bottom: 3rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .sfm-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sfm-page-title i {
+    color: #2dd4bf;
+  }
+
+  .sfm-page-subtitle {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 5px;
+  }
+
+  .sfm-assignment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .sfm-officer-card {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 16px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .sfm-officer-card:hover {
+    transform: translateY(-8px);
+    border-color: #2dd4bf;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(30, 41, 59, 0.8);
+  }
+
+  .sfm-officer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .sfm-officer-main-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sfm-officer-name {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .sfm-status-pill {
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-detail-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .sfm-detail-icon {
+    color: #2dd4bf;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+    margin-top: 3px;
+  }
+
+  .sfm-detail-label {
+    display: block;
+    font-size: 0.7rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .sfm-detail-value {
+    display: block;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .sfm-remark-box {
+    margin-top: auto;
+    background: rgba(15, 23, 42, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px dashed rgba(148, 163, 184, 0.2);
+  }
+
+  .sfm-remark-text {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  .sfm-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem;
+    background: rgba(20, 30, 48, 0.5);
+    border-radius: 16px;
+    border: 1px dashed rgba(148, 163, 184, 0.3);
+    color: #64748b;
+  }
+
+  @media (max-width: 768px) {
+    .sfm-assignment-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="sfm-assignment-log-section">
+  <div class="sfm-assignment-log-container">
+
+    <div class="sfm-page-header">
+      <h2 class="sfm-page-title">
+        <i class="fa-solid fa-user-shield"></i>
+        Officer Assignments
+      </h2>
+      <p class="sfm-page-subtitle">Real-time deployment tracking and jurisdictional logs</p>
+    </div>
+
+    <div class="sfm-assignment-grid">
+      {% for officer in data %}
+      <div class="sfm-officer-card">
+        <div class="sfm-officer-header">
+          <div class="sfm-officer-main-info">
+            <h5 class="sfm-officer-name">{{ officer.name }}</h5>
+            <span class="text-muted small">ID: #{{ forloop.counter }}</span>
+          </div>
+          <span class="sfm-status-pill">Active Deployment</span>
+        </div>
+
+        <div class="sfm-detail-item">
+          <div class="sfm-detail-icon"><i class="fa-solid fa-anchor"></i></div>
+          <div class="sfm-detail-info">
+            <span class="sfm-detail-label">Assigned Area</span>
+            <span class="sfm-detail-value">{{ officer.fishind_area }}</span>
+          </div>
+        </div>
+
+        <div class="sfm-detail-item">
+          <div class="sfm-detail-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="sfm-detail-info">
+            <span class="sfm-detail-label">Service Period</span>
+            <span class="sfm-detail-value">{{ officer.start_date }} <span class="text-muted px-1">→</span> {{ officer.end_date }}</span>
+          </div>
+        </div>
+
+        <div class="sfm-remark-box">
+          <span class="sfm-detail-label d-block mb-1">Administrative Remarks</span>
+          <span class="sfm-remark-text">{{ officer.remarks }}</span>
+        </div>
+      </div>
+      {% empty %}
+      <div class="sfm-empty">
+        <i class="fa-solid fa-shield-halved d-block mb-3" style="font-size: 3rem; opacity: 0.2;"></i>
+        No officer deployment records found in the registry.
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

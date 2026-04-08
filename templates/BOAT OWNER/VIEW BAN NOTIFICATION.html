@@ -1,0 +1,257 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+    /* Formal Deep Teal Monitoring Styling */
+    .monitoring-section {
+        padding: 3rem 0;
+        min-height: calc(100vh - 200px);
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-header h4 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header .subtitle {
+        color: #2dd4bf;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .table-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(15px);
+        border-radius: 8px;
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        padding: 1.5rem;
+    }
+
+    .table-responsive {
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .custom-table {
+        margin: 0;
+        background: transparent;
+        border-collapse: separate;
+        border-spacing: 0 5px;
+    }
+
+    .custom-table thead {
+        background: rgba(45, 212, 191, 0.1) !important;
+    }
+
+    .custom-table thead th {
+        color: #2dd4bf !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 1.2rem 1rem;
+        border: none !important;
+        font-size: 0.75rem;
+        background: transparent !important;
+    }
+
+    /* THE FIX: Matching the deep teal background of the suite */
+    .custom-table tbody tr {
+        background: rgba(15, 32, 39, 0.6) !important;
+        transition: all 0.3s ease;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(45, 212, 191, 0.15) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .custom-table tbody td {
+        color: #ffffff !important;
+        padding: 1.2rem 1rem;
+        vertical-align: middle;
+        border: none !important;
+        font-size: 0.9rem;
+        background: transparent !important; /* Ensure TR color shows through */
+    }
+
+    .boat-reg {
+        color: #2dd4bf !important;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .date-cell, .time-cell {
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-family: 'Courier New', monospace;
+    }
+
+    .monitor-image {
+        height: 60px;
+        width: 80px;
+        border-radius: 4px;
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        transition: 0.3s;
+        cursor: pointer;
+        object-fit: cover;
+    }
+
+    .monitor-image:hover {
+        border-color: #2dd4bf;
+        filter: brightness(1.2);
+    }
+
+    .status-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 0.4rem 0.8rem;
+        border-radius: 3px;
+        background: rgba(45, 212, 191, 0.15);
+        color: #2dd4bf;
+        border: 1px solid rgba(45, 212, 191, 0.3);
+    }
+
+    .empty-state {
+        padding: 5rem 0;
+        text-align: center;
+        color: rgba(45, 212, 191, 0.4);
+    }
+
+    .empty-state i { font-size: 3rem; margin-bottom: 1rem; }
+
+    /* Modal Styling */
+    .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(11, 48, 55, 0.95);
+        backdrop-filter: blur(10px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-modal.active { display: flex; }
+
+    .modal-content-img {
+        max-width: 85%;
+        max-height: 85%;
+        border: 1px solid #2dd4bf;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        color: #2dd4bf;
+        font-size: 2rem;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .custom-table thead { display: none; }
+        .custom-table tbody td { display: block; text-align: right; padding-left: 50%; position: relative; }
+        .custom-table tbody td::before { content: attr(data-label); position: absolute; left: 1rem; font-weight: 700; color: #2dd4bf; text-transform: uppercase; font-size: 0.7rem; }
+    }
+</style>
+
+<div class="monitoring-section">
+    <div class="container">
+        <div class="page-header">
+            <h4><i class="fa-solid fa-tower-observation me-2"></i> Surveillance Log</h4>
+            <p class="subtitle">System Registry & Visual Verification</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th>ID / Registry</th>
+                            <th>Log Date</th>
+                            <th>Timestamp</th>
+                            <th>Visual Record</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in val %}
+                            <tr>
+                                <td data-label="Registry">
+                                    <span class="boat-reg">{{ i.boat.regno }}</span>
+                                </td>
+                                <td data-label="Date">
+                                    <span class="date-cell">{{ i.date }}</span>
+                                </td>
+                                <td data-label="Time">
+                                    <span class="time-cell">{{ i.time }}</span>
+                                </td>
+                                <td data-label="Record">
+                                    {% if i.image %}
+                                        <img src="{{ i.image.url }}" class="monitor-image" onclick="openImageModal(this.src)">
+                                    {% else %}
+                                        <small style="color: rgba(255,255,255,0.3)">[ No Data ]</small>
+                                    {% endif %}
+                                </td>
+                                <td data-label="Status">
+                                    <span class="status-tag">Verified</span>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="fa-solid fa-microchip"></i>
+                                        <p>No Active Surveillance Records Found</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="image-modal" id="imageModal" onclick="closeImageModal()">
+    <span class="modal-close"><i class="fas fa-times"></i></span>
+    <img class="modal-content-img" id="modalImage" src="">
+</div>
+
+<script>
+    function openImageModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modal.classList.add('active');
+        modalImg.src = src;
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

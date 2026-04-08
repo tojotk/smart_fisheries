@@ -1,0 +1,853 @@
+{#{% extends 'OFFICER/officer_home.html' %}#}
+{#{% block body %}#}
+{#<div class="container mt-5">#}
+{#  <div class="row justify-content-center">#}
+{#    <div class="col-md-6">#}
+{##}
+{#      <div class="card shadow">#}
+{#        <div class="card-header bg-primary text-white text-center">#}
+{#          <h5>Officer Sign-Up</h5>#}
+{#        </div>#}
+{##}
+{#        <div class="card-body">#}
+{#          <form method="post">#}
+{#            {% csrf_token %}#}
+{##}
+{#            <div class="mb-3">#}
+{#              <label for="name" class="form-label">Name</label>#}
+{#              <input type="text" class="form-control" id="name" name="name" placeholder="Enter full name">#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#              <label for="contact" class="form-label">Contact</label>#}
+{#              <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter contact number">#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#              <label for="department" class="form-label">Department</label>#}
+{#              <input type="text" class="form-control" id="department" name="department" placeholder="Enter department">#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#              <label for="designation" class="form-label">Designation</label>#}
+{#              <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter designation">#}
+{#            </div>#}
+{##}
+{#            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">#}
+{#              <button type="submit" class="btn btn-success me-md-2">Submit</button>#}
+{#              <a href="#" class="btn btn-outline-primary">Sign Up</a>#}
+{#            </div>#}
+{##}
+{#          </form>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+<style>
+    :root {
+        --obsidian-dark: #2d1e2f;
+        --obsidian-plum: #4e2a4f;
+        --plum-light: #6b3d6b;
+        --plum-bright: #8e4a8e;
+        --accent-violet: #b565d8;
+        --accent-lavender: #e6d5f5;
+        --accent-pink: #ff6ec7;
+        --accent-orange: #ff9500;
+        --accent-green: #10b981;
+        --accent-red: #ff4757;
+        --glow-purple: rgba(181, 101, 216, 0.4);
+        --glow-pink: rgba(255, 110, 199, 0.4);
+        --glow-green: rgba(16, 185, 129, 0.4);
+    }
+
+    .signup-section {
+        padding: 3rem 0;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.8s ease;
+        position: relative;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Animated particle background */
+    .signup-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            radial-gradient(2px 2px at 20% 30%, var(--accent-violet), transparent),
+            radial-gradient(2px 2px at 60% 70%, var(--accent-pink), transparent),
+            radial-gradient(1px 1px at 50% 50%, var(--accent-lavender), transparent),
+            radial-gradient(2px 2px at 80% 10%, var(--accent-orange), transparent),
+            radial-gradient(1px 1px at 90% 60%, var(--accent-green), transparent);
+        background-size: 300% 300%;
+        animation: particleMove 20s ease-in-out infinite;
+        pointer-events: none;
+        opacity: 0.4;
+        z-index: 0;
+    }
+
+    @keyframes particleMove {
+        0%, 100% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+    }
+
+    .form-card {
+        background: linear-gradient(135deg, rgba(45, 30, 47, 0.95) 0%, rgba(35, 20, 37, 0.98) 100%);
+        backdrop-filter: blur(30px);
+        border-radius: 28px;
+        border: 2px solid rgba(181, 101, 216, 0.5);
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.7),
+            0 0 120px rgba(181, 101, 216, 0.25),
+            inset 0 1px 0 rgba(181, 101, 216, 0.3);
+        padding: 3.5rem;
+        max-width: 650px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+
+    .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg,
+            var(--accent-violet),
+            var(--accent-pink),
+            var(--accent-orange),
+            var(--accent-green),
+            var(--accent-pink),
+            var(--accent-violet)
+        );
+        background-size: 300% 100%;
+        animation: shimmer 4s linear infinite;
+        box-shadow: 0 0 25px var(--glow-purple);
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -300% 0; }
+        100% { background-position: 300% 0; }
+    }
+
+    .form-card:hover {
+        transform: translateY(-10px) scale(1.01);
+        box-shadow:
+            0 25px 70px rgba(0, 0, 0, 0.8),
+            0 0 150px rgba(181, 101, 216, 0.35),
+            0 0 80px rgba(255, 110, 199, 0.25),
+            inset 0 1px 0 rgba(181, 101, 216, 0.4);
+        border-color: rgba(255, 110, 199, 0.6);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .form-header i {
+        font-size: 4rem;
+        background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.2rem;
+        display: block;
+        animation: iconPulse 2.5s ease-in-out infinite;
+        filter: drop-shadow(0 0 25px var(--glow-purple)) drop-shadow(0 0 15px var(--glow-pink));
+    }
+
+    @keyframes iconPulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            filter: drop-shadow(0 0 25px var(--glow-purple)) drop-shadow(0 0 15px var(--glow-pink));
+        }
+        50% {
+            opacity: 0.9;
+            transform: scale(1.1) rotate(-5deg);
+            filter: drop-shadow(0 0 35px rgba(255, 110, 199, 0.8)) drop-shadow(0 0 25px var(--glow-purple));
+        }
+    }
+
+    .form-header h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff 0%, var(--accent-lavender) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        text-shadow:
+            0 0 30px var(--glow-purple),
+            0 5px 20px rgba(0, 0, 0, 0.7);
+        animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+        0%, 100% {
+            filter: drop-shadow(0 0 20px var(--glow-purple));
+        }
+        50% {
+            filter: drop-shadow(0 0 35px var(--glow-pink));
+        }
+    }
+
+    .form-header p {
+        color: #e6d5f5;
+        opacity: 0.95;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    /* Progress indicator */
+    .progress-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        padding: 0 1rem;
+    }
+
+    .progress-step {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(181, 101, 216, 0.2);
+        border: 2px solid rgba(181, 101, 216, 0.3);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .progress-step::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: var(--accent-violet);
+        transition: all 0.5s ease;
+    }
+
+    .progress-step.active {
+        background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 20px var(--glow-purple);
+        transform: scale(1.3);
+    }
+
+    .progress-step.active::after {
+        width: 100%;
+        height: 100%;
+        animation: progressPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes progressPulse {
+        0%, 100% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(2);
+        }
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+        position: relative;
+        animation: slideUp 0.7s ease backwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.15s; }
+    .form-group:nth-child(2) { animation-delay: 0.25s; }
+    .form-group:nth-child(3) { animation-delay: 0.35s; }
+    .form-group:nth-child(4) { animation-delay: 0.45s; }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(181, 101, 216, 0.5);
+    }
+
+    .form-group label i {
+        font-size: 1.2rem;
+        color: var(--accent-pink);
+        filter: drop-shadow(0 0 10px rgba(255, 110, 199, 0.7));
+        animation: iconBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes iconBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .form-control-custom {
+        width: 100%;
+        padding: 1.2rem 3.5rem 1.2rem 1.5rem;
+        background: rgba(255, 255, 255, 0.97);
+        border: 2px solid rgba(181, 101, 216, 0.3);
+        border-radius: 16px;
+        color: var(--obsidian-dark);
+        font-size: 1.05rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .form-control-custom::placeholder {
+        color: rgba(45, 30, 47, 0.4);
+        font-weight: 500;
+    }
+
+    .form-control-custom:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 1);
+        border-color: var(--accent-violet);
+        box-shadow:
+            0 0 0 5px rgba(181, 101, 216, 0.3),
+            0 8px 25px rgba(181, 101, 216, 0.4),
+            0 0 40px rgba(255, 110, 199, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+        transform: translateY(-3px) scale(1.01);
+    }
+
+    /* Phone number styling */
+    .form-control-custom[type="tel"] {
+        letter-spacing: 2px;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* Validation indicator */
+    .validation-indicator {
+        position: absolute;
+        right: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.3rem;
+        opacity: 0;
+        transition: all 0.4s ease;
+        pointer-events: none;
+    }
+
+    .validation-indicator.valid {
+        color: var(--accent-green);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px var(--glow-green));
+        animation: validPop 0.5s ease;
+    }
+
+    .validation-indicator.invalid {
+        color: var(--accent-red);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px rgba(255, 71, 87, 0.6));
+        animation: invalidShake 0.5s ease;
+    }
+
+    @keyframes validPop {
+        0% { transform: translateY(-50%) scale(0); }
+        50% { transform: translateY(-50%) scale(1.3); }
+        100% { transform: translateY(-50%) scale(1); }
+    }
+
+    @keyframes invalidShake {
+        0%, 100% { transform: translateY(-50%) translateX(0); }
+        25% { transform: translateY(-50%) translateX(-5px); }
+        75% { transform: translateY(-50%) translateX(5px); }
+    }
+
+    .button-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin-top: 3rem;
+        animation: slideUp 0.7s ease 0.5s backwards;
+    }
+
+    .btn-custom {
+        padding: 1.3rem;
+        border: none;
+        border-radius: 16px;
+        font-size: 1.15rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-pink) 100%);
+        color: #ffffff;
+        box-shadow:
+            0 6px 25px var(--glow-purple),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-submit::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: translate(-50%, -50%);
+        transition: width 0.7s ease, height 0.7s ease;
+    }
+
+    .btn-submit:hover::before {
+        width: 500px;
+        height: 500px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow:
+            0 10px 35px var(--glow-purple),
+            0 0 60px rgba(255, 110, 199, 0.5),
+            0 0 80px rgba(181, 101, 216, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        background: linear-gradient(135deg, var(--plum-bright) 0%, var(--accent-orange) 100%);
+    }
+
+    .btn-submit:active {
+        transform: translateY(-2px) scale(1.01);
+    }
+
+    .btn-submit span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-signup {
+        background: transparent;
+        color: var(--accent-lavender);
+        border: 2px solid var(--accent-violet);
+        box-shadow: 0 4px 15px rgba(181, 101, 216, 0.2);
+    }
+
+    .btn-signup::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(181, 101, 216, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.7s ease, height 0.7s ease;
+    }
+
+    .btn-signup:hover::before {
+        width: 500px;
+        height: 500px;
+    }
+
+    .btn-signup:hover {
+        background: rgba(181, 101, 216, 0.15);
+        border-color: var(--accent-pink);
+        color: #ffffff;
+        transform: translateY(-3px) scale(1.03);
+        box-shadow:
+            0 6px 20px rgba(181, 101, 216, 0.4),
+            0 0 40px rgba(255, 110, 199, 0.3);
+    }
+
+    .btn-signup:active {
+        transform: translateY(-1px) scale(1.01);
+    }
+
+    .btn-custom i {
+        font-size: 1.3rem;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+    }
+
+    /* Decorative floating element */
+    .form-card::after {
+        content: '👮';
+        position: absolute;
+        font-size: 12rem;
+        opacity: 0.08;
+        right: -3rem;
+        bottom: -3rem;
+        pointer-events: none;
+        animation: float 10s ease-in-out infinite;
+        filter: drop-shadow(0 0 40px var(--glow-purple));
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-30px) rotate(8deg);
+        }
+        75% {
+            transform: translateY(-15px) rotate(-8deg);
+        }
+    }
+
+    /* Loading state */
+    .btn-submit.loading {
+        pointer-events: none;
+        opacity: 0.85;
+        background: linear-gradient(135deg, var(--plum-light) 0%, var(--plum-bright) 100%);
+    }
+
+    .btn-submit.loading i {
+        animation: spin 1.2s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+        .form-card {
+            padding: 2.5rem 1.8rem;
+            margin: 1rem;
+            border-radius: 22px;
+        }
+
+        .form-header h3 {
+            font-size: 1.9rem;
+            letter-spacing: 3px;
+        }
+
+        .form-header i {
+            font-size: 3.2rem;
+        }
+
+        .progress-indicator {
+            gap: 0.75rem;
+        }
+
+        .progress-step {
+            width: 12px;
+            height: 12px;
+        }
+
+        .button-group {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .btn-custom {
+            padding: 1.1rem;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .form-control-custom {
+            padding: 1.1rem 3.2rem 1.1rem 1.3rem;
+            font-size: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<div class="signup-section">
+    <div class="form-card">
+        <div class="form-header">
+            <i class="fa fa-user-plus"></i>
+            <h3>Officer Sign-Up</h3>
+            <p>Register new officer account</p>
+        </div>
+
+        <div class="progress-indicator">
+            <div class="progress-step active" data-step="1"></div>
+            <div class="progress-step" data-step="2"></div>
+            <div class="progress-step" data-step="3"></div>
+            <div class="progress-step" data-step="4"></div>
+        </div>
+
+        <form method="post" id="signupForm">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name">
+                    <i class="fa fa-user"></i>
+                    Full Name
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        class="form-control-custom"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                        minlength="3"
+                    >
+                    <i class="fa fa-check-circle validation-indicator" id="nameIndicator"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">
+                    <i class="fa fa-phone"></i>
+                    Contact Number
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="tel"
+                        class="form-control-custom"
+                        id="contact"
+                        name="contact"
+                        placeholder="Enter 10-digit contact number"
+                        required
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                    >
+                    <i class="fa fa-check-circle validation-indicator" id="contactIndicator"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="department">
+                    <i class="fa fa-building"></i>
+                    Department
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        class="form-control-custom"
+                        id="department"
+                        name="department"
+                        placeholder="Enter department name"
+                        required
+                    >
+                    <i class="fa fa-check-circle validation-indicator" id="departmentIndicator"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="designation">
+                    <i class="fa fa-id-badge"></i>
+                    Designation
+                </label>
+                <div class="input-wrapper">
+                    <input
+                        type="text"
+                        class="form-control-custom"
+                        id="designation"
+                        name="designation"
+                        placeholder="Enter your designation"
+                        required
+                    >
+                    <i class="fa fa-check-circle validation-indicator" id="designationIndicator"></i>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-custom btn-submit">
+                    <span>
+                        <i class="fa fa-check-circle"></i>
+                        Submit
+                    </span>
+                </button>
+                <a href="#" class="btn-custom btn-signup">
+                    <i class="fa fa-user-plus"></i>
+                    Sign Up
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Form validation and progress tracking
+    const form = document.getElementById('signupForm');
+    const inputs = {
+        name: document.getElementById('name'),
+        contact: document.getElementById('contact'),
+        department: document.getElementById('department'),
+        designation: document.getElementById('designation')
+    };
+
+    const indicators = {
+        name: document.getElementById('nameIndicator'),
+        contact: document.getElementById('contactIndicator'),
+        department: document.getElementById('departmentIndicator'),
+        designation: document.getElementById('designationIndicator')
+    };
+
+    const progressSteps = document.querySelectorAll('.progress-step');
+
+    // Name validation
+    inputs.name.addEventListener('input', function() {
+        if (this.value.length >= 3) {
+            indicators.name.className = 'fa fa-check-circle validation-indicator valid';
+            progressSteps[0].classList.add('active');
+        } else {
+            indicators.name.className = 'fa fa-times-circle validation-indicator invalid';
+            progressSteps[0].classList.remove('active');
+        }
+    });
+
+    // Contact validation
+    inputs.contact.addEventListener('input', function() {
+        const value = this.value.replace(/\D/g, '');
+        this.value = value;
+
+        if (value.length === 10) {
+            indicators.contact.className = 'fa fa-check-circle validation-indicator valid';
+            progressSteps[1].classList.add('active');
+        } else if (value.length > 0) {
+            indicators.contact.className = 'fa fa-times-circle validation-indicator invalid';
+            progressSteps[1].classList.remove('active');
+        } else {
+            indicators.contact.className = 'fa fa-check-circle validation-indicator';
+            progressSteps[1].classList.remove('active');
+        }
+    });
+
+    // Department validation
+    inputs.department.addEventListener('input', function() {
+        if (this.value.length >= 2) {
+            indicators.department.className = 'fa fa-check-circle validation-indicator valid';
+            progressSteps[2].classList.add('active');
+        } else {
+            indicators.department.className = 'fa fa-times-circle validation-indicator invalid';
+            progressSteps[2].classList.remove('active');
+        }
+    });
+
+    // Designation validation
+    inputs.designation.addEventListener('input', function() {
+        if (this.value.length >= 2) {
+            indicators.designation.className = 'fa fa-check-circle validation-indicator valid';
+            progressSteps[3].classList.add('active');
+        } else {
+            indicators.designation.className = 'fa fa-times-circle validation-indicator invalid';
+            progressSteps[3].classList.remove('active');
+        }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        const name = inputs.name.value.trim();
+        const contact = inputs.contact.value.trim();
+        const department = inputs.department.value.trim();
+        const designation = inputs.designation.value.trim();
+
+        if (!name || name.length < 3) {
+            e.preventDefault();
+            alert('Please enter a valid name (minimum 3 characters).');
+            inputs.name.focus();
+            return;
+        }
+
+        if (!contact || contact.length !== 10) {
+            e.preventDefault();
+            alert('Please enter a valid 10-digit contact number.');
+            inputs.contact.focus();
+            return;
+        }
+
+        if (!department || department.length < 2) {
+            e.preventDefault();
+            alert('Please enter a valid department name.');
+            inputs.department.focus();
+            return;
+        }
+
+        if (!designation || designation.length < 2) {
+            e.preventDefault();
+            alert('Please enter a valid designation.');
+            inputs.designation.focus();
+            return;
+        }
+
+        // Add loading animation to button
+        const btn = document.querySelector('.btn-submit');
+        btn.classList.add('loading');
+        btn.innerHTML = '<span><i class="fa fa-spinner fa-spin"></i> Submitting...</span>';
+    });
+
+    // Add subtle animation to inputs on interaction
+    Object.values(inputs).forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.transform = 'translateY(-3px) scale(1.01)';
+        });
+
+        input.addEventListener('blur', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+</script>
+
+{% endblock %}

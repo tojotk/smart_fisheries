@@ -1,0 +1,309 @@
+{#{% extends 'OFFICER/officer_home.html' %}#}
+{#{% block body %}#}
+{#<div class="container mt-5">#}
+{#  <div class="card shadow">#}
+{#    <div class="card-header bg-primary text-white text-center">#}
+{#      <h5>Fishing Area - Trolling Details</h5>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body">#}
+{#      <div class="table-responsive">#}
+{#        <table class="table table-bordered table-striped table-hover align-middle text-center">#}
+{#          <thead class="table-dark">#}
+{#            <tr>#}
+{#              <th scope="col">Fishing Area</th>#}
+{#              <th scope="col">Start Date</th>#}
+{#              <th scope="col">End Date</th>#}
+{#              <th scope="col">Remarks</th>#}
+{#              <th scope="col">Edit</th>#}
+{#              <th scope="col">Delete</th>#}
+{#            </tr>#}
+{#          </thead>#}
+{#                        {% for detail in data %}#}
+{##}
+{#          <tbody>#}
+{##}
+{#            <tr>#}
+{#              <td>{{ detail.fishind_area }}</td>#}
+{#              <td>{{ detail.start_date }}</td>#}
+{#              <td>{{ detail.end_date }}</td>#}
+{#              <td>{{ detail.remarks }}</td>#}
+{#              <td>#}
+{#                <a href="/myapp/officer_edit_trolling_details/{{ detail.id }}#a" class="btn btn-warning btn-sm">Edit</a>#}
+{#              </td>#}
+{#              <td>#}
+{#                <a href="/myapp/delete_trolling_post/{{ detail.id }}#a" class="btn btn-danger btn-sm">Delete</a>#}
+{#              </td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{##}
+{#            <!-- Add Button Row -->#}
+{#            <tr>#}
+{#              <td colspan="6">#}
+{#                <a href="/myapp/officer_add_trolling_details#a" class="btn btn-primary">+ Add New Trolling Detail</a>#}
+{#              </td>#}
+{#            </tr>#}
+{##}
+{#          </tbody>#}
+{##}
+{#        </table>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-box: rgba(45, 30, 47, 0.4);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+        --glow-purple: rgba(181, 101, 216, 0.3);
+    }
+
+    .trolling-wrapper {
+        max-width: 1000px;
+        margin: 3rem auto;
+        padding: 0 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Page Header */
+    .page-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+
+    .page-header h2 {
+        color: var(--pure-white);
+        font-weight: 800;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header span {
+        color: var(--accent-pink);
+    }
+
+    .page-header p {
+        color: var(--text-lavender);
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    /* Add Button Styling */
+    .add-action-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-glow-add {
+        background: rgba(181, 101, 216, 0.1);
+        border: 1px solid var(--accent-violet);
+        color: var(--pure-white);
+        padding: 10px 25px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 0.3s;
+        box-shadow: 0 0 15px var(--glow-purple);
+    }
+
+    .btn-glow-add:hover {
+        background: var(--accent-violet);
+        box-shadow: 0 0 25px var(--accent-violet);
+        color: var(--pure-white);
+        transform: translateY(-3px);
+    }
+
+    /* Grid List Container */
+    .trolling-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Card Item (Replaces Table Tr) */
+    .trolling-item {
+        background: var(--plum-box);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 20px;
+        border: 1px solid rgba(181, 101, 216, 0.1);
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1.5fr auto;
+        align-items: center;
+        gap: 20px;
+        transition: 0.3s;
+    }
+
+    .trolling-item:hover {
+        background: rgba(181, 101, 216, 0.08);
+        border-color: var(--accent-pink);
+        transform: scale(1.01);
+    }
+
+    /* Column Styling */
+    .data-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .data-label {
+        color: var(--accent-violet);
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .data-value {
+        color: var(--pure-white);
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .area-highlight {
+        color: var(--accent-pink);
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    /* Action Buttons */
+    .action-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        transition: 0.3s;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .btn-edit {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+        border: 1px solid #f59e0b;
+    }
+
+    .btn-edit:hover {
+        background: #f59e0b;
+        color: var(--pure-white);
+    }
+
+    .btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+    }
+
+    .btn-delete:hover {
+        background: #ef4444;
+        color: var(--pure-white);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 850px) {
+        .trolling-item {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .action-group {
+            grid-column: span 2;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(181, 101, 216, 0.1);
+            padding-top: 10px;
+        }
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px;
+        color: var(--text-lavender);
+        background: var(--plum-box);
+        border-radius: 20px;
+        border: 1px dashed var(--accent-violet);
+    }
+</style>
+
+<div class="trolling-wrapper">
+    <div class="page-header">
+        <h2>Trolling <span>Management</span></h2>
+        <p><i class="fas fa-water me-2"></i> Area Scheduling & Zone Control</p>
+    </div>
+
+    <div class="add-action-container">
+        <a href="/myapp/officer_add_trolling_details#a" class="btn-glow-add">
+            <i class="fas fa-plus-circle me-2"></i> New Detail
+        </a>
+    </div>
+
+    <div class="trolling-grid">
+        {% for detail in data %}
+        <div class="trolling-item">
+            <div class="data-group">
+                <span class="data-label">Fishing Zone</span>
+                <span class="data-value area-highlight">{{ detail.fishind_area }}</span>
+            </div>
+
+            <div class="data-group">
+                <span class="data-label">Commencement</span>
+                <span class="data-value">{{ detail.start_date }}</span>
+            </div>
+
+            <div class="data-group">
+                <span class="data-label">Conclusion</span>
+                <span class="data-value">{{ detail.end_date }}</span>
+            </div>
+
+            <div class="data-group">
+                <span class="data-label">Officer Remarks</span>
+                <span class="data-value" style="font-size: 0.85rem; opacity: 0.8;">{{ detail.remarks }}</span>
+            </div>
+
+            <div class="action-group">
+                <a href="/myapp/officer_edit_trolling_details/{{ detail.id }}#a" class="btn-icon btn-edit" title="Edit">
+                    <i class="fas fa-pen"></i>
+                </a>
+                <a href="/myapp/delete_trolling_post/{{ detail.id }}#a" class="btn-icon btn-delete" title="Delete">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <i class="fas fa-fish-bubble fa-3x mb-3" style="color: var(--accent-violet);"></i>
+            <h4>No Trolling Schedules Active</h4>
+            <p>Initiate a new trolling detail to begin monitoring.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

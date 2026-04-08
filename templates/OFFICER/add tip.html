@@ -1,0 +1,192 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-glass: rgba(45, 30, 47, 0.7);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --accent-lavender: #e6d5f5;
+        --glow-purple: rgba(181, 101, 216, 0.4);
+    }
+
+    .form-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        perspective: 1000px;
+    }
+
+    .glass-form-card {
+        background: var(--plum-glass);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        border: 1px solid rgba(181, 101, 216, 0.3);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 80px rgba(181, 101, 216, 0.1);
+        padding: 3rem;
+        width: 100%;
+        max-width: 550px;
+        animation: formAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes formAppear {
+        from { opacity: 0; transform: rotateX(-15deg) translateY(50px); }
+        to { opacity: 1; transform: rotateX(0) translateY(0); }
+    }
+
+    .header-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2.5rem;
+        color: white;
+        box-shadow: 0 10px 20px rgba(181, 101, 216, 0.4);
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .form-title {
+        color: white;
+        text-align: center;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    .input-group-custom {
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group-custom label {
+        color: var(--accent-lavender);
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .field-wrapper {
+        position: relative;
+    }
+
+    .form-input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(181, 101, 216, 0.3);
+        border-radius: 12px;
+        padding: 12px 15px;
+        color: white;
+        transition: 0.3s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 15px rgba(255, 110, 199, 0.2);
+    }
+
+    textarea.form-input {
+        min-height: 120px;
+        resize: none;
+    }
+
+    .char-indicator {
+        text-align: right;
+        font-size: 0.75rem;
+        color: var(--accent-violet);
+        margin-top: 5px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(90deg, var(--accent-violet), var(--accent-pink));
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 1rem;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 110, 199, 0.4);
+        filter: brightness(1.1);
+    }
+
+    .submit-btn:active {
+        transform: scale(0.98);
+    }
+</style>
+
+<div class="form-wrapper">
+    <div class="glass-form-card">
+        <div class="header-icon">
+            <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3 class="form-title">Broadcast Tip</h3>
+
+        <form action="/myapp/officer_add_tip_post" method="post" id="safetyForm">
+            <div class="input-group-custom">
+                <label for="title">Heading / Subject</label>
+                <div class="field-wrapper">
+                    <input type="text" id="title" name="title" class="form-input" placeholder="e.g. Storm Warning" required>
+                </div>
+            </div>
+
+            <div class="input-group-custom">
+                <label for="desc">Detailed Guidance</label>
+                <div class="field-wrapper">
+                    <textarea id="desc" name="desc" class="form-input" placeholder="Enter safety instructions..." required maxlength="500"></textarea>
+                    <div class="char-indicator">
+                        <span id="charCount">0</span>/500
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane me-2"></i> Deploy Tip
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Live character counting function
+    const descArea = document.getElementById('desc');
+    const charDisplay = document.getElementById('charCount');
+
+    descArea.addEventListener('input', () => {
+        const length = descArea.value.length;
+        charDisplay.textContent = length;
+        if (length >= 450) charDisplay.style.color = '#ff6ec7';
+        else charDisplay.style.color = '#b565d8';
+    });
+
+    // Button loading state function
+    document.getElementById('safetyForm').onsubmit = function() {
+        const btn = document.getElementById('submitBtn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Sending...';
+        btn.style.opacity = '0.7';
+        btn.style.pointerEvents = 'none';
+    };
+</script>
+{% endblock %}

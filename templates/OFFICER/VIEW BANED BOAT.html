@@ -1,0 +1,215 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-box: rgba(45, 30, 47, 0.4);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+        --glow-purple: rgba(181, 101, 216, 0.3);
+    }
+
+    .violation-wrapper {
+        max-width: 1100px;
+        margin: 3rem auto;
+        padding: 0 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Page Header */
+    .page-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+
+    .page-header h2 {
+        color: var(--pure-white);
+        font-weight: 800;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header span {
+        color: var(--accent-pink);
+    }
+
+    .page-header p {
+        color: var(--text-lavender);
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    /* Grid List Container - Replacing Table */
+    .violation-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Item Card (Replaces Table Row) */
+    .violation-item {
+        background: var(--plum-box);
+        backdrop-filter: blur(12px);
+        padding: 20px 30px;
+        border-radius: 20px;
+        border: 1px solid rgba(181, 101, 216, 0.1);
+        display: grid;
+        grid-template-columns: 0.8fr 2fr 1fr 1fr;
+        align-items: center;
+        gap: 20px;
+        transition: 0.3s;
+    }
+
+    .violation-item:hover {
+        background: rgba(181, 101, 216, 0.08);
+        border-color: var(--accent-pink);
+        transform: translateX(10px);
+    }
+
+    /* Column Data Styling */
+    .data-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .data-label {
+        color: var(--accent-violet);
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .data-value {
+        color: var(--pure-white); /* White text only for data */
+        font-weight: 600;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    /* Evidence Image */
+    .evidence-thumb {
+        width: 80px;
+        height: 60px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 2px solid rgba(181, 101, 216, 0.3);
+        transition: 0.4s;
+    }
+
+    .evidence-thumb:hover {
+        transform: scale(2.5);
+        z-index: 10;
+        border-color: var(--accent-pink);
+        box-shadow: 0 0 20px var(--glow-purple);
+    }
+
+    /* Action Status Styling */
+    .status-banned {
+        color: var(--accent-pink);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        text-shadow: 0 0 10px rgba(255, 110, 199, 0.3);
+    }
+
+    .btn-ban-action {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid #ef4444;
+        color: #ef4444;
+        padding: 8px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        transition: 0.3s;
+        text-align: center;
+    }
+
+    .btn-ban-action:hover {
+        background: #ef4444;
+        color: var(--pure-white);
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    }
+
+    /* Mobile view */
+    @media (max-width: 800px) {
+        .violation-item {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .data-group:nth-child(2) { grid-column: span 2; }
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px;
+        background: var(--plum-box);
+        border-radius: 20px;
+        border: 1px dashed var(--accent-violet);
+    }
+</style>
+
+<div class="violation-wrapper">
+    <div class="page-header">
+        <h2>Violation <span>Records</span></h2>
+        <p><i class="fas fa-shield-alt me-2"></i> Enforcement & Compliance Monitor</p>
+    </div>
+
+    <div class="violation-grid">
+        {% for violation in data %}
+        <div class="violation-item">
+
+            <div class="data-group">
+                <span class="data-label">Evidence</span>
+                <img src="{{ violation.image.url }}" class="evidence-thumb" alt="Proof">
+            </div>
+
+            <div class="data-group">
+                <span class="data-label">Incident Description</span>
+                <span class="data-value">{{ violation.description }}</span>
+            </div>
+
+            <div class="data-group">
+                <span class="data-label">Reported On</span>
+                <span class="data-value">{{ violation.date }}</span>
+            </div>
+
+            <div class="data-group text-center">
+                <span class="data-label">Action Status</span>
+                <div class="mt-2">
+                    {% if violation.status == "na" %}
+                        <a href="/myapp/officer_ban_boat/{{ violation.id }}#a" class="btn-ban-action">
+                            <i class="fas fa-user-slash me-1"></i> Ban Boat
+                        </a>
+                    {% else %}
+                        <span class="status-banned"><i class="fas fa-ban me-1"></i> Banned</span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <i class="fas fa-check-double fa-3x mb-3" style="color: var(--accent-violet); opacity: 0.5;"></i>
+            <h4 class="text-white">All Clear</h4>
+            <p>No active violations require attention at this time.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

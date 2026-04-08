@@ -1,0 +1,230 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+
+<style>
+  /* Formal Deep Teal Silk Voyage Management Styling */
+  .trip-details-container {
+    padding: 2rem 0;
+  }
+
+  .trip-details-header {
+    margin-bottom: 2rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+  }
+
+  .trip-details-title {
+    font-family: 'Raleway', sans-serif;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .trip-details-subtitle {
+    color: #2dd4bf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+  }
+
+  .trip-table-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .trip-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .trip-table thead {
+    background: rgba(45, 212, 191, 0.1);
+  }
+
+  .trip-table thead th {
+    padding: 1.2rem;
+    color: #2dd4bf;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .trip-table tbody td {
+    padding: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.95rem;
+  }
+
+  .trip-table tbody tr {
+    transition: background 0.3s;
+  }
+
+  .trip-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  /* Status Badges */
+  .status-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: inline-block;
+  }
+
+  .tag-pending { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+  .tag-ongoing { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+  .tag-completed { background: rgba(45, 212, 191, 0.2); color: #2dd4bf; }
+
+  /* Formal Buttons */
+  .action-btn {
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+    border: 1px solid transparent;
+  }
+
+  .btn-edit { border-color: #eab308; color: #eab308; }
+  .btn-edit:hover { background: #eab308; color: #0b3037; }
+
+  .btn-delete { border-color: #ef4444; color: #ef4444; }
+  .btn-delete:hover { background: #ef4444; color: white; }
+
+  .btn-status { border-color: #3b82f6; color: #3b82f6; }
+  .btn-status:hover { background: #3b82f6; color: white; }
+
+  .footer-action {
+    background: rgba(11, 48, 55, 0.5);
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .btn-add-trip {
+    background: transparent;
+    border: 1px solid #2dd4bf;
+    color: #2dd4bf;
+    padding: 0.8rem 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-add-trip:hover {
+    background: #2dd4bf;
+    color: #0b3037;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 992px) {
+    .table-responsive { border: 0; }
+  }
+</style>
+
+<div class="container trip-details-container">
+  <div class="trip-details-header">
+    <h2 class="trip-details-title">Voyage Logs</h2>
+    <p class="trip-details-subtitle">Detailed Fishing Trip Manifest & Status</p>
+  </div>
+
+  <div class="trip-table-card">
+    <div class="table-responsive">
+      <table class="trip-table">
+        <thead>
+          <tr>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Origin Port</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td><strong style="color: #ffffff;">{{ i.start_date }}</strong></td>
+            <td><strong style="color: #ffffff;">{{ i.end_date }}</strong></td>
+            <td>{{ i.From }}</td>
+            <td>{{ i.To }}</td>
+            <td>
+              {% if i.status == 'Pending' %}
+                <span class="status-tag tag-pending">Pending</span>
+              {% elif i.status == 'Ongoing' %}
+                <span class="status-tag tag-ongoing">In Progress</span>
+              {% elif i.status == 'Completed' %}
+                <span class="status-tag tag-completed">Arrived</span>
+              {% else %}
+                <span class="status-tag tag-pending">{{ i.status }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="/myapp/boat_owner_edit_trip_details/{{ i.id }}" class="action-btn btn-edit">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="/myapp/boat_owner_DELETE_trip_details/{{ i.id }}"
+                   class="action-btn btn-delete"
+                   onclick="return confirm('Permanently remove this voyage record?');">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </a>
+                <a href="/myapp/boat_owner_update_trip_status/{{ i.id }}" class="action-btn btn-status">
+                  <i class="fas fa-sync-alt"></i> Update
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="py-5 text-center text-muted">
+              <i class="fas fa-route fa-3x mb-3 opacity-25"></i>
+              <p>No recorded voyages found in the system manifest.</p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-action">
+      <a href="/myapp/boat_owner_add_trip_details/#a" class="btn-add-trip">
+        <i class="fas fa-plus-circle"></i> Initialize New Voyage
+      </a>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+{% endblock %}

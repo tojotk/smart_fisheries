@@ -1,0 +1,262 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+    /* Formal Deep Teal Profile Styling */
+    .profile-section {
+        padding: 2.5rem 0;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 800px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-header-custom {
+        background: rgba(45, 212, 191, 0.1);
+        padding: 2rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    .card-header-custom h4 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .card-header-custom i {
+        font-size: 2rem;
+        color: #2dd4bf;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-body-custom {
+        padding: 2.5rem;
+    }
+
+    /* Form Grid */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .full-width { grid-column: span 2; }
+
+    .form-label {
+        color: #2dd4bf;
+        font-weight: 700;
+        font-size: 0.75rem;
+        margin-bottom: 0.6rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .input-icon-group {
+        position: relative;
+    }
+
+    .input-icon-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(45, 212, 191, 0.5);
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        background: rgba(11, 48, 55, 0.5);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 4px;
+        color: white !important;
+        padding: 0.8rem 1rem 0.8rem 2.8rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        background: rgba(11, 48, 55, 0.8);
+        border-color: #2dd4bf;
+        box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+        outline: none;
+    }
+
+    /* File Upload Styling */
+    .file-link {
+        display: inline-flex;
+        align-items: center;
+        color: #2dd4bf;
+        text-decoration: none;
+        padding: 0.6rem 1rem;
+        background: rgba(45, 212, 191, 0.1);
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .file-input-custom {
+        background: rgba(45, 212, 191, 0.05);
+        border: 1px dashed rgba(45, 212, 191, 0.4);
+        border-radius: 4px;
+        padding: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .file-input-custom:hover {
+        border-color: #2dd4bf;
+        background: rgba(45, 212, 191, 0.1);
+    }
+
+    .btn-update {
+        background: transparent;
+        border: 1px solid #2dd4bf;
+        color: #2dd4bf;
+        border-radius: 4px;
+        padding: 1rem 3rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+    .btn-update:hover {
+        background: #2dd4bf;
+        color: #0b3037;
+        box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .full-width { grid-column: span 1; }
+    }
+</style>
+
+<div class="profile-section">
+    <div class="container d-flex justify-content-center">
+        <div class="profile-card">
+            <div class="card-header-custom">
+                <i class="fa-solid fa-user-gear"></i>
+                <h4>Profile Configuration</h4>
+            </div>
+            <div class="card-body-custom">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-grid">
+                        <div class="mb-3 full-width">
+                            <label class="form-label">Full Personnel Name</label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-id-badge"></i>
+                                <input type="text" name="name" class="form-control" value="{{ data.name }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Contact Primary</label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-phone-flip"></i>
+                                <input type="tel" id="phone" name="phone" class="form-control" value="{{ data.phone }}" pattern="[0-9]{10}" maxlength="10" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Location / Place</label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-map-location-dot"></i>
+                                <input type="text" name="place" class="form-control" value="{{ data.place }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Post Office</label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-envelope-open-text"></i>
+                                <input type="text" name="post" class="form-control" value="{{ data.Post }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Area PIN Code</label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-location-pin"></i>
+                                <input type="text" id="pin" name="pin" class="form-control" value="{{ data.pin }}" pattern="[0-9]{6}" maxlength="6" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 full-width">
+                            <label class="form-label">Identification Documentation</label>
+
+                            {% if data.id_proof %}
+                                <a href="{{ data.id_proof.url }}" target="_blank" class="file-link">
+                                    <i class="fas fa-file-shield me-2"></i> Review Active ID Proof
+                                </a>
+                            {% endif %}
+
+                            <div class="file-input-wrapper">
+                                <label for="id_proof" class="file-input-custom" id="drop-zone">
+                                    <i class="fas fa-cloud-arrow-up mb-2" style="font-size: 1.5rem; color: #2dd4bf;"></i>
+                                    <div id="file-label-text" style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">
+                                        Select new document to update (PDF, JPG, PNG)
+                                    </div>
+                                </label>
+                                <input type="file" id="id_proof" name="id_proof" class="d-none" accept=".pdf,.jpg,.jpeg,.png">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn-update">
+                            <i class="fas fa-arrows-rotate me-2"></i> Synchronize Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+    const fileInput = document.getElementById('id_proof');
+    const fileLabelText = document.getElementById('file-label-text');
+    const dropZone = document.getElementById('drop-zone');
+
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            fileLabelText.textContent = "Selected: " + this.files[0].name;
+            fileLabelText.style.color = "#2dd4bf";
+        }
+    });
+
+    // Sanitization for numbers
+    ['phone', 'pin'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    });
+
+    // Simple Drag & Drop Visuals
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = '#2dd4bf'; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = 'rgba(45, 212, 191, 0.4)'; });
+</script>
+{% endblock %}

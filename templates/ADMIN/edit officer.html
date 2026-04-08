@@ -1,0 +1,240 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-edit-officer-section {
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .sfm-officer-card {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+  }
+
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .sfm-officer-header {
+    background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+  }
+
+  .sfm-officer-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(45, 212, 191, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    color: #2dd4bf;
+    font-size: 1.8rem;
+  }
+
+  .sfm-officer-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sfm-officer-body {
+    padding: 2.5rem;
+  }
+
+  .sfm-form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .sfm-form-label {
+    display: block;
+    color: #94a3b8; /* Muted text */
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .sfm-form-label i {
+    color: #2dd4bf;
+    margin-right: 8px;
+  }
+
+  .sfm-form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .sfm-form-input:focus {
+    border-color: #2dd4bf;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.1);
+  }
+
+  .sfm-button-container {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .sfm-edit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+  }
+
+  .sfm-edit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(45, 212, 191, 0.4);
+    filter: brightness(1.1);
+  }
+
+  .sfm-edit-btn i {
+    margin-left: 8px;
+  }
+
+  /* Decorative Glows */
+  .sfm-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.1) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @media (max-width: 576px) {
+    .sfm-officer-card { margin: 0 1rem; }
+    .sfm-officer-body { padding: 1.5rem; }
+  }
+</style>
+
+<div class="sfm-edit-officer-section">
+  <div class="sfm-officer-card">
+    <div class="sfm-glow" style="top: -50px; left: -50px;"></div>
+    <div class="sfm-glow" style="bottom: -50px; right: -50px;"></div>
+
+    <div class="sfm-officer-header">
+      <div class="sfm-officer-icon">
+        <i class="fa-solid fa-user-pen"></i>
+      </div>
+      <h5 class="sfm-officer-title">Modify Profile</h5>
+    </div>
+
+    <div class="sfm-officer-body">
+      <form action="/myapp/admin_edit_officer_post" method="post">
+        {% csrf_token %}
+
+        <div class="sfm-form-group">
+          <label for="name" class="sfm-form-label">
+            <i class="fa-solid fa-user"></i> Full Name
+          </label>
+          <input
+            type="text"
+            class="sfm-form-input"
+            id="name"
+            name="name"
+            value="{{ data.name }}"
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="sfm-form-group">
+          <label for="contact" class="sfm-form-label">
+            <i class="fa-solid fa-phone"></i> Contact Number
+          </label>
+          <input
+            type="tel"
+            class="sfm-form-input"
+            id="contact"
+            name="contact"
+            value="{{ data.phone }}"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            title="Please enter a valid 10-digit number"
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="sfm-form-group">
+          <label for="department" class="sfm-form-label">
+            <i class="fa-solid fa-building"></i> Department
+          </label>
+          <input
+            type="text"
+            class="sfm-form-input"
+            id="department"
+            name="department"
+            value="{{ data.department }}"
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="sfm-form-group">
+          <label for="designation" class="sfm-form-label">
+            <i class="fa-solid fa-id-card"></i> Designation
+          </label>
+          <input
+            type="text"
+            class="sfm-form-input"
+            id="designation"
+            name="designation"
+            value="{{ data.designation }}"
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="sfm-button-container">
+          <button type="submit" class="sfm-edit-btn">
+            Update Records <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

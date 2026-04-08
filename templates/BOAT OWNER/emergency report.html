@@ -1,0 +1,216 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+<style>
+    /* Formal Deep Teal Silk Reports Styling */
+    .reports-section {
+        padding: 2rem 0;
+        min-height: calc(100vh - 200px);
+    }
+
+    .page-header {
+        margin-bottom: 2rem;
+        border-left: 4px solid #2dd4bf;
+        padding-left: 1.5rem;
+    }
+
+    .page-header h4 {
+        font-family: 'Raleway', sans-serif;
+        color: #ffffff;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .page-header .subtitle {
+        color: #2dd4bf;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 5px;
+    }
+
+    /* Formal Command Card */
+    .table-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 8px;
+        overflow: hidden;
+        padding: 1.5rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        background: transparent;
+    }
+
+    .custom-table thead {
+        background: rgba(45, 212, 191, 0.1);
+    }
+
+    .custom-table thead th {
+        color: #2dd4bf !important;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 1.2rem;
+        border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+        font-size: 0.8rem;
+    }
+
+    .custom-table tbody tr {
+        border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+        transition: 0.3s;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(45, 212, 191, 0.05);
+    }
+
+    .custom-table tbody td {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 1.2rem;
+        vertical-align: middle;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    /* Column Specific Styling */
+    .report-id {
+        color: #ffffff;
+        font-weight: 700;
+        font-family: 'Roboto Mono', monospace;
+    }
+
+    .vessel-cell {
+        color: #2dd4bf;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .report-content {
+        max-width: 250px;
+        text-align: left !important;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Refined Badges */
+    .type-badge {
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+        border: 1px solid transparent;
+    }
+
+    .type-emergency { background: rgba(239, 68, 68, 0.1); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+    .type-incident { background: rgba(234, 179, 8, 0.1); color: #eab308; border-color: rgba(234, 179, 8, 0.3); }
+    .type-general { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-color: rgba(59, 130, 246, 0.3); }
+
+    /* Track Button Styling */
+    .btn-track-map {
+        background: transparent;
+        border: 1px solid #2dd4bf;
+        color: #2dd4bf;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.3s;
+    }
+
+    .btn-track-map:hover {
+        background: #2dd4bf;
+        color: #0b3037;
+    }
+
+    .empty-state {
+        padding: 4rem 2rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.3);
+    }
+</style>
+
+<div class="reports-section">
+    <div class="container">
+        <div class="page-header">
+            <h4><i class="fas fa-clipboard-list me-2"></i> Report Archive</h4>
+            <p class="subtitle">System Logs, Incident Reports & Emergency Dispatches</p>
+        </div>
+
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Log ID</th>
+                            <th>Entry Date</th>
+                            <th>Reporting User</th>
+                            <th>Vessel Reg</th>
+                            <th>Narrative</th>
+                            <th>Category</th>
+                            <th>Navigation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if data %}
+                            {% for item in data %}
+                                <tr>
+                                    <td class="report-id">#{{ item.id }}</td>
+                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.user.name }}</td>
+                                    <td class="vessel-cell">{{ item.boat.regno }}</td>
+                                    <td class="report-content">{{ item.report }}</td>
+                                    <td>
+                                        {% if 'emergency' in item.type|lower %}
+                                            <span class="type-badge type-emergency">Emergency</span>
+                                        {% elif 'incident' in item.type|lower or 'alert' in item.type|lower %}
+                                            <span class="type-badge type-incident">Incident</span>
+                                        {% else %}
+                                            <span class="type-badge type-general">General</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="https://www.google.com/maps?q={{ item.latitude }},{{ item.longitude }}"
+                                           target="_blank"
+                                           class="btn-track-map">
+                                            <i class="fas fa-location-crosshairs"></i>
+                                            Track
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <i class="fas fa-folder-open fa-3x mb-3 opacity-25"></i>
+                                        <h5>No Records Found</h5>
+                                        <p>The report database is currently empty.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

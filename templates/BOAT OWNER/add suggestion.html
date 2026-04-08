@@ -1,0 +1,199 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+
+<style>
+  /* Formal Deep Teal Silk Suggestion Styling */
+  .suggestion-container {
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .suggestion-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border-radius: 8px;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Formal Top Bar Accent */
+  .suggestion-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #2dd4bf; /* Emerald Accent */
+  }
+
+  .form-header {
+    padding: 2.5rem 2.5rem 1rem 2.5rem;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+  }
+
+  .form-header h2 {
+    font-family: 'Raleway', sans-serif;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .form-header p {
+    color: #2dd4bf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+  }
+
+  .form-body-custom {
+    padding: 2.5rem;
+  }
+
+  .form-label-custom {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-label-custom i {
+    color: #2dd4bf;
+  }
+
+  /* Textarea/Input Styling */
+  .form-control-custom {
+    background: rgba(11, 48, 55, 0.5);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 4px;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-control-custom:focus {
+    background: rgba(11, 48, 55, 0.8);
+    border-color: #2dd4bf;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+    color: white;
+    outline: none;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .btn-submit-custom {
+    background: #2dd4bf;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.5rem;
+    color: #0b3037;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    flex: 2;
+  }
+
+  .btn-submit-custom:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 212, 191, 0.2);
+  }
+
+  .btn-secondary-custom {
+    background: transparent;
+    border: 1px solid rgba(45, 212, 191, 0.5);
+    border-radius: 4px;
+    padding: 0.8rem 1.5rem;
+    color: #2dd4bf;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+  }
+
+  .btn-secondary-custom:hover {
+    background: rgba(45, 212, 191, 0.1);
+    color: #ffffff;
+    border-color: #2dd4bf;
+  }
+
+  @media (max-width: 768px) {
+    .button-group {
+      flex-direction: column;
+    }
+    .form-body-custom {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<div class="suggestion-container">
+  <div class="suggestion-card">
+    <div class="form-header">
+      <h2>Suggestions</h2>
+      <p>System Feedback & Improvements</p>
+    </div>
+
+    <div class="form-body-custom">
+      <form method="post" action="/myapp/boat_owner_add_suggestion_post/">
+        {% csrf_token %}
+
+        <div class="mb-4">
+          <label for="suggestion" class="form-label-custom">
+            <i class="fas fa-lightbulb"></i>
+            Operational Suggestion
+          </label>
+          <textarea
+            id="suggestion"
+            name="suggestion"
+            class="form-control-custom"
+            placeholder="Please describe your suggestion or technical improvement..."
+            required
+          ></textarea>
+        </div>
+
+        <div style="height: 1px; background: rgba(45, 212, 191, 0.1); margin-bottom: 2rem;"></div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-submit-custom">
+            <i class="fas fa-paper-plane me-2"></i> Send Suggestion
+          </button>
+{#          <a href="#" class="btn-secondary-custom">#}
+{#            <i class="fas fa-plus me-1"></i> New#}
+{#          </a>#}
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

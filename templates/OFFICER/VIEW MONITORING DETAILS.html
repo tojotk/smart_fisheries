@@ -1,0 +1,230 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-glass: rgba(45, 30, 47, 0.5);
+        --emergency-red: #ef4444;
+        --accent-pink: #ff6ec7;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+        --alert-glow: rgba(239, 68, 68, 0.3);
+        --table-border: rgba(239, 68, 68, 0.2);
+    }
+
+    .detection-wrapper {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 20px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .page-header h2 {
+        color: var(--pure-white);
+        font-weight: 800;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        font-size: 2.2rem;
+    }
+
+    .page-header span {
+        color: var(--emergency-red);
+        text-shadow: 0 0 20px var(--alert-glow);
+    }
+
+    /* Table Container Styling */
+    .table-responsive-custom {
+        background: var(--plum-glass);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        border: 1px solid var(--table-border);
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--text-lavender);
+    }
+
+    .custom-table thead {
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .custom-table th {
+        padding: 20px;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        color: var(--emergency-red);
+        border-bottom: 2px solid var(--table-border);
+        text-align: left;
+    }
+
+    .custom-table td {
+        padding: 18px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+    }
+
+    .custom-table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(239, 68, 68, 0.05);
+        box-shadow: inset 5px 0 0 var(--emergency-red);
+    }
+
+    /* User Profile Style */
+    .user-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .avatar-sm {
+        width: 35px;
+        height: 35px;
+        background: linear-gradient(135deg, var(--emergency-red), var(--accent-pink));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 0.9rem;
+    }
+
+    /* Content Styling */
+    .timestamp-text {
+        font-family: 'Courier New', monospace;
+        color: var(--pure-white);
+        font-size: 0.9rem;
+    }
+
+    .description-text {
+        max-width: 300px;
+        line-height: 1.4;
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+
+    /* Visual Evidence Image */
+    .evidence-thumb {
+        width: 80px;
+        height: 50px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid var(--emergency-red);
+        transition: 0.4s;
+    }
+
+    .evidence-thumb:hover {
+        transform: scale(3) translateX(-30%);
+        z-index: 1000;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid var(--emergency-red);
+    }
+
+    .live-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--emergency-red);
+        border-radius: 50%;
+        animation: pulseRed 1.5s infinite;
+    }
+
+    @keyframes pulseRed {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+        .custom-table thead { display: none; }
+        .custom-table td { display: block; text-align: right; padding-left: 50%; position: relative; }
+        .custom-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 20px;
+            font-weight: bold;
+            color: var(--emergency-red);
+        }
+    }
+</style>
+
+<div class="detection-wrapper">
+    <div class="page-header">
+        <h2>Illegal <span>Reports</span></h2>
+
+    </div>
+
+    <div class="table-responsive-custom">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Reported By</th>
+                    <th>Detection Time</th>
+                    <th>Incident Details</th>
+                    <th class="text-center">Evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td data-label="Reporter">
+                        <div class="user-cell">
+                            <div class="avatar-sm">{{ i.USER.name|slice:":1"|upper }}</div>
+                            <span class="user-name">{{ i.USER.name }}</span>
+                        </div>
+                    </td>
+                    <td data-label="Time">
+                        <span class="timestamp-text">{{ i.date }}</span>
+                    </td>
+                    <td data-label="Description">
+                        <div class="description-text">{{ i.description }}</div>
+                    </td>
+                    <td data-label="Evidence" class="text-center">
+                        <img src="/media/{{ i.image }}" class="evidence-thumb" alt="Evidence">
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-5">
+                        <p style="opacity: 0.5; letter-spacing: 1px;">NO CRITICAL INCIDENTS DETECTED IN CURRENT RADIUS</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

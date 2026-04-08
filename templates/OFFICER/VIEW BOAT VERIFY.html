@@ -1,0 +1,255 @@
+{% extends 'OFFICER/officer_home.html' %}
+{% block body %}
+<style>
+    :root {
+        --obsidian: #0f0810;
+        --plum-dark: #2d1e2f;
+        --plum-glass: rgba(45, 30, 47, 0.6);
+        --accent-violet: #b565d8;
+        --accent-pink: #ff6ec7;
+        --accent-cyan: #06b6d4;
+        --accent-green: #10b981;
+        --text-lavender: #e6d5f5;
+        --pure-white: #ffffff;
+    }
+
+    .vessel-section {
+        padding: 3rem 1.5rem;
+        min-height: 90vh;
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+        color: var(--pure-white);
+        font-weight: 800;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        text-shadow: 0 0 20px rgba(181, 101, 216, 0.5);
+    }
+
+    .section-header span {
+        color: var(--accent-pink);
+    }
+
+    /* Glass Table Styling */
+    .glass-card {
+        background: var(--plum-glass);
+        backdrop-filter: blur(20px);
+        border-radius: 25px;
+        border: 1px solid rgba(181, 101, 216, 0.2);
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-table {
+        width: 100%;
+        color: var(--text-lavender);
+        border-collapse: collapse;
+        margin-bottom: 0;
+    }
+
+    .custom-table thead {
+        background: rgba(15, 8, 16, 0.8);
+    }
+
+    .custom-table th {
+        padding: 1.5rem;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        color: var(--accent-violet);
+        border-bottom: 2px solid rgba(181, 101, 216, 0.2);
+        text-align: left;
+    }
+
+    .custom-table td {
+        padding: 1.2rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+    }
+
+    .custom-table tbody tr:hover {
+        background: rgba(181, 101, 216, 0.08);
+        transition: 0.3s;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .status-verified {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--accent-green);
+        border: 1px solid var(--accent-green);
+    }
+
+    .status-banned {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ff4757;
+        border: 1px solid #ff4757;
+    }
+
+    /* Action Buttons */
+    .btn-action {
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-verify {
+        background: var(--accent-green);
+        color: white;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-verify:hover {
+        transform: translateY(-2px);
+        background: #059669;
+        color: white;
+    }
+
+    .btn-trip {
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid var(--accent-cyan);
+        color: var(--accent-cyan);
+    }
+
+    .btn-trip:hover {
+        background: var(--accent-cyan);
+        color: var(--obsidian);
+        transform: translateY(-2px);
+    }
+
+    .vessel-name {
+        color: var(--pure-white);
+        font-weight: 700;
+        display: block;
+    }
+
+    .reg-no {
+        font-family: 'Courier New', monospace;
+        color: var(--accent-pink);
+        font-weight: 600;
+    }
+
+    @media (max-width: 992px) {
+        .custom-table thead { display: none; }
+        .custom-table td {
+            display: block;
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            border: none;
+        }
+        .custom-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 1.5rem;
+            color: var(--accent-violet);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+        .custom-table tr {
+            display: block;
+            border-bottom: 2px solid rgba(181, 101, 216, 0.2);
+            padding: 1rem 0;
+        }
+    }
+</style>
+
+<div class="vessel-section">
+    <div class="section-header">
+        <h2>Boat <span>Verification</span></h2>
+        <p class="text-muted">Manage boat registrations and trip logs</p>
+    </div>
+
+    <div class="glass-card">
+        <div class="table-responsive">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Owner</th>
+                        <th>Reg Details</th>
+                        <th>Capacity</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for boat in boats %}
+                    <tr>
+                        <td data-label="Owner">
+                            <span class="vessel-name">{{ boat.owner.name }}</span>
+                        </td>
+                        <td data-label="Reg Details">
+                            <span class="reg-no">{{ boat.regno }}</span>
+                        </td>
+                        <td data-label="Capacity">
+                            <i class="fas fa-users me-2"></i>{{ boat.capacity }}
+                        </td>
+                        <td data-label="Type">
+                            {{ boat.type }}
+                        </td>
+                        <td data-label="Status">
+                            {% if boat.status == 'pending' %}
+                                <a href="/myapp/officer_verify_boat/{{ boat.id }}" class="btn-action btn-verify">
+                                    <i class="fas fa-user-check"></i> Verify Now
+                                </a>
+                            {% elif boat.status == 'BAN' %}
+                                <span class="status-badge status-banned">
+                                    <i class="fas fa-exclamation-triangle"></i> Banned
+                                </span>
+                            {% else %}
+                                <span class="status-badge status-verified">
+                                    <i class="fas fa-check-circle"></i> Verified
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td data-label="Actions">
+                            <a href="/myapp/officer_view_trip_details/{{ boat.id }}#a" class="btn-action btn-trip">
+                                <i class="fas fa-route"></i> Trips
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <i class="fas fa-ship fa-3x mb-3" style="opacity: 0.2;"></i>
+                            <p>No boat records found in the registry.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

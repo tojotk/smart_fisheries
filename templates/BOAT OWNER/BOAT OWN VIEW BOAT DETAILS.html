@@ -1,0 +1,266 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+
+<style>
+  /* Formal Deep Teal Silk Table Styling */
+  .boat-list-container {
+    padding: 2rem 0;
+  }
+
+  .boat-list-header {
+    margin-bottom: 2rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+  }
+
+  .boat-list-title {
+    font-family: 'Raleway', sans-serif;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .boat-list-subtitle {
+    color: #2dd4bf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+  }
+
+  .boat-table-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .boat-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .boat-table thead {
+    background: rgba(45, 212, 191, 0.1);
+  }
+
+  .boat-table thead th {
+    padding: 1.2rem;
+    color: #2dd4bf;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .boat-table tbody td {
+    padding: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.95rem;
+  }
+
+  .boat-table tbody tr {
+    transition: background 0.3s;
+  }
+
+  .boat-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  /* Formal Button Styles */
+  .action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-edit {
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+  }
+
+  .btn-edit:hover {
+    background: #3b82f6;
+    color: white;
+  }
+
+  .btn-delete {
+    border: 1px solid #ef4444;
+    color: #ef4444;
+  }
+
+  .btn-delete:hover {
+    background: #ef4444;
+    color: white;
+  }
+
+  .btn-trip {
+    background: #2dd4bf;
+    color: #0b3037;
+    border: 1px solid #2dd4bf;
+  }
+
+  .btn-trip:hover {
+    filter: brightness(1.1);
+  }
+
+  .btn-assign {
+    border: 1px solid #eab308;
+    color: #eab308;
+  }
+
+  .btn-assign:hover {
+    background: #eab308;
+    color: #0b3037;
+  }
+
+  /* Status Badges */
+  .status-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .status-verified { background: rgba(45, 212, 191, 0.2); color: #2dd4bf; }
+  .status-pending { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+  .status-rejected { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+  .lock-text {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  .footer-action {
+    background: rgba(11, 48, 55, 0.5);
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .btn-add-vessel {
+    background: transparent;
+    border: 1px solid #2dd4bf;
+    color: #2dd4bf;
+    padding: 0.8rem 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+
+  .btn-add-vessel:hover {
+    background: #2dd4bf;
+    color: #0b3037;
+  }
+</style>
+
+<div class="container boat-list-container">
+  <div class="boat-list-header">
+    <h2 class="boat-list-title">Vessel Inventory</h2>
+    <p class="boat-list-subtitle">Fleet Status and Operations Overview</p>
+  </div>
+
+  <div class="boat-table-card">
+    <div class="table-responsive">
+      <table class="boat-table">
+        <thead>
+          <tr>
+            <th>Reg No</th>
+            <th>Capacity</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Management</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td><code style="color: #2dd4bf; font-weight: bold;">{{ i.regno }}</code></td>
+            <td>{{ i.capacity }} PAX</td>
+            <td>{{ i.type }}</td>
+            <td>
+              {% if i.status == 'Verified' %}
+                <span class="status-tag status-verified">Verified</span>
+              {% elif i.status == 'Pending' %}
+                <span class="status-tag status-pending">Pending</span>
+              {% else %}
+                <span class="status-tag status-rejected">{{ i.status }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="/myapp/boat_owner_edit_boat/{{ i.id }}#a" class="action-btn btn-edit">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="/myapp/delete_boat/{{ i.id }}#a" class="action-btn btn-delete"
+                   onclick="return confirm('Confirm vessel decommissioning?');">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </a>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                {% if i.status == 'Verified' %}
+                  <a href="/myapp/boat_owner_boat_own_view_trip_details/{{ i.id }}#a" class="action-btn btn-trip">
+                    <i class="fas fa-route"></i> Trip
+                  </a>
+                  <a href="/myapp/AssignBoat/{{ i.id }}/#a" class="action-btn btn-assign">
+                    <i class="fas fa-user-plus"></i> Assign
+                  </a>
+                {% else %}
+                  <span class="lock-text">
+                    <i class="fas fa-lock"></i> Verification Required
+                  </span>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% if data|length == 0 %}
+          <tr>
+            <td colspan="6" class="py-5 text-center text-muted">
+              <i class="fas fa-ship fa-3x mb-3 opacity-25"></i>
+              <p>No registered vessels found in the system database.</p>
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-action">
+      <a href="/myapp/boat_owner_add_boat#a" class="btn-add-vessel">
+        <i class="fas fa-plus-circle me-2"></i> Register New Vessel
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

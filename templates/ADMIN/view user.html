@@ -1,0 +1,235 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-users-log-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+  }
+
+  .sfm-users-log-container {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .sfm-page-header {
+    margin-bottom: 2.5rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .sfm-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sfm-page-title i {
+    color: #2dd4bf;
+  }
+
+  .sfm-page-subtitle {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 5px;
+  }
+
+  .sfm-table-wrapper {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .sfm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .sfm-table thead {
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 2px solid rgba(45, 212, 191, 0.3);
+  }
+
+  .sfm-table th {
+    padding: 1.2rem 1rem;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .sfm-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+  }
+
+  .sfm-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  .sfm-table td {
+    padding: 1rem;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .sfm-counter {
+    font-family: 'Courier New', monospace;
+    color: #64748b;
+    font-weight: 700;
+  }
+
+  .sfm-user-main {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sfm-user-main .name {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .sfm-user-main .email {
+    color: #94a3b8;
+    font-size: 0.8rem;
+  }
+
+  .sfm-phone-badge {
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .sfm-avatar:hover {
+    transform: scale(2.5);
+    z-index: 100;
+    border-color: #2dd4bf;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+
+  .sfm-geo-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sfm-empty {
+    text-align: center;
+    padding: 4rem !important;
+    color: #64748b;
+  }
+
+  @media (max-width: 1100px) {
+    .sfm-table-wrapper { overflow-x: auto; }
+    .sfm-table { min-width: 1000px; }
+  }
+</style>
+
+<div class="sfm-users-log-section">
+  <div class="sfm-users-log-container">
+
+    <div class="sfm-page-header">
+      <h2 class="sfm-page-title">
+        <i class="fa-solid fa-users-gear"></i>
+        Registered Personnel
+      </h2>
+      <p class="sfm-page-subtitle">Complete database of verified system users and their geo-coordinates</p>
+    </div>
+
+    <div class="sfm-table-wrapper">
+      <table class="sfm-table">
+        <thead>
+          <tr>
+            <th>UID</th>
+            <th style="text-align: left;">Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Image</th>
+{#            <th>Longitude</th>#}
+          </tr>
+        </thead>
+       <tbody>
+  {% for user in user_list %}
+  <tr>
+    <td>
+      <span class="sfm-counter">#0{{ forloop.counter }}</span>
+    </td>
+    <td style="text-align: left;">
+      <span class="sfm-user-main">
+        <span class="name">{{ user.name }}</span>
+      </span>
+    </td>
+    <td>
+      <span class="email" style="color: #94a3b8; font-size: 0.85rem;">{{ user.email }}</span>
+    </td>
+    <td>
+      <span class="sfm-phone-badge">
+        <i class="fa-solid fa-phone me-1" style="font-size: 0.7rem;"></i>
+        {{ user.phone }}
+      </span>
+    </td>
+    <td>
+      {% if user.photo %}
+        <img src="{{ user.photo.url }}" alt="User Image" class="sfm-avatar">
+      {% else %}
+        <div class="sfm-avatar" style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); font-size: 0.6rem; color: #64748b;">
+          N/A
+        </div>
+      {% endif %}
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="5" class="sfm-empty">
+      <i class="fa-solid fa-inbox fa-2x mb-2"></i>
+      <p>No personnel records found</p>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

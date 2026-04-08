@@ -1,0 +1,552 @@
+{#{% extends 'admin/home.html' %}#}
+{#{% block body %}#}
+{##}
+{#<style>#}
+{#  .sfm-requests-section {#}
+{#    padding: 2rem 0;#}
+{#    min-height: calc(100vh - 300px);#}
+{#  }#}
+{##}
+{#  .sfm-requests-container {#}
+{#    max-width: 1300px;#}
+{#    margin: 0 auto;#}
+{#    padding: 0 1.5rem;#}
+{#  }#}
+{##}
+{#  .sfm-page-header {#}
+{#    margin-bottom: 2.5rem;#}
+{#    border-left: 4px solid #2dd4bf;#}
+{#    padding-left: 1.5rem;#}
+{#    animation: fadeIn 0.8s ease-out;#}
+{#  }#}
+{##}
+{#  @keyframes fadeIn {#}
+{#    from { opacity: 0; transform: translateX(-20px); }#}
+{#    to { opacity: 1; transform: translateX(0); }#}
+{#  }#}
+{##}
+{#  .sfm-page-title {#}
+{#    font-size: 1.8rem;#}
+{#    font-weight: 800;#}
+{#    color: #ffffff;#}
+{#    margin: 0;#}
+{#    letter-spacing: 1px;#}
+{#    text-transform: uppercase;#}
+{#    display: flex;#}
+{#    align-items: center;#}
+{#    gap: 12px;#}
+{#  }#}
+{##}
+{#  .sfm-page-title i {#}
+{#    color: #2dd4bf;#}
+{#  }#}
+{##}
+{#  .sfm-table-wrapper {#}
+{#    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */#}
+{#    backdrop-filter: blur(25px);#}
+{#    -webkit-backdrop-filter: blur(25px);#}
+{#    border-radius: 20px;#}
+{#    border: 1px solid rgba(45, 212, 191, 0.2);#}
+{#    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);#}
+{#    overflow: hidden;#}
+{#  }#}
+{##}
+{#  .sfm-table {#}
+{#    width: 100%;#}
+{#    border-collapse: collapse;#}
+{#    margin: 0;#}
+{#  }#}
+{##}
+{#  .sfm-table thead {#}
+{#    background: rgba(15, 23, 42, 0.8);#}
+{#    border-bottom: 2px solid rgba(45, 212, 191, 0.3);#}
+{#  }#}
+{##}
+{#  .sfm-table th {#}
+{#    padding: 1.2rem 1.5rem;#}
+{#    color: #94a3b8;#}
+{#    font-weight: 700;#}
+{#    font-size: 0.75rem;#}
+{#    letter-spacing: 1.5px;#}
+{#    text-transform: uppercase;#}
+{#    text-align: left;#}
+{#  }#}
+{##}
+{#  .sfm-table tbody tr {#}
+{#    border-bottom: 1px solid rgba(255, 255, 255, 0.05);#}
+{#    transition: background 0.3s ease;#}
+{#  }#}
+{##}
+{#  .sfm-table tbody tr:hover {#}
+{#    background: rgba(45, 212, 191, 0.05);#}
+{#  }#}
+{##}
+{#  .sfm-table td {#}
+{#    padding: 1.2rem 1.5rem;#}
+{#    color: #e2e8f0;#}
+{#    font-size: 0.95rem;#}
+{#    vertical-align: middle;#}
+{#  }#}
+{##}
+{#  .sfm-address-box {#}
+{#    line-height: 1.5;#}
+{#    font-size: 0.85rem;#}
+{#    color: #94a3b8;#}
+{#  }#}
+{##}
+{#  .sfm-id-thumb {#}
+{#    width: 80px;#}
+{#    height: 55px;#}
+{#    object-fit: cover;#}
+{#    border-radius: 8px;#}
+{#    border: 1px solid rgba(255, 255, 255, 0.1);#}
+{#    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);#}
+{#    cursor: zoom-in;#}
+{#  }#}
+{##}
+{#  .sfm-id-thumb:hover {#}
+{#    transform: scale(2.5);#}
+{#    z-index: 100;#}
+{#    position: relative;#}
+{#    border-color: #2dd4bf;#}
+{#    box-shadow: 0 10px 30px rgba(0,0,0,0.8);#}
+{#  }#}
+{##}
+{#  .sfm-action-group {#}
+{#    display: flex;#}
+{#    gap: 8px;#}
+{#    justify-content: flex-end;#}
+{#  }#}
+{##}
+{#  .sfm-btn {#}
+{#    padding: 0.5rem 1rem;#}
+{#    border-radius: 8px;#}
+{#    font-weight: 700;#}
+{#    font-size: 0.75rem;#}
+{#    text-transform: uppercase;#}
+{#    letter-spacing: 0.5px;#}
+{#    text-decoration: none !important;#}
+{#    transition: 0.3s;#}
+{#    display: inline-flex;#}
+{#    align-items: center;#}
+{#    gap: 6px;#}
+{#  }#}
+{##}
+{#  .sfm-btn-accept {#}
+{#    background: rgba(45, 212, 191, 0.1);#}
+{#    color: #2dd4bf;#}
+{#    border: 1px solid rgba(45, 212, 191, 0.3);#}
+{#  }#}
+{##}
+{#  .sfm-btn-accept:hover {#}
+{#    background: #2dd4bf;#}
+{#    color: #141e30;#}
+{#  }#}
+{##}
+{#  .sfm-btn-reject {#}
+{#    background: rgba(239, 68, 68, 0.1);#}
+{#    color: #ef4444;#}
+{#    border: 1px solid rgba(239, 68, 68, 0.3);#}
+{#  }#}
+{##}
+{#  .sfm-btn-reject:hover {#}
+{#    background: #ef4444;#}
+{#    color: #ffffff;#}
+{#  }#}
+{##}
+{#  .sfm-status-badge {#}
+{#    padding: 4px 12px;#}
+{#    border-radius: 20px;#}
+{#    font-size: 0.75rem;#}
+{#    font-weight: 700;#}
+{#    text-transform: uppercase;#}
+{#    background: rgba(59, 130, 246, 0.1);#}
+{#    color: #3b82f6;#}
+{#    border: 1px solid rgba(59, 130, 246, 0.3);#}
+{#  }#}
+{##}
+{#  .sfm-empty {#}
+{#    text-align: center;#}
+{#    padding: 4rem !important;#}
+{#    color: #64748b;#}
+{#  }#}
+{##}
+{#  @media (max-width: 992px) {#}
+{#    .sfm-table-wrapper { overflow-x: auto; }#}
+{#    .sfm-table { min-width: 900px; }#}
+{#  }#}
+{#</style>#}
+{##}
+{#<div class="sfm-requests-section">#}
+{#  <div class="sfm-requests-container">#}
+{##}
+{#    <div class="sfm-page-header">#}
+{#      <h2 class="sfm-page-title">#}
+{#        <i class="fa-solid fa-anchor"></i>#}
+{#        Vessel Ownership Requests#}
+{#      </h2>#}
+{#    </div>#}
+{##}
+{#    <div class="sfm-table-wrapper">#}
+{#      <table class="sfm-table">#}
+{#        <thead>#}
+{#          <tr>#}
+{#            <th>Applicant Details</th>#}
+{#            <th>Contact Info</th>#}
+{#            <th>Postal Residence</th>#}
+{#            <th>Identity Verification</th>#}
+{#            <th class="text-end">Verification Status</th>#}
+{#          </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#          {% for i in data %}#}
+{#          <tr>#}
+{#            <td>#}
+{#              <div class="fw-bold text-white">{{ i.name }}</div>#}
+{#              <small class="text-muted">ID: #{{ i.LOGIN.id }}</small>#}
+{#            </td>#}
+{#            <td>#}
+{#              <i class="fa-solid fa-phone-volume me-2 text-cyan" style="font-size: 0.8rem;"></i>{{ i.phone }}#}
+{#            </td>#}
+{#            <td>#}
+{#              <div class="sfm-address-box">#}
+{#                {{ i.place }}<br>#}
+{#                {{ i.Post }} - {{ i.pin }}#}
+{#              </div>#}
+{#            </td>#}
+{#            <td>#}
+{#              <img src="{{ i.id_proof.url }}" class="sfm-id-thumb" alt="ID Proof">#}
+{#            </td>#}
+{#            <td>#}
+{#              <div class="sfm-action-group">#}
+{#                {% if i.status == 'pending' %}#}
+{#                  <a href="/myapp/accept_boat_owner/{{ i.LOGIN.id }}" class="sfm-btn sfm-btn-accept">#}
+{#                    <i class="fa-solid fa-circle-check"></i> Accept#}
+{#                  </a>#}
+{#                  <a href="/myapp/reject_boat_owner/{{ i.LOGIN.id }}" class="sfm-btn sfm-btn-reject">#}
+{#                    <i class="fa-solid fa-circle-xmark"></i> Reject#}
+{#                  </a>#}
+{#                {% else %}#}
+{#                  <span class="sfm-status-badge">{{ i.status }}</span>#}
+{#                {% endif %}#}
+{#              </div>#}
+{#            </td>#}
+{#          </tr>#}
+{#          {% empty %}#}
+{#          <tr>#}
+{#            <td colspan="5" class="sfm-empty">#}
+{#              <i class="fa-solid fa-folder-open d-block mb-3" style="font-size: 3rem; opacity: 0.2;"></i>#}
+{#              No pending registration requests found in the system.#}
+{#            </td>#}
+{#          </tr>#}
+{#          {% endfor %}#}
+{#        </tbody>#}
+{#      </table>#}
+{#    </div>#}
+{##}
+{#  </div>#}
+{#</div>#}
+{##}
+{#{% endblock %}#}
+
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-requests-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+  }
+
+  .sfm-requests-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Flex Header for Search and Title */
+  .sfm-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sfm-page-header {
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .sfm-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sfm-page-title i {
+    color: #2dd4bf;
+  }
+
+  /* Search Bar Styling */
+  .sfm-search-wrapper {
+    position: relative;
+    min-width: 320px;
+  }
+
+  .sfm-search-input {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 12px;
+    padding: 12px 20px 12px 45px; /* Space for the icon */
+    color: #ffffff;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .sfm-search-input:focus {
+    outline: none;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #2dd4bf;
+    font-size: 1rem;
+    pointer-events: none; /* Icon won't interfere with clicking input */
+  }
+
+  .sfm-table-wrapper {
+    background: rgba(20, 30, 48, 0.7);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  /* Table styling remains the same as your request flow */
+  .sfm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .sfm-table thead {
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 2px solid rgba(45, 212, 191, 0.3);
+  }
+
+  .sfm-table th {
+    padding: 1.2rem 1.5rem;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .sfm-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+  }
+
+  .sfm-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  .sfm-table td {
+    padding: 1.2rem 1.5rem;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    vertical-align: middle;
+  }
+
+  .sfm-id-thumb {
+    width: 80px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: zoom-in;
+  }
+
+  .sfm-id-thumb:hover {
+    transform: scale(2.5);
+    z-index: 100;
+    position: relative;
+    border-color: #2dd4bf;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+
+  .sfm-action-group {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .sfm-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sfm-btn-accept { background: rgba(45, 212, 191, 0.1); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.3); }
+  .sfm-btn-accept:hover { background: #2dd4bf; color: #141e30; }
+
+  .sfm-btn-reject { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+  .sfm-btn-reject:hover { background: #ef4444; color: #ffffff; }
+
+  .sfm-status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  @media (max-width: 992px) {
+    .sfm-header-flex { flex-direction: column; align-items: flex-start; }
+    .sfm-search-wrapper { width: 100%; }
+    .sfm-table-wrapper { overflow-x: auto; }
+    .sfm-table { min-width: 900px; }
+  }
+</style>
+
+<div class="sfm-requests-section">
+  <div class="sfm-requests-container">
+
+    <div class="sfm-header-flex">
+      <div class="sfm-page-header">
+        <h2 class="sfm-page-title">
+          <i class="fa-solid fa-anchor"></i>
+          Ownership Requests
+        </h2>
+      </div>
+
+      <div class="sfm-search-wrapper">
+        <i class="fa-solid fa-magnifying-glass sfm-search-icon"></i>
+        <input
+          type="text"
+          id="sfmAdminSearch"
+          onkeyup="adminRequestSearch()"
+          placeholder="Search Name, Phone or Address..."
+          class="sfm-search-input"
+        >
+      </div>
+    </div>
+
+    <div class="sfm-table-wrapper">
+      <table class="sfm-table" id="requestsTable">
+        <thead>
+          <tr>
+            <th>Applicant Details</th>
+            <th>Contact Info</th>
+            <th>Postal Residence</th>
+            <th>Identity Verification</th>
+            <th class="text-end">Verification Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr class="searchable-row">
+            <td>
+              <div class="fw-bold text-white row-name">{{ i.name }}</div>
+              <small class="text-muted">ID: #{{ i.LOGIN.id }}</small>
+            </td>
+            <td class="row-phone">
+              <i class="fa-solid fa-phone-volume me-2 text-cyan" style="font-size: 0.8rem;"></i>{{ i.phone }}
+            </td>
+            <td class="row-place">
+              <div class="sfm-address-box">
+                {{ i.place }}<br>
+                {{ i.Post }} - {{ i.pin }}
+              </div>
+            </td>
+            <td>
+              <img src="{{ i.id_proof.url }}" class="sfm-id-thumb" alt="ID Proof">
+            </td>
+            <td>
+              <div class="sfm-action-group">
+                {% if i.status == 'pending' %}
+                  <a href="/myapp/accept_boat_owner/{{ i.LOGIN.id }}" class="sfm-btn sfm-btn-accept">
+                    <i class="fa-solid fa-circle-check"></i> Accept
+                  </a>
+                  <a href="/myapp/reject_boat_owner/{{ i.LOGIN.id }}" class="sfm-btn sfm-btn-reject">
+                    <i class="fa-solid fa-circle-xmark"></i> Reject
+                  </a>
+                {% else %}
+                  <span class="sfm-status-badge">{{ i.status }}</span>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center py-10 text-slate-500">
+              <i class="fa-solid fa-folder-open d-block mb-3" style="font-size: 3rem; opacity: 0.2;"></i>
+              No registration requests found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function adminRequestSearch() {
+    let input = document.getElementById("sfmAdminSearch");
+    let filter = input.value.toLowerCase();
+    let rows = document.querySelectorAll(".searchable-row");
+
+    rows.forEach(row => {
+      let name = row.querySelector(".row-name").innerText.toLowerCase();
+      let phone = row.querySelector(".row-phone").innerText.toLowerCase();
+      let place = row.querySelector(".row-place").innerText.toLowerCase();
+
+      if (name.includes(filter) || phone.includes(filter) || place.includes(filter)) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+</script>
+
+{% endblock %}

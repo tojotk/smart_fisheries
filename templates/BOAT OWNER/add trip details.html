@@ -1,0 +1,230 @@
+{% extends 'BOAT OWNER/owner_home.html' %}
+{% block body %}
+
+<style>
+  /* Formal Deep Teal Silk Trip Management Styling */
+  .trip-container {
+    padding: 3rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .trip-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border-radius: 8px;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Formal Top Bar Accent */
+  .trip-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #2dd4bf; /* Emerald Accent */
+  }
+
+  .form-header {
+    padding: 2.5rem 2.5rem 1rem 2.5rem;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+  }
+
+  .form-header h2 {
+    font-family: 'Raleway', sans-serif;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .form-header p {
+    color: #2dd4bf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+  }
+
+  .form-body-custom {
+    padding: 2.5rem;
+  }
+
+  .form-label-custom {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-label-custom i {
+    color: #2dd4bf;
+    width: 20px;
+  }
+
+  .form-control-custom {
+    background: rgba(11, 48, 55, 0.5);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .form-control-custom:focus {
+    background: rgba(11, 48, 55, 0.8);
+    border-color: #2dd4bf;
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.1);
+    outline: none;
+  }
+
+  /* Date picker icon styling */
+  .form-control-custom::-webkit-calendar-picker-indicator {
+    filter: invert(1) sepia(100%) saturate(500%) hue-rotate(130deg);
+    cursor: pointer;
+  }
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-group-custom {
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-submit-custom {
+    background: #2dd4bf;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    color: #0b3037;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-submit-custom:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 212, 191, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .grid-layout {
+      grid-template-columns: 1fr;
+    }
+    .form-body-custom {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<div class="trip-container">
+  <div class="trip-card">
+    <div class="form-header">
+      <h2>Add Trip Log</h2>
+      <p>Voyage Documentation & Logistics</p>
+    </div>
+
+    <div class="form-body-custom">
+      <form method="post" action="/myapp/boat_owner_add_trip_details_post">
+        {% csrf_token %}
+
+        <div class="grid-layout">
+          <div>
+            <label for="sdate" class="form-label-custom">
+              <i class="fas fa-calendar-alt"></i> Start Date
+            </label>
+            <input type="date" id="sdate" name="sdate" class="form-control-custom" required>
+          </div>
+          <div>
+            <label for="edate" class="form-label-custom">
+              <i class="fas fa-calendar-check"></i> End Date
+            </label>
+            <input type="date" id="edate" name="edate" class="form-control-custom" required>
+          </div>
+        </div>
+
+        <div class="input-group-custom">
+          <label for="from" class="form-label-custom">
+            <i class="fas fa-anchor"></i> Departure Port
+          </label>
+          <input
+            type="text"
+            id="from"
+            name="from"
+            class="form-control-custom"
+            placeholder="Port of Origin"
+            required
+          >
+        </div>
+
+        <div class="input-group-custom">
+          <label for="to" class="form-label-custom">
+            <i class="fas fa-map-marker-alt"></i> Destination
+          </label>
+          <input
+            type="text"
+            id="to"
+            name="to"
+            class="form-control-custom"
+            placeholder="Target Location / Arrival Port"
+            required
+          >
+        </div>
+
+        <div style="height: 1px; background: rgba(45, 212, 191, 0.1); margin-bottom: 2rem;"></div>
+
+        <button type="submit" class="btn-submit-custom">
+          <i class="fas fa-plus-circle"></i> Initialize Trip
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Logical Date Constraints
+  const startDateInput = document.getElementById('sdate');
+  const endDateInput = document.getElementById('edate');
+
+  // Set today as minimum for Start Date
+  startDateInput.min = new Date().toISOString().split('T')[0];
+
+  startDateInput.addEventListener('change', function() {
+    // End date cannot be before start date
+    endDateInput.min = this.value;
+    if (endDateInput.value && endDateInput.value < this.value) {
+      endDateInput.value = this.value;
+    }
+  });
+</script>
+
+{% endblock %}

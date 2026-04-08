@@ -1,0 +1,223 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-camera-section {
+    padding: 2rem 0;
+    min-height: calc(100vh - 300px);
+  }
+
+  .sfm-camera-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .sfm-page-header {
+    margin-bottom: 2.5rem;
+    border-left: 4px solid #2dd4bf;
+    padding-left: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .sfm-page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sfm-page-title i {
+    color: #2dd4bf;
+  }
+
+  .sfm-table-wrapper {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .sfm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  .sfm-table thead {
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 2px solid rgba(45, 212, 191, 0.3);
+  }
+
+  .sfm-table th {
+    padding: 1.2rem 1.5rem;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .sfm-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+  }
+
+  .sfm-table tbody tr:hover {
+    background: rgba(45, 212, 191, 0.05);
+  }
+
+  .sfm-table td {
+    padding: 1.2rem 1.5rem;
+    color: #e2e8f0;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+
+  .sfm-camera-id-badge {
+    font-family: 'Courier New', monospace;
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-right: 12px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-action-cell {
+    text-align: right;
+  }
+
+  .sfm-btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none !important;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid transparent;
+  }
+
+  .sfm-btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  .sfm-btn-delete:hover {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+  }
+
+  .sfm-add-footer {
+    background: rgba(15, 23, 42, 0.5);
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(45, 212, 191, 0.1);
+  }
+
+  .sfm-btn-add {
+    background: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+    color: #ffffff;
+    padding: 0.8rem 2rem;
+    font-size: 0.85rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-btn-add:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(45, 212, 191, 0.4);
+    filter: brightness(1.1);
+  }
+
+  .sfm-empty {
+    text-align: center;
+    padding: 3rem !important;
+    color: #64748b;
+    font-style: italic;
+  }
+
+  @media (max-width: 576px) {
+    .sfm-camera-container { padding: 0 1rem; }
+    .sfm-action-cell { text-align: left; }
+    .sfm-table td { display: block; width: 100%; }
+    .sfm-table th { display: none; }
+  }
+</style>
+
+<div class="sfm-camera-section">
+  <div class="sfm-camera-container">
+
+    <div class="sfm-page-header">
+      <h2 class="sfm-page-title">
+        <i class="fa-solid fa-video"></i>
+        Sensor Network Management
+      </h2>
+    </div>
+
+    <div class="sfm-table-wrapper">
+      <table class="sfm-table">
+        <thead>
+          <tr>
+            <th>Camera Identification</th>
+            <th class="text-end">System Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>
+              <span class="sfm-camera-id-badge">CAM-{{ i.id }}</span>
+              <span class="fw-bold">{{ i.camera_name }}</span>
+            </td>
+            <td class="sfm-action-cell">
+              <a href="/myapp/deletecamera/{{ i.id }}"
+                 class="sfm-btn sfm-btn-delete"
+                 onclick="return confirm('Are you sure you want to decommission this camera unit?');">
+                <i class="fa-solid fa-trash-can"></i> Decommission
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2" class="sfm-empty">
+              <i class="fa-solid fa-video-slash d-block mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
+              No active camera units detected in the system.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="sfm-add-footer">
+        <a href="/myapp/admin_add_camera" class="sfm-btn sfm-btn-add">
+          <i class="fa-solid fa-plus-circle"></i> Initialize New Camera Unit
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

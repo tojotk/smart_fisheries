@@ -1,0 +1,623 @@
+{#<!doctype html>#}
+{#<html lang="en">#}
+{#  <head>#}
+{#    <!-- Required meta tags -->#}
+{#    <meta charset="utf-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">#}
+{##}
+{#    <link rel="stylesheet" href="/static/login/fonts/icomoon/style.css">#}
+{##}
+{#    <link rel="stylesheet" href="/static/login/css/owl.carousel.min.css">#}
+{##}
+{#    <!-- Bootstrap CSS -->#}
+{#    <link rel="stylesheet" href="/static/login/css/bootstrap.min.css">#}
+{#    #}
+{#    <!-- Style -->#}
+{#    <link rel="stylesheet" href="/static/login/css/style.css">#}
+{##}
+{#    <title>Login </title>#}
+{#  </head>#}
+{#  <body>#}
+{#  #}
+{##}
+{#  <div class="d-lg-flex half">#}
+{#    <div class="bg order-1 order-md-2" style="background-image: url('/static/login/images/logo.jpg');"></div>#}
+{#    <div class="contents order-2 order-md-1">#}
+{##}
+{#      <div class="container">#}
+{#        <div class="row align-items-center justify-content-center">#}
+{#          <div class="col-md-7">#}
+{#            <div class="mb-4">#}
+{#              <h3>Sign In</h3>#}
+{##}
+{#            </div>#}
+{#            <form action="/myapp/login_post" method="post">#}
+{#              <div class="form-group first">#}
+{#                <label for="username">Username</label>#}
+{#                <input type="text" class="form-control" name="USERNAME" id="username">#}
+{##}
+{#              </div>#}
+{#              <div class="form-group last mb-3">#}
+{#                <label for="password">Password</label>#}
+{#                <input type="password" class="form-control" id="password" NAME="PASSWORD">#}
+{#                #}
+{#              </div>#}
+{#              #}
+{#              <div class="d-flex mb-5 align-items-center">#}
+{#                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>#}
+{#                  <input type="checkbox" checked="checked"/>#}
+{#                  <div class="control__indicator"></div>#}
+{#                </label>#}
+{#                <span class="ml-auto"><a href="forgot_password.html" class="forgot-pass">Forgot Password</a></span>#}
+{#              </div>#}
+{##}
+{#              <input type="submit" value="Log In" class="btn btn-block btn-primary">#}
+{##}
+{#              <span class="d-block text-center my-4 text-muted">&mdash; or &mdash;</span>#}
+{#              #}
+{#              <div class="social-login">#}
+{#                <a href="/myapp/boat_owner_owner_registration" class="facebook btn d-flex justify-content-center align-items-center">#}
+{#                  <span class="mr-3"></span> SIGN UP#}
+{#                </a>#}
+{#                <a href="#" class="twitter btn d-flex justify-content-center align-items-center">#}
+{#                  <span class="icon-twitter mr-3"></span> Login with  Twitter#}
+{#                </a>#}
+{#                <a href="#" class="google btn d-flex justify-content-center align-items-center">#}
+{#                  <span class="icon-google mr-3"></span> Login with  Google#}
+{#                </a>#}
+{#              </div>#}
+{#            </form>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{##}
+{#    #}
+{#  </div>#}
+{#    #}
+{#    #}
+{##}
+{#    <script src="/static/login/js/jquery-3.3.1.min.js"></script>#}
+{#    <script src="/static/login/js/popper.min.js"></script>#}
+{#    <script src="/static/login/js/bootstrap.min.js"></script>#}
+{#    <script src="/static/login/js/main.js"></script>#}
+{#  </body>#}
+{#</html>#}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <title>Login - Marine Management System</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        min-height: 100vh;
+      }
+
+      .login-half-wrapper {
+        display: flex;
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Decorative animated background */
+      .login-half-wrapper::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+        z-index: 0;
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .login-image-section {
+        flex: 1;
+        position: relative;
+        background: linear-gradient(135deg, rgba(53, 87, 93, 0.9) 0%, rgb(41, 161, 225) 100%),
+                    url('https://images.unsplash.com/photo-1540946485063-a40da27545f8?q=80&w=2070') center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .login-image-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(53, 87, 93, 0.3) 0%, rgba(53, 87, 93, 0.3) 100%);
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 0.9; }
+      }
+
+      .login-image-overlay {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: white;
+        padding: 3rem;
+      }
+
+      .login-logo-circle {
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        border: 3px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .login-logo-circle i {
+        font-size: 4rem;
+        color: white;
+      }
+
+      .login-brand-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+      }
+
+      .login-brand-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.95;
+        letter-spacing: 1px;
+      }
+
+      .login-form-section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+        position: relative;
+        z-index: 1;
+        background: white;
+      }
+
+      .login-form-container {
+        width: 100%;
+        max-width: 480px;
+        animation: slideInRight 0.8s ease-out;
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .login-header {
+        margin-bottom: 2.5rem;
+      }
+
+      .login-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2d2d2d;
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .login-header h3::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, rgba(255, 0, 9, 0.49) 0%, #1062c5 100%);
+        border-radius: 2px;
+      }
+
+      .login-header p {
+        color: #666;
+        margin-top: 1rem;
+        font-size: 1rem;
+      }
+
+      .login-form-group {
+        margin-bottom: 1.8rem;
+        position: relative;
+      }
+
+      .login-form-group label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.6rem;
+        font-size: 0.95rem;
+        display: block;
+      }
+
+      .login-form-control {
+        width: 100%;
+        padding: 0.9rem 1rem 0.9rem 3rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+      }
+
+      .login-form-control:focus {
+        outline: none;
+        border-color: #35577D;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+      }
+
+      .login-input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color:  #35577D;
+        font-size: 1.2rem;
+        pointer-events: none;
+      }
+
+      .login-password-wrapper {
+        position: relative;
+      }
+
+      .login-password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #999;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+      }
+
+      .login-password-toggle:hover {
+        color:  #35577D;
+      }
+
+      .login-remember-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .login-checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .login-checkbox-wrapper input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        accent-color: #35577D;
+      }
+
+      .login-checkbox-wrapper span {
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .login-forgot-link {
+        color: #35577D;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+      }
+
+      .login-forgot-link:hover {
+        color: #ff8c42;
+        text-decoration: underline;
+      }
+
+      .login-btn-primary {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, rgba(9, 22, 255, 0.82) 50%, rgba(255, 0, 9, 0.95) 100%);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .login-btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .login-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+      }
+
+      .login-divider {
+        text-align: center;
+        margin: 2rem 0;
+        position: relative;
+      }
+
+      .login-divider span {
+        background: white;
+        padding: 0 1rem;
+        color: #999;
+        font-size: 0.9rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .login-divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #e0e0e0;
+      }
+
+      .login-signup-btn {
+        width: 100%;
+        padding: 1rem;
+        background: white;
+        border: 2px solid #35577D;
+        border-radius: 10px;
+        color:  #35577D;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .login-signup-btn:hover {
+        background:  #35577D;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+        text-decoration: none;
+      }
+
+      .login-signup-btn i {
+        font-size: 1.2rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 991px) {
+        .login-half-wrapper {
+          flex-direction: column;
+        }
+
+        .login-image-section {
+          min-height: 40vh;
+        }
+
+        .login-logo-circle {
+          width: 100px;
+          height: 100px;
+        }
+
+        .login-logo-circle i {
+          font-size: 2.5rem;
+        }
+
+        .login-brand-title {
+          font-size: 1.8rem;
+        }
+
+        .login-brand-subtitle {
+          font-size: 1rem;
+        }
+
+        .login-form-section {
+          padding: 2rem 1rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .login-header h3 {
+          font-size: 1.6rem;
+        }
+
+        .login-form-control {
+          padding: 0.8rem 0.9rem 0.8rem 2.8rem;
+        }
+
+        .login-remember-row {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+  <div class="login-half-wrapper">
+    <!-- Image Section -->
+    <div class="login-image-section">
+      <div class="login-image-overlay">
+        <div class="login-logo-circle">
+          <i class="bi bi-water"></i>
+        </div>
+        <h1 class="login-brand-title">MARINE SYSTEM</h1>
+        <p class="login-brand-subtitle">Secure Boat Management Platform</p>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="login-form-section">
+      <div class="login-form-container">
+        <div class="login-header">
+          <h3>Sign In</h3>
+          <p>Welcome back! Please login to your account.</p>
+        </div>
+
+        <form action="/myapp/login_post" method="post">
+          <!-- Username Field -->
+          <div class="login-form-group">
+            <label for="username">Username</label>
+            <div style="position: relative;">
+              <i class="bi bi-person-circle login-input-icon"></i>
+              <input type="text" class="login-form-control" name="USERNAME" id="username" placeholder="Enter your username" required>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="login-form-group">
+            <label for="password">Password</label>
+            <div class="login-password-wrapper">
+              <i class="bi bi-lock-fill login-input-icon"></i>
+              <input type="password" class="login-form-control" id="password" name="PASSWORD" placeholder="Enter your password" required>
+              <i class="bi bi-eye login-password-toggle" id="togglePassword"></i>
+            </div>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="login-remember-row">
+            <label class="login-checkbox-wrapper">
+              <input type="checkbox" checked="checked"/>
+              <span>Remember me</span>
+            </label>
+            <a href="/myapp/ForgotPassword/" class="login-forgot-link">Forgot Password?</a>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit" class="login-btn-primary">
+            <i class="bi bi-box-arrow-in-right"></i> Log In
+          </button>
+
+          <!-- Divider -->
+          <div class="login-divider">
+            <span>or</span>
+          </div>
+
+          <!-- Sign Up Button -->
+          <a href="/myapp/boat_owner_owner_registration" class="login-signup-btn">
+            <i class="bi bi-person-plus-fill"></i>
+            Create New Account
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Password Toggle
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordField = document.getElementById('password');
+      const toggleIcon = this;
+
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('bi-eye');
+        toggleIcon.classList.add('bi-eye-slash');
+      } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('bi-eye-slash');
+        toggleIcon.classList.add('bi-eye');
+      }
+    });
+
+    // Add smooth focus effects
+    document.querySelectorAll('.login-form-control').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.querySelector('.login-input-icon').style.transform = 'translateY(-50%) scale(1.2)';
+        this.parentElement.querySelector('.login-input-icon').style.color = '#ff6b35';
+      });
+
+      input.addEventListener('blur', function() {
+        this.parentElement.querySelector('.login-input-icon').style.transform = 'translateY(-50%) scale(1)';
+        if (this.value === '') {
+          this.parentElement.querySelector('.login-input-icon').style.color = '#ff6b35';
+        }
+      });
+    });
+  </script>
+
+  </body>
+</html>

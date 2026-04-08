@@ -1,0 +1,500 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>LOGIN PAGE</title>#}
+{#  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">#}
+{#  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">#}
+{##}
+{#  <style>#}
+{#    body {#}
+{#      background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.7)), #b30000;#}
+{#      background-attachment: fixed;#}
+{#      background-size: cover;#}
+{#      height: 100vh;#}
+{#    }#}
+{#    .card {#}
+{#      background: rgba(0, 0, 0, 0.85); /* semi-transparent */#}
+{#      border-radius: 12px;#}
+{#      border: 1px solid rgba(255, 0, 0, 0.5);#}
+{#      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);#}
+{#    }#}
+{#    .form-control {#}
+{#      background-color: rgba(255, 255, 255, 0.1);#}
+{#      border: 1px solid #ff4d4d;#}
+{#      color: #fff;#}
+{#    }#}
+{#    .form-control::placeholder {#}
+{#      color: #bbb;#}
+{#    }#}
+{#    .btn-success {#}
+{#      background-color: #ff3333;#}
+{#      border: none;#}
+{#    }#}
+{#    .btn-success:hover {#}
+{#      background-color: #cc0000;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body class="d-flex align-items-center justify-content-center">#}
+{##}
+{#  <div class="container">#}
+{#    <div class="row justify-content-center">#}
+{#      <div class="col-md-4">#}
+{#        <div class="card shadow-lg">#}
+{#          <div class="card-header text-center bg-danger">#}
+{#            <h4 class="mb-0 text-light font-weight-bold">LOGIN</h4>#}
+{#          </div>#}
+{#          <div class="card-body">#}
+{#            <form action="/myapp/login_post" method="post">{% csrf_token %}#}
+{#              <!-- Username -->#}
+{#              <div class="form-group">#}
+{#                <label for="username" class="font-weight-bold text-light">Username</label>#}
+{#                <input type="text" class="form-control" id="username" name="USERNAME" placeholder="Enter username">#}
+{#              </div>#}
+{##}
+{#              <!-- Password with eye toggle -->#}
+{#              <div class="form-group">#}
+{#                <label for="password" class="font-weight-bold text-light">Password</label>#}
+{#                <div class="input-group">#}
+{#                  <input type="password" class="form-control" id="password" name="PASSWORD" placeholder="Enter password">#}
+{#                  <div class="input-group-append">#}
+{#                    <span class="input-group-text bg-dark text-danger" style="cursor:pointer;" id="togglePassword">#}
+{#                      <i class="bi bi-eye" id="eyeIcon"></i>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{##}
+{#              <!-- Login Button -->#}
+{#              <button type="submit" class="btn btn-success btn-block font-weight-bold">Login</button>#}
+{#            </form>#}
+{#          </div>#}
+{##}
+{#          <!-- Footer Links -->#}
+{#          <div class="card-footer text-center">#}
+{#            <a href="/myapp/boat_owner_owner_registration" class="btn btn-sm btn-warning mr-2">Sign Up</a>#}
+{#            <a href="forgot_password.html" class="btn btn-sm btn-info">Forgot Password?</a>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- JS for password toggle -->#}
+{#  <script>#}
+{#    document.getElementById("togglePassword").addEventListener("click", function () {#}
+{#      const passwordField = document.getElementById("password");#}
+{#      const eyeIcon = document.getElementById("eyeIcon");#}
+{##}
+{#      if (passwordField.type === "password") {#}
+{#        passwordField.type = "text";#}
+{#        eyeIcon.classList.remove("bi-eye");#}
+{#        eyeIcon.classList.add("bi-eye-slash");#}
+{#      } else {#}
+{#        passwordField.type = "password";#}
+{#        eyeIcon.classList.remove("bi-eye-slash");#}
+{#        eyeIcon.classList.add("bi-eye");#}
+{#      }#}
+{#    });#}
+{#  </script>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LOGIN PAGE</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+                  url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070') center/cover fixed;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(179, 0, 0, 0.3), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 51, 51, 0.2), transparent 50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+      border: 2px solid rgba(255, 0, 0, 0.4);
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.5),
+                  0 0 80px rgba(255, 0, 0, 0.3),
+                  inset 0 0 20px rgba(255, 0, 0, 0.1);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #b30000 0%, #ff3333 100%);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .card-header h4 {
+      position: relative;
+      z-index: 1;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: 3px;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .logo-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #ff3333 0%, #b30000 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      box-shadow: 0 0 30px rgba(255, 51, 51, 0.6);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .logo-icon i {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-body {
+      padding: 2rem;
+      animation: fadeIn 1s ease-out 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 77, 77, 0.3);
+      color: #fff;
+      padding: 0.75rem 1rem 0.75rem 3rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: #ff3333;
+      box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+      color: #fff;
+    }
+
+    .form-control::placeholder {
+      color: #999;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff3333;
+      font-size: 1.2rem;
+      z-index: 2;
+    }
+
+    .form-group label {
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .input-group-text {
+      background-color: rgba(255, 51, 51, 0.2);
+      border: 2px solid rgba(255, 77, 77, 0.3);
+      border-left: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .input-group-text:hover {
+      background-color: rgba(255, 51, 51, 0.3);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #ff3333 0%, #b30000 100%);
+      border: none;
+      padding: 0.75rem;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-success::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-success:hover::before {
+      left: 100%;
+    }
+
+    .btn-success:hover {
+      background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 51, 51, 0.6);
+    }
+
+    .card-footer {
+      background: rgba(0, 0, 0, 0.5);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #0da9ff 0%, #2e70ff 100%);
+      border: none;
+      color: #000;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+    }
+
+    .btn-info {
+      background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-info:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+    }
+
+    .decorative-element {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .dec-1 {
+      width: 100px;
+      height: 100px;
+      background: #ff3333;
+      top: 10%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .dec-2 {
+      width: 150px;
+      height: 150px;
+      background: #b30000;
+      bottom: 15%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    .dec-3 {
+      width: 80px;
+      height: 80px;
+      background: #0097ff;
+      top: 60%;
+      left: 10%;
+      animation-delay: 4s;
+    }
+  </style>
+</head>
+<body class="d-flex align-items-center justify-content-center">
+
+  <!-- Decorative Elements -->
+  <div class="decorative-element dec-1"></div>
+  <div class="decorative-element dec-2"></div>
+  <div class="decorative-element dec-3"></div>
+
+  <div class="container login-container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card shadow-lg">
+          <div class="card-header text-center">
+            <h4 class="mb-0 font-weight-bold">
+              <i class="bi bi-shield-lock-fill mr-2"></i>
+              SECURE LOGIN
+            </h4>
+          </div>
+
+          <div class="card-body">
+            <!-- Logo Section -->
+            <div class="logo-container">
+              <div class="logo-icon">
+                <i class="bi bi-person-fill"></i>
+              </div>
+              <h5 class="text-light font-weight-bold">WELCOME BACK</h5>
+            </div>
+
+            <form action="/myapp/login_post" method="post">
+              <!-- Username -->
+              <div class="form-group">
+                <label for="username">Username</label>
+                <div class="position-relative">
+                  <i class="bi bi-person-circle input-icon"></i>
+                  <input type="text" class="form-control" id="username" name="USERNAME" placeholder="Enter your username" required>
+                </div>
+              </div>
+
+              <!-- Password with eye toggle -->
+              <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                  <div class="position-relative flex-grow-1">
+                    <i class="bi bi-lock-fill input-icon"></i>
+                    <input type="password" class="form-control" id="password" name="PASSWORD" placeholder="Enter your password" required style="border-radius: 10px 0 0 10px;">
+                  </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text text-danger" id="togglePassword" style="border-radius: 0 10px 10px 0;">
+                      <i class="bi bi-eye" id="eyeIcon"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Login Button -->
+              <button type="submit" class="btn btn-success btn-block font-weight-bold mt-4">
+                <i class="bi bi-box-arrow-in-right mr-2"></i>
+                Login
+              </button>
+            </form>
+          </div>
+
+          <!-- Footer Links -->
+          <div class="card-footer text-center">
+            <p class="text-light mb-3 small">Don't have an account?</p>
+            <a href="/myapp/boat_owner_owner_registration" class="btn btn-sm btn-warning mr-2">
+              <i class="bi bi-person-plus-fill mr-1"></i>
+              Sign Up
+            </a>
+            <a href="forgot_password.html" class="btn btn-sm btn-info">
+              <i class="bi bi-question-circle-fill mr-1"></i>
+              Forgot Password?
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS for password toggle -->
+  <script>
+    document.getElementById("togglePassword").addEventListener("click", function () {
+      const passwordField = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.classList.remove("bi-eye");
+        eyeIcon.classList.add("bi-eye-slash");
+      } else {
+        passwordField.type = "password";
+        eyeIcon.classList.remove("bi-eye-slash");
+        eyeIcon.classList.add("bi-eye");
+      }
+    });
+
+    // Add floating animation to decorative elements
+    document.querySelectorAll('.decorative-element').forEach((el, index) => {
+      el.style.animationDelay = `${index * 2}s`;
+    });
+  </script>
+
+</body>
+</html>

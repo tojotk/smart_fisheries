@@ -1,0 +1,230 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<style>
+  .sfm-add-staff-section {
+    min-height: calc(100vh - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .sfm-staff-card {
+    background: rgba(20, 30, 48, 0.7); /* Navy Mirage Base */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 750px;
+    width: 100%;
+    position: relative;
+  }
+
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .sfm-staff-header {
+    background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+  }
+
+  .sfm-staff-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(45, 212, 191, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    color: #2dd4bf;
+    font-size: 1.5rem;
+  }
+
+  .sfm-staff-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .sfm-staff-body {
+    padding: 2.5rem;
+  }
+
+  .sfm-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .sfm-form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .sfm-form-label {
+    display: block;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.75rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .sfm-form-label i {
+    color: #2dd4bf;
+    margin-right: 5px;
+  }
+
+  .sfm-form-input {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .sfm-form-input:focus {
+    border-color: #2dd4bf;
+    background: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.1);
+  }
+
+  .sfm-button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .sfm-submit-btn {
+    flex: 2;
+    background: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+    color: #ffffff;
+    padding: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .sfm-cancel-btn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    padding: 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+  }
+
+  .sfm-submit-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+    box-shadow: 0 10px 20px rgba(45, 212, 191, 0.2);
+  }
+
+  .sfm-cancel-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .sfm-form-row { grid-template-columns: 1fr; }
+    .sfm-staff-card { margin: 0 1rem; }
+  }
+</style>
+
+<div class="sfm-add-staff-section">
+  <div class="sfm-staff-card">
+
+    <div class="sfm-staff-header">
+      <div class="sfm-staff-icon">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <h4 class="sfm-staff-title">Personnel Enrollment</h4>
+    </div>
+
+    <div class="sfm-staff-body">
+      <form method="post" action="/myapp/admin_add_officer_post/">
+        {% csrf_token %}
+
+        <div class="sfm-form-row">
+          <div class="sfm-form-group">
+            <label for="name" class="sfm-form-label"><i class="fa-solid fa-user"></i> Full Name</label>
+            <input type="text" class="sfm-form-input" name="name" id="name" placeholder="John Doe" required>
+          </div>
+
+          <div class="sfm-form-group">
+            <label for="email" class="sfm-form-label"><i class="fa-solid fa-envelope"></i> Email Address</label>
+            <input type="email" class="sfm-form-input" name="email" id="email" placeholder="officer@sfm.com" required>
+          </div>
+        </div>
+
+        <div class="sfm-form-row">
+          <div class="sfm-form-group">
+            <label for="phone" class="sfm-form-label"><i class="fa-solid fa-phone"></i> Contact Number</label>
+            <input type="tel" class="sfm-form-input" name="phone" id="phone" placeholder="10 Digit Number" pattern="[0-9]{10}" maxlength="10" required>
+          </div>
+
+          <div class="sfm-form-group">
+            <label for="department" class="sfm-form-label"><i class="fa-solid fa-building"></i> Department</label>
+            <input type="text" class="sfm-form-input" name="department" id="department" placeholder="e.g. Coastal Watch" required>
+          </div>
+        </div>
+
+        <div class="sfm-form-group">
+          <label for="designation" class="sfm-form-label"><i class="fa-solid fa-id-card"></i> Designation</label>
+          <input type="text" class="sfm-form-input" name="designation" id="designation" placeholder="e.g. Senior Officer" required>
+        </div>
+
+        <div class="sfm-form-row">
+          <div class="sfm-form-group">
+            <label for="username" class="sfm-form-label"><i class="fa-solid fa-at"></i> System Username</label>
+            <input type="text" class="sfm-form-input" name="username" id="username" minlength="4" placeholder="min. 4 chars" required>
+          </div>
+
+          <div class="sfm-form-group">
+            <label for="password" class="sfm-form-label"><i class="fa-solid fa-key"></i> Security Password</label>
+            <input type="password" class="sfm-form-input" name="password" id="password" minlength="6" placeholder="min. 6 chars" required>
+          </div>
+        </div>
+
+        <div class="sfm-button-container">
+          <button type="submit" class="sfm-submit-btn">
+            Create Personnel Account <i class="fa-solid fa-circle-check ms-2"></i>
+          </button>
+          <a href="/myapp/admin_viewofficer" class="sfm-cancel-btn">Discard</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
