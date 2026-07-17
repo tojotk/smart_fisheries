@@ -30,6 +30,8 @@ Manage Trolling Ban Details
 View Complaints & Send Replies
 View Suggestions
 Dashboard & Reports
+
+
 🚤 Boat Owner
 Registration & Login
 Manage Profile
@@ -40,6 +42,8 @@ View Trolling Ban Details
 Receive Notifications
 Emergency Reporting
 Complaint & Suggestion System
+
+
 👮 Fisheries Officer
 Login
 Manage Trolling Ban
@@ -49,6 +53,8 @@ Monitor Illegal Fishing
 Manage Safety Tips
 Ban Boat Operations
 View AI Detection Logs
+
+
 📱 Mobile User
 Register & Login
 View Assigned Boats
@@ -65,6 +71,8 @@ Report Incidents
 📍 GPS Location Tracking
 🔔 Instant Alert Generation
 📷 Image Evidence Capture
+
+
 🛠 Tech Stack
 Frontend
 HTML5
@@ -87,7 +95,12 @@ Tools
 Git & GitHub
 Visual Studio Code
 PyCharm
+
+
+
 🏗 System Architecture
+
+
 Surveillance Camera
         │
         ▼
@@ -104,6 +117,9 @@ Database Alerts Dashboard
         │
         ▼
 Flutter Mobile App
+
+
+
 📂 Project Modules
 Smart Fisheries
 │
